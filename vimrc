@@ -16,7 +16,7 @@ filetype indent on
 " UI
 set ruler           " each window will contain a statusline
 set statusline=%F%m%r%h%w\ [%{&ff}\|%Y]\ [CUR=\%03.3b\|\%02.2B]\ [POS=%04l:%04v][%p%%]
-set laststatus=2    " always show statusline
+" set laststatus=2    " always show statusline
 set wildmenu        " command-line completion in enhanced mode
 set showmatch       " show matching brackets when cursor is over
 set scrolloff=3
@@ -109,4 +109,7 @@ nnoremap <silent> zk O<Esc>
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+" Powerline settings
+set nocompatible " Disable vi-compatibility
+set laststatus=2 " Always show the statusline
 

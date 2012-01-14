@@ -75,7 +75,8 @@ endfunction
 autocmd! bufwritepost .vimrc source %
 
 " Snippets
-let g:snips_author = '${author}'
+let g:snips_author = 'andyt'
+let g:snippets_dir = "~/.vim/bundle/snipmate-snippets/snippets/"
 
 " Restore cursor
 function! ResCur()

@@ -5,7 +5,7 @@
 The installation script will attempt to backup any existing dotfiles prior to 
 installing those included in this repository.
 
-1. git clone git@github.com/andythigpen/dotfiles ~/.dotfiles
+1. git clone git://github.com/andythigpen/dotfiles.git ~/.dotfiles
 2. cd ~/.dotfiles
 3. ./install.sh
 

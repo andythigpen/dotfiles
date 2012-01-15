@@ -1,7 +1,6 @@
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.function ==
 /* 
- * ===  FUNCTION  ======================================================================
  *         Name:  |?FUNCTION_NAME|
  *  Description:  
  * =====================================================================================
@@ -10,51 +9,47 @@ void<CURSOR>
 |FUNCTION_NAME| ( <+argument list+> )
 {
 <SPLIT>	return <+return value+>;
-}		/* -----  end of function |FUNCTION_NAME|  ----- */
+}
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.function-static ==
 /* 
- * ===  FUNCTION  ======================================================================
  *         Name:  |?FUNCTION_NAME|
  *  Description:  
- * =====================================================================================
  */
 static void<CURSOR>
 |FUNCTION_NAME| ( <+argument list+> )
 {
 <SPLIT>	return <+return value+>;
-}		/* -----  end of static function |FUNCTION_NAME|  ----- */
+}
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.main ==
 #include	<stdlib.h>
 
 /* 
- * ===  FUNCTION  ======================================================================
  *         Name:  main
  *  Description:  
- * =====================================================================================
  */
 int
 main ( int argc, char *argv[] )
 {<CURSOR>
 <SPLIT>	return EXIT_SUCCESS;
-}				/* ----------  end of function main  ---------- */
+}
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.enum ==
 enum |?ENUM_NAME| {<CURSOR>
-<SPLIT>};				/* ----------  end of enum |ENUM_NAME|  ---------- */
+<SPLIT>};
 
 typedef enum |ENUM_NAME| |ENUM_NAME:c|;
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.struct ==
 struct |?STRUCT_NAME| {<CURSOR>
-<SPLIT>};				/* ----------  end of struct |STRUCT_NAME|  ---------- */
+<SPLIT>};
 
 typedef struct |STRUCT_NAME| |STRUCT_NAME:c|;
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.union ==
 union |?UNION_NAME| {<CURSOR>
-<SPLIT>};				/* ----------  end of union |UNION_NAME|  ---------- */
+<SPLIT>};
 
 typedef union |UNION_NAME| |UNION_NAME:c|;
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,8 +94,8 @@ sizeof(<CURSOR><SPLIT>)
 assert(<CURSOR><SPLIT>);
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.open-input-file ==
-FILE	*|?FILEPOINTER|;										/* input-file pointer */
-char	*|FILEPOINTER|_file_name = "<CURSOR>";		/* input-file name    */
+FILE	*|?FILEPOINTER|;
+char	*|FILEPOINTER|_file_name = "<CURSOR>";
 
 |FILEPOINTER|	= fopen( |FILEPOINTER|_file_name, "r" );
 if ( |FILEPOINTER| == NULL ) {
@@ -109,7 +104,7 @@ if ( |FILEPOINTER| == NULL ) {
 	exit (EXIT_FAILURE);
 }
 <SPLIT>{-continue here-}
-if( fclose(|FILEPOINTER|) == EOF ) {			/* close input file   */
+if( fclose(|FILEPOINTER|) == EOF ) {
 	fprintf ( stderr, "couldn't close file '%s'; %s\n",
 			|FILEPOINTER|_file_name, strerror(errno) );
 	exit (EXIT_FAILURE);
@@ -117,8 +112,8 @@ if( fclose(|FILEPOINTER|) == EOF ) {			/* close input file   */
 
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == idioms.open-output-file ==
-FILE	*|?FILEPOINTER|;										/* output-file pointer */
-char	*|FILEPOINTER|_file_name = "<CURSOR>";		/* output-file name    */
+FILE	*|?FILEPOINTER|;
+char	*|FILEPOINTER|_file_name = "<CURSOR>";
 
 |FILEPOINTER|	= fopen( |FILEPOINTER|_file_name, "w" );
 if ( |FILEPOINTER| == NULL ) {
@@ -127,7 +122,7 @@ if ( |FILEPOINTER| == NULL ) {
 	exit (EXIT_FAILURE);
 }
 <SPLIT>{-continue here-}
-if( fclose(|FILEPOINTER|) == EOF ) {			/* close output file   */
+if( fclose(|FILEPOINTER|) == EOF ) {
 	fprintf ( stderr, "couldn't close file '%s'; %s\n",
 			|FILEPOINTER|_file_name, strerror(errno) );
 	exit (EXIT_FAILURE);

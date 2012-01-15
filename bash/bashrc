@@ -1,0 +1,10 @@
+
+# Use vi mode
+set -o vi
+
+# Also, use vi
+export EDITOR=/usr/bin/vim
+
+# Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'

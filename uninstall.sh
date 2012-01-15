@@ -20,9 +20,18 @@ function uninstall_dotfile {
     fi
 }
 
-DOTFILES=( vimrc vim )
+read -p "Uninstall vim files [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    for dotfile in vimrc vim ; do
+        uninstall_dotfile $dotfile
+    done
+fi
 
-for dotfile in "${DOTFILES[@]}"; do
-    uninstall_dotfile $dotfile
-done
-
+read -p "Uninstall bashrc [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    if [ -h ~/.bashrc ]; then
+        unlink ~/.bashrc
+    else
+        sed -i '/### include bashrc/,/### end include/d' ~/.bashrc
+    fi
+fi

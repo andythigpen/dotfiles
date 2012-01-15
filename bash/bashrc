@@ -2,8 +2,9 @@
 # Use vi mode
 set -o vi
 
-# Also, use vi
+# Environment variables
 export EDITOR=/usr/bin/vim
+export PATH=$PATH:~/bin
 
 # Aliases
 alias ls='ls --color=auto'

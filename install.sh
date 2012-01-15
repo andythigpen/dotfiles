@@ -46,3 +46,12 @@ EOF
     fi
 fi
 
+read -p "Install ~/bin [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    if [ -e ~/bin ]; then
+        echo "~/bin already exists. Not installing."
+    else
+        ln -s $TOP/bin ~/bin
+    fi
+fi
+

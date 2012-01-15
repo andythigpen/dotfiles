@@ -35,3 +35,12 @@ if [[ "$choice" =~ $DEFAULT_YES ]]; then
         sed -i '/### include bashrc/,/### end include/d' ~/.bashrc
     fi
 fi
+
+read -p "Uninstall ~/bin [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    if [ -h ~/bin ]; then
+        unlink ~/bin
+    else
+        echo "~/bin is not a link."
+    fi
+fi

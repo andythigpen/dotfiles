@@ -1,0 +1,43 @@
+#!/bin/bash
+
+DIR=$1
+
+function die
+{
+    echo $1
+    exit 1
+}
+
+if [ -z $DIR ]; then
+    DIR=.
+fi
+
+CHOICE=y
+echo -n "Remove '.orig' files? [y]: "
+read CHOICE
+if [ "$CHOICE" == "y" -o -z "$CHOICE" ]; then
+    find $DIR -name '*.orig' -exec rm -vf {} \;
+fi
+
+CHOICE=y
+echo -n "Remove '.bak' files? [y]: "
+read CHOICE
+if [ "$CHOICE" == "y" -o -z "$CHOICE" ]; then
+    find $DIR -name '*.bak' -exec rm -vf {} \;
+fi
+
+CHOICE=n
+echo -n "Remove '.patch' files? [n]: "
+read CHOICE
+if [ "$CHOICE" == "y" ]; then
+    find $DIR -name '*.patch' -exec rm -vf {} \;
+fi
+
+CHOICE=n
+echo -n "Remove cscope files? [n]: "
+read CHOICE
+if [ "$CHOICE" == "y" ]; then
+    find $DIR -name 'cscope.*' -exec rm -vf {} \;
+fi
+
+exit 0

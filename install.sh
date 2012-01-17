@@ -55,3 +55,8 @@ if [[ "$choice" =~ $DEFAULT_YES ]]; then
     fi
 fi
 
+read -p "Install gitconfig [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    replace_dotfile gitconfig
+fi
+

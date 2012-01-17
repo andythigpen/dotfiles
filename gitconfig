@@ -1,0 +1,14 @@
+[color]
+	ui = auto
+[core]
+	excludesfile = /home/andyt/.gitignore
+	autocrlf = false
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	stat = status
+	br = branch
+	ls = branch -a
+	staged = diff --staged
+	changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"

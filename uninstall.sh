@@ -44,3 +44,8 @@ if [[ "$choice" =~ $DEFAULT_YES ]]; then
         echo "~/bin is not a link."
     fi
 fi
+
+read -p "Uninstall gitconfig [Y/n]? " choice
+if [[ "$choice" =~ $DEFAULT_YES ]]; then
+    uninstall_dotfile gitconfig
+fi

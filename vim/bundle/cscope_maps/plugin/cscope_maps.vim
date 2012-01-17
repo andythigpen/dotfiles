@@ -39,8 +39,7 @@ if has("cscope")
 
     " add any cscope database in current directory
     if filereadable("cscope.out")
-        " vim 7+ automatically adds cscope.out in current directory
-        " cs add cscope.out  
+        cs add cscope.out  
     " else add the database pointed to by environment variable 
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB

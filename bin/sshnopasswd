@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ARGS=2 
+if [ $# -ne "$ARGS" ]; then
+  echo "Usage: `basename $0` user ip"
+  exit -1
+fi
+
+USER=$1
+IP=$2
+
+echo "Generating a keypair"
+ssh-keygen -t rsa -f ~/.ssh/key_$IP
+echo "Creating remote .ssh directory:"
+ssh $USER@$IP mkdir -p .ssh
+echo "Adding public key to remote authorized_keys:"
+cat ~/.ssh/key_$IP.pub | ssh $USER@$IP 'cat >> .ssh/authorized_keys'
+

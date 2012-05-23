@@ -1,15 +1,15 @@
 [color]
-	ui = auto
+    ui = auto
 [core]
-	excludesfile = /home/andyt/.gitignore
-	autocrlf = false
+    excludesfile = /home/andyt/.gitignore
+    autocrlf = false
 [alias]
-	co = checkout
-	ci = commit
-	st = status
-	stat = status
-	br = branch
-	ls = branch -a
-	staged = diff --staged
-	ll = log --pretty=oneline --decorate=short --graph --abbrev-commit
-	changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"
+    co = checkout
+    ci = commit
+    st = status
+    stat = status
+    br = branch
+    ls = branch -a
+    staged = diff --staged
+    ll = log --pretty=oneline --decorate=short --graph --abbrev-commit
+    changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"

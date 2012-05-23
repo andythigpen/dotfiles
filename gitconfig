@@ -12,4 +12,5 @@
     ls = branch -a
     staged = diff --staged
     ll = log --pretty=oneline --decorate=short --graph --abbrev-commit
+    all = log --pretty=oneline --decorate=short --graph --abbrev-commit --all
     changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"

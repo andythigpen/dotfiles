@@ -1,0 +1,27 @@
+#!/bin/sh
+
+SETTINGS_DIR=~/.review
+COOKIE_FILE=$SETTINGS_DIR/review.cookie
+
+mkdir -p $SETTINGS_DIR
+
+[ ! -f "$SETTINGS_DIR/review.settings" ] && echo "Missing $SETTINGS_DIR/review.settings." && exit 1
+
+source $SETTINGS_DIR/review.settings
+
+TEST_LOGIN=`curl --cookie $COOKIE_FILE --cookie-jar $COOKIE_FILE -s -w "%{http_code}" -o /dev/null $BASE_URL`
+
+if [ "$TEST_LOGIN" != "200" ]; then
+    AUTH_TOKEN=`curl -sL $BASE_URL/users/login | grep authenticity_token | awk -F'value="' '{print $3;}' | awk -F'"' '{print $1;}'| tr -d '\n'`
+    read -p "Username: " USERNAME
+    read -s -p "Password: " PASSWORD
+    echo "Logging in..."
+    curl -d "user[username]=$USERNAME" -d "user[password]=$PASSWORD" -d "authenticity_token=$AUTH_TOKEN" --cookie-jar $COOKIE_FILE -o /dev/null $BASE_URL/users/login 
+    [ $? -eq 0 ] && echo "Success"
+fi
+
+read -p "Changeset id: " CHANGESET_ID
+
+curl -sL --cookie $COOKIE_FILE --cookie-jar $COOKIE_FILE $BASE_URL/changeset/download/$CHANGESET_ID -o changeset_$CHANGESET_ID.patch
+
+echo "Downloaded to changeset_$CHANGESET_ID.patch"

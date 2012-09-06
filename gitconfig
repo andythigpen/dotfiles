@@ -10,6 +10,8 @@
     stat = status
     br = branch
     ls = branch -a
+    ff = pull --ff-only
+    up = fetch --all -p
     staged = diff --staged
     ll = log --pretty=oneline --decorate=short --graph --abbrev-commit
     all = log --pretty=oneline --decorate=short --graph --abbrev-commit --all

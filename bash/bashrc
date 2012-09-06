@@ -9,3 +9,5 @@ export PATH=$PATH:~/bin
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
+export PS1='\u:\W\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '

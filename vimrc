@@ -113,3 +113,9 @@ call pathogen#helptags()
 set nocompatible " Disable vi-compatibility
 set laststatus=2 " Always show the statusline
 
+" vimwiki settings
+" turn off auto formatting so that TAB still works for snippets
+let g:vimwiki_table_auto_fmt = 0
+let g:vimwiki_table_mappings = 0
+" automatically export to HTML on save
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]

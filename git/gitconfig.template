@@ -1,0 +1,21 @@
+[user]
+    name =
+    email = 
+[color]
+    ui = auto
+[core]
+    excludesfile = ~/.gitignore
+    autocrlf = false
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    stat = status
+    br = branch
+    ls = branch -a
+    ff = pull --ff-only
+    up = fetch --all -p
+    staged = diff --staged
+    ll = log --pretty=oneline --decorate=short --graph --abbrev-commit
+    all = log --pretty=oneline --decorate=short --graph --abbrev-commit --all
+    changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"

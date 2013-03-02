@@ -1,0 +1,163 @@
+"
+" vimrc
+" Settings are divided into groups according to the output of :options
+" The number for each section corresponds to the section number of :options
+" Most of the help comments beside each option come from :options as well
+"
+
+" 2 Moving around, searching and patterns {{{
+set incsearch     " show match for partly typed search command
+set ignorecase    " ignore case when using a search pattern
+set smartcase     " override 'ignorecase' when pattern has upper case characters
+" }}}
+
+" 4 Displaying text {{{
+set scrolloff=3   " number of screen lines to show around the cursor
+set linebreak     " wrap long lines at a character in 'breakat'
+set lazyredraw    " don't redraw while executing macros
+" }}}
+
+" 5 Syntax, highlighting and spelling {{{
+filetype plugin on    " enable loading filetype plugins
+filetype indent on    " enable loading filetype indent files
+syntax enable         " enable syntax highlighting
+set hlsearch          " highlight all matches for the last used search pattern
+if version >= 700     " map spell check
+    noremap <leader>sp :set spell!<CR>
+endif
+" }}}
+
+" 6 Multiple windows {{{
+set laststatus=2      " 0, 1 or 2; when to use a status line for the last window
+set hidden            " don't unload a buffer when no longer shown in a window
+" }}}
+
+" 11 Messages and info {{{
+set ruler             " show cursor position below each window
+set showcmd           " show (partial) command keys in the status line
+" }}}
+
+" 13 Editing text {{{
+set showmatch         " when inserting a bracket, briefly jump to its match
+" }}}
+
+" 14 Tabs and indenting {{{
+set tabstop=4         " number of spaces a <Tab> in the text stands for
+set shiftwidth=4      " number of spaces used for each step of (auto)indent
+set smarttab          " a <Tab> in an indent inserts 'shiftwidth' spaces
+set softtabstop=4     " if non-zero, number of spaces to insert for a <Tab>
+set shiftround        " round to 'shiftwidth' for "<<" and ">>"
+set expandtab         " expand <Tab> to spaces in Insert mode
+set autoindent        " automatically set the indent of a new line
+set smartindent       " do clever autoindenting
+" }}}
+
+" 15 Folding {{{
+"set nofoldenable
+" }}}
+
+" 20 Command line editing {{{
+set wildmenu        " command-line completion shows a list of matches
+" }}}
+
+" Newline mappings {{{
+" insert new lines and stay in normal mode
+nnoremap <silent> zj o<Esc>
+nnoremap <silent> zk O<Esc>
+" }}}
+
+" Vimscript file settings {{{
+augroup filetype_vim
+    " enable folding based on markers for vimscript files
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" Old settings {{{
+" UI
+" set statusline=%F%m%r%h%w\ [%{&ff}\|%Y]\ [CUR=\%03.3b\|\%02.2B]\ [POS=%04l:%04v][%p%%]
+" set pastetoggle=<F9>
+" set t_Co=256        " enable 256 color mode
+" colorscheme tir_black
+
+" Search options
+
+" Visual mode (from amix.dk/vim/vimrc.html)
+"vnoremap <silent> * :call VisualSearch('f')<CR>
+"vnoremap <silent> # :call VisualSearch('b')<CR>
+"vnoremap <silent> gv :call VisualSearch('gv')<CR>
+
+"function! CmdLine(str)
+    "exe "menu Foo.Bar :" . a:str
+    "emenu Foo.Bar
+    "unmenu Foo
+"endfunction
+
+" From an idea by Michael Naumann
+"function! VisualSearch(direction) range
+    "let l:saved_reg = @"
+    "execute "normal! vgvy"
+
+    "let l:pattern = escape(@", '\\/.*$^~[]')
+    "let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    "if a:direction == 'b'
+        "execute "normal ?" . l:pattern . "^M"
+    "elseif a:direction == 'gv'
+        "call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    "elseif a:direction == 'f'
+        "execute "normal /" . l:pattern . "^M"
+    "endif
+"
+    "let @/ = l:pattern
+    "let @" = l:saved_reg
+"endfunction
+"
+" Autocomplete
+"inoremap ( ()<Esc>i
+"inoremap { {}<Esc>i
+"inoremap [ []<Esc>i
+"inoremap < <><Esc>i
+
+"autocmd! bufwritepost .vimrc source %
+
+" Snippets
+"let g:snips_author = 'andyt'
+"let g:snippets_dir = "~/.vim/bundle/snipmate-snippets/snippets/"
+
+" Restore cursor
+"function! ResCur()
+    "if line("'\"") <= line("$")
+        "normal! g`"
+        "return 1
+    "endif
+"endfunction
+
+"augroup resCur
+    "autocmd!
+    "autocmd BufWinEnter * call ResCur()
+"augroup END
+
+" switch between related files
+"noremap ,a :A<CR>
+
+" spelling
+" Create blank lines and stay in normal mode
+"nnoremap <silent> zj o<Esc>
+"nnoremap <silent> zk O<Esc>
+"
+" Pathogen
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
+
+" Powerline settings
+"set nocompatible " Disable vi-compatibility
+
+" vimwiki settings
+" turn off auto formatting so that TAB still works for snippets
+"let g:vimwiki_table_auto_fmt = 0
+"let g:vimwiki_table_mappings = 0
+" automatically export to HTML on save
+"let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
+" }}}

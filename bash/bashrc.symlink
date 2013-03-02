@@ -1,0 +1,18 @@
+
+# Use vi mode
+set -o vi
+
+# Environment variables
+export EDITOR=/usr/bin/vim
+export PATH=$PATH:~/bin
+
+# Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias vi='vim'
+
+# Git
+if [[ $(type -t __git_ps1) == "function" ]]; then
+    export PS1='\u:\W\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '
+fi
+[ -f ~/.gitauthor.bash ] && source ~/.gitauthor.bash

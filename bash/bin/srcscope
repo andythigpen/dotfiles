@@ -1,0 +1,28 @@
+#!/bin/bash
+
+DIR=$1
+
+die() {
+    echo $1
+    exit 1
+}
+
+if [ -z "$DIR" ]; then
+    DIR=.
+fi
+
+rm -f ./cscope.files || die "Cannot remove cscope.files"
+echo "Searching for source files..."
+find -L $DIR -name '*.cpp' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+find -L $DIR -name '*.c' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+
+echo "Searching for header files..."
+find -L $DIR -name '*.h' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+
+echo "Building database..."
+cscope -b
+
+rm -f ./cscope.files || die "Unable to remove cscope.files"
+
+echo "Done."
+exit 0

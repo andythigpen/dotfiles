@@ -74,6 +74,12 @@ augroup filetype_vim
 augroup END
 " }}}
 
+" Pathogen settings {{{
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+" }}}
+
 " Old settings {{{
 " UI
 " set statusline=%F%m%r%h%w\ [%{&ff}\|%Y]\ [CUR=\%03.3b\|\%02.2B]\ [POS=%04l:%04v][%p%%]
@@ -147,10 +153,6 @@ augroup END
 "nnoremap <silent> zj o<Esc>
 "nnoremap <silent> zk O<Esc>
 "
-" Pathogen
-"call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
-
 " Powerline settings
 "set nocompatible " Disable vi-compatibility
 

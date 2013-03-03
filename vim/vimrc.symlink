@@ -185,3 +185,37 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
 " Supertab settings {{{
 let g:SuperTabDefaultCompletionType = "context"
 " }}}
+
+" cscope settings {{{
+if has("cscope")
+    set cscopetag           " always search cscope databases and tag files
+    set csto=1              " prefer ctags first
+
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set cscopeverbose       " show a message when any other cscope db is added
+
+    " Cscope actions:
+    " s: Find this C symbol
+    " g: Find this definition
+    " d: Find functions called by this function
+    " c: Find functions calling this function
+    " t: Find this text string
+    " e: Find this egrep pattern
+    " f: Find this file
+    " i: Find files #including this file
+    nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <leader>ce :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <leader>cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap <leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+" }}}

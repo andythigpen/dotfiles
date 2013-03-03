@@ -23,3 +23,6 @@
 [submodule "vim/vim.symlink/bundle/vim-autoclose"]
 	path = vim/vim.symlink/bundle/vim-autoclose
 	url = git://github.com/Townk/vim-autoclose.git
+[submodule "vim/vim.symlink/bundle/supertab"]
+	path = vim/vim.symlink/bundle/supertab
+	url = git://github.com/ervandew/supertab.git

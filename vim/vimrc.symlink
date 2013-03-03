@@ -167,3 +167,6 @@ let g:vimwiki_table_mappings = 0
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
 " }}}
 
+" Supertab settings {{{
+let g:SuperTabDefaultCompletionType = "context"
+" }}}

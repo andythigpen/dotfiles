@@ -10,3 +10,6 @@
 [submodule "vim/vim.symlink/bundle/a.vim"]
 	path = vim/vim.symlink/bundle/a.vim
 	url = git://github.com/vim-scripts/a.vim.git
+[submodule "vim/vim.symlink/bundle/tcomment_vim"]
+	path = vim/vim.symlink/bundle/tcomment_vim
+	url = git://github.com/tomtom/tcomment_vim.git

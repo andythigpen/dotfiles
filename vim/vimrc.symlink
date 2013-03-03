@@ -129,6 +129,9 @@ endfunction
 " http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
 nnoremap <leader>f :NERDTreeToggle<cr>
 
+" toggle alternate file (switches from .h to .c/cpp/etc)
+nnoremap <leader>a :A<cr>
+
 " }}}
 
 " Old settings {{{

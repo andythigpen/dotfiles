@@ -19,3 +19,6 @@
 [submodule "vim/vim.symlink/bundle/vimwiki"]
 	path = vim/vim.symlink/bundle/vimwiki
 	url = git://github.com/vim-scripts/vimwiki.git
+[submodule "vim/vim.symlink/bundle/vim-autoclose"]
+	path = vim/vim.symlink/bundle/vim-autoclose
+	url = git://github.com/Townk/vim-autoclose.git

@@ -38,7 +38,7 @@ set showcmd           " show (partial) command keys in the status line
 " }}}
 
 " 13 Editing text {{{
-set showmatch         " when inserting a bracket, briefly jump to its match
+"set showmatch         " when inserting a bracket, briefly jump to its match
 " }}}
 
 " 14 Tabs and indenting {{{

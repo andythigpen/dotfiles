@@ -95,12 +95,6 @@ nnoremap <silent><leader>h :nohlsearch<cr>
 " automatically prepend very-magic search mode to all searches
 nnoremap / /\v
 
-" End of line whitespace {{{
-"TODO: enable this to be toggled using a function and matchadd()
-nnoremap <leader>w :match Error /\v\s+$/<cr>
-nnoremap <leader>W :%s/\v\s+$//<cr>
-" }}}
-
 " Quick-fix mappings {{{
 " returns 1 if the quickfix window is open, 0 otherwise
 function! IsQuickfixOpen()
@@ -127,6 +121,8 @@ endfunction
 " when appropriate
 nnoremap <silent><leader>[ :call GotoQuickfixOrBuffer("previous")<cr>
 nnoremap <silent><leader>] :call GotoQuickfixOrBuffer("next")<cr>
+" use \' to switch back and forth between last opened buffer
+nnoremap <silent><leader>' <c-^>
 
 " Toggle quick-fix {{{
 nnoremap <silent><leader>q :call QuickfixToggle()<cr>

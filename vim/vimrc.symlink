@@ -80,6 +80,11 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 " }}}
 
+" Colorscheme settings {{{
+set t_Co=256                " enable 256 color terminal mode
+colorscheme jellybeans
+" }}}
+
 " Old settings {{{
 " UI
 " set statusline=%F%m%r%h%w\ [%{&ff}\|%Y]\ [CUR=\%03.3b\|\%02.2B]\ [POS=%04l:%04v][%p%%]

@@ -124,7 +124,10 @@ endfunction
 
 " }}}
 
-nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+" problem with arrows in NERDTree ?
+" try this:
+" http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
+nnoremap <leader>f :NERDTreeToggle<cr>
 
 " }}}
 

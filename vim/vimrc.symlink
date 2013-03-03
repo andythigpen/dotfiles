@@ -85,6 +85,29 @@ set t_Co=256                " enable 256 color terminal mode
 colorscheme jellybeans
 " }}}
 
+" Leader mappings {{{
+set pastetoggle=<leader>\p
+
+" clear the highlighting for the last search
+nnoremap <leader>nh :nohlsearch<cr>
+
+" automatically prepend very-magic search mode to all searches
+nnoremap / /\v
+
+" End of line whitespace {{{
+"TODO: enable this to be toggled using a function and matchadd()
+nnoremap <leader>w :match Error /\v\s+$/<cr>
+nnoremap <leader>W :%s/\v\s+$//<cr>
+" }}}
+
+" Quick-fix mappings {{{
+nnoremap <leader>[ :cprevious<cr>
+nnoremap <leader>] :cnext<cr>
+" }}}
+:nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+
+" }}}
+
 " Old settings {{{
 " UI
 " set statusline=%F%m%r%h%w\ [%{&ff}\|%Y]\ [CUR=\%03.3b\|\%02.2B]\ [POS=%04l:%04v][%p%%]

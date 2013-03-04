@@ -85,7 +85,7 @@ set t_Co=256                " enable 256 color terminal mode
 colorscheme jellybeans
 " }}}
 
-" Leader mappings {{{
+" Generic leader mappings {{{
 " toggle paste mode
 set pastetoggle=<leader>\p
 
@@ -114,7 +114,7 @@ function! GotoQuickfixOrBuffer(direction)
     else
         let type = "b"
     endif
-    execute "normal! :" . type . a:direction . "\<cr>"
+    silent! execute "normal! :" . type . a:direction . "\<cr>"
 endfunction
 
 " use \[ and \] to move backward/forward between the error list or buffers,
@@ -130,7 +130,9 @@ nnoremap <silent><leader>q :call QuickfixToggle()<cr>
 function! QuickfixToggle()
     if IsQuickfixOpen()
         cclose
-        execute g:quickfix_return_to_window . "wincmd w"
+        if exists("g:quickfix_return_to_window")
+            execute g:quickfix_return_to_window . "wincmd w"
+        endif
     else
         let g:quickfix_return_to_window = winnr()
         copen

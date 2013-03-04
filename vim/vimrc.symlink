@@ -171,9 +171,12 @@ endfunction
 
 augroup resCur
     autocmd!
-    au BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
+    au BufWritePost,BufLeave,BufWinLeave ?* if MakeViewCheck() | mkview | endif
     au BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
 augroup END
+
+" only save folds/cursor info for views, not local mappings, etc.
+set viewoptions=folds,cursor,slash,unix
 " }}}
 
 " Vimwiki settings {{{
@@ -221,3 +224,11 @@ if has("cscope")
     nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 " }}}
+
+" Unlimited undo {{{
+if exists("+undofile")
+    set undofile                " save undo history to a file
+    set undodir=~/.vimundo      " directory to save undo files in
+endif
+" }}}
+

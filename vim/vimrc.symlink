@@ -169,7 +169,7 @@ function! MakeViewCheck()
     return 1
 endfunction
 
-augroup resCur
+augroup restore_cursor
     autocmd!
     au BufWritePost,BufLeave,BufWinLeave ?* if MakeViewCheck() | mkview | endif
     au BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
@@ -232,3 +232,9 @@ if exists("+undofile")
 endif
 " }}}
 
+" Tagbar settings {{{
+nnoremap <silent><leader>t :TagbarToggle<CR>
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_autoshowtag = 1
+" }}}

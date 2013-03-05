@@ -90,6 +90,15 @@ call pathogen#helptags()
 
 " Colorscheme settings {{{
 set t_Co=256                " enable 256 color terminal mode
+
+" TODO figure out what the hi mode for the cscope tag is or just switch to
+" using the quickfix window
+let g:jellybeans_overrides = {
+\    'ModeMsg': { 'guifg': 'ffb964', 'guibg': '',
+\                 'ctermfg': 'Yellow', 'ctermbg': '',
+\                 'attr': '' },
+\}
+
 colorscheme jellybeans
 " }}}
 
@@ -213,6 +222,10 @@ if has("cscope")
     endif
     set cscopeverbose       " show a message when any other cscope db is added
 
+    "TODO: http://vim.wikia.com/wiki/Avoid_automatic_jump_after_make
+    " set cscopequickfix=s-,c-,d-,i-,t-,e-
+    " nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR><C-O>:copen<CR>
+
     " Cscope actions:
     " s: Find this C symbol
     " g: Find this definition
@@ -230,6 +243,7 @@ if has("cscope")
     nnoremap <leader>cf :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nnoremap <leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
 endif
 " }}}
 
@@ -266,6 +280,7 @@ nnoremap <silent><leader>mu :make! uiservice-dbg<CR>
 " TODO: only open one terminal buffer depending on the cmd passed in
 "       and show/hide that buffer accordingly, instead of closing and
 "       reopening each time...
+"       http://vim.wikia.com/wiki/Vim_buffer_FAQ
 function! GetTerminalBuffer()
     for i in range(1, winnr('$'))
         if getbufvar(winbufnr(i), '&filetype') == 'conque_term'

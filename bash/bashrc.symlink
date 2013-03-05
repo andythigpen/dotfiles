@@ -31,7 +31,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # environment variables
-export EDITOR=/usr/bin/vim
+export EDITOR=vim
 export PATH=$PATH:~/bin
 
 # Alias definitions.

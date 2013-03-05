@@ -83,7 +83,7 @@ install_dotfiles() {
 
         for src in `find $module -maxdepth 1 -name \*.symlink`; do
             dest="$HOME/.`basename \"${src%.*}\"`"
-            if [[ -f "$dest" || -d "$dest" ]]; then
+            if [[ -f "$dest" || -d "$dest" || -L "$dest" ]]; then
                 resolve_conflict $src $dest
             else
                 link_files $src $dest
@@ -97,9 +97,18 @@ install_dotfiles() {
     done
 }
 
+update_submodules() {
+    PWD=`pwd`
+    cd $DOTFILES_ROOT
+    git submodule init
+    git submodule update
+    cd $PWD
+}
+
 echo
 
 install_dotfiles
+update_submodules
 
 echo
 echo "Done."

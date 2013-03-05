@@ -5,6 +5,8 @@
 " Most of the help comments beside each option come from :options as well
 "
 
+set nocompatible  " disables vi compatibility
+
 " 2 Moving around, searching and patterns {{{
 set incsearch     " show match for partly typed search command
 set ignorecase    " ignore case when using a search pattern
@@ -39,6 +41,9 @@ set showcmd           " show (partial) command keys in the status line
 
 " 13 Editing text {{{
 "set showmatch         " when inserting a bracket, briefly jump to its match
+
+" allow bs over autoindent, line breaks, start of insert
+set backspace=start,eol,indent
 " }}}
 
 " 14 Tabs and indenting {{{
@@ -54,6 +59,9 @@ set smartindent       " do clever autoindenting
 
 " 15 Folding {{{
 "set nofoldenable
+
+" \z is slightly faster to type than zA to toggle a fold
+nnoremap <leader>z zA
 " }}}
 
 " 20 Command line editing {{{
@@ -122,7 +130,7 @@ endfunction
 nnoremap <silent><leader>[ :call GotoQuickfixOrBuffer("previous")<cr>
 nnoremap <silent><leader>] :call GotoQuickfixOrBuffer("next")<cr>
 " use \' to switch back and forth between last opened buffer
-nnoremap <silent><leader>' <c-^>
+nnoremap <silent><leader><BS> <c-^>
 
 " Toggle quick-fix {{{
 nnoremap <silent><leader>q :call QuickfixToggle()<cr>
@@ -141,11 +149,6 @@ endfunction
 " }}}
 
 " }}}
-
-" problem with arrows in NERDTree ?
-" try this:
-" http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
-nnoremap <leader>f :NERDTreeToggle<cr>
 
 " toggle alternate file (switches from .h to .c/cpp/etc)
 nnoremap <leader>a :A<cr>
@@ -189,6 +192,11 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
 
 " Supertab settings {{{
 let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabLongestEnhanced = 1
+" let g:SuperTabLongestHighlight = 1
+let g:SuperTabCrMaping = 0
+" show a menu, preview, and automatically output the longest match
+" set completeopt=menu,preview,longest
 " }}}
 
 " cscope settings {{{
@@ -232,9 +240,24 @@ if exists("+undofile")
 endif
 " }}}
 
+" NERDTree settings {{{
+" problem with arrows in NERDTree ?
+" try this:
+" http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
+nnoremap <leader>f :NERDTreeToggle<cr>
+" quit the file view after selecting a file
+let g:NERDTreeQuitOnOpen = 1
+" }}}
+
 " Tagbar settings {{{
 nnoremap <silent><leader>t :TagbarToggle<CR>
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_autoshowtag = 1
+" }}}
+
+" makeprg settings {{{
+nnoremap <silent><leader>md :make! dbg<CR>
+nnoremap <silent><leader>mr :make! rel<CR>
+nnoremap <silent><leader>mu :make! uiservice-dbg<CR>
 " }}}

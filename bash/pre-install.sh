@@ -4,7 +4,7 @@ TOP=$(dirname $(readlink -f $0))
 DOTFILES_ROOT=$(readlink -f "$TOP/..")
 source $DOTFILES_ROOT/script/common.sh
 
-if [ -d ~/bin ]; then
+if [[ -d ~/bin || -L ~/bin ]]; then
     valid=false
     while [[ "$valid" == "false" ]]; do
         ask "Directory ~/bin already exists. Options\n  [r]eplace directory, [s]kip? " action

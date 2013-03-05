@@ -1,0 +1,46 @@
+#!/bin/bash
+
+DIR=$1
+
+die() {
+    echo $1
+    exit 1
+}
+
+if [ -z $DIR ]; then
+    DIR=.
+fi
+
+rm -f ./cscope.files || die "Cannot remove cscope.files"
+echo "Searching for C/C++ source files..."
+find -L $DIR -name '*.cpp' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+find -L $DIR -name '*.c' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+echo "Searching for C/C++ header files..."
+find -L $DIR -name '*.h' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+echo "Searching for Java source files..."
+find -L $DIR -name '*.java' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+echo "Searching for Python source files..."
+find -L $DIR -name '*.py' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+echo "Searching for Javascript/HTML source files..."
+find -L $DIR -name '*.js' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+find -L $DIR -name '*.html' | awk '{if ($0 ~ / /) printf "\"%s\"\n", $0; else print}' >> cscope.files
+
+echo "Sorting..."
+sort cscope.files > cscope.files.sorted
+mv cscope.files.sorted cscope.files
+
+echo "Building cscope database..."
+cscope -b
+echo "Building ctags databases..."
+CURDIR=`pwd`
+for i in $(find . -maxdepth 1 -type d -not -name .git -not -name . -not -name boost); do
+    echo "$i"
+    cd $i
+    ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --languages=c++ --sort=foldcase .
+    cd $CURDIR
+done
+
+rm -f cscope.files || die "Unable to remove cscope.files"
+
+echo "Done."
+exit 0

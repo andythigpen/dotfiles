@@ -1,0 +1,143 @@
+#!/bin/bash
+
+function usage()
+{
+    cat <<EOF
+Usage: $(basename $0) [params]
+  -b,--base         the branch's base
+  -d,--done         marks a review as done (deletes the branch and tags)
+  -h,--help         this message
+EOF
+    exit 1
+}
+
+_git_review()
+{
+    __gitcomp "-b --base -d --done -h"
+}
+
+PARAMS="$(getopt -o b:d:r:h -l base:,done:,rebase:,help --name git -- $@)"
+if [ $? -ne 0 ]; then
+    usage
+fi
+
+eval set -- "$PARAMS"
+unset PARAMS
+
+BRANCH_NAME=$(git symbolic-ref HEAD)
+BRANCH_NAME=${BRANCH_NAME##refs/heads/}
+
+OPERATION="review"
+
+while true; do
+    case $1 in
+        -b|--base)
+            BRANCH_BASE=$2
+            shift 2
+            ;;
+        -d|--done)
+            BRANCH_NAME=$2
+            OPERATION="reviewdone"
+            break
+            ;;
+        -h|--help)
+            echo "help"
+            usage
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "unknown '$1'"
+            usage
+            ;;
+    esac
+done
+
+if [ -z $BRANCH_BASE ]; then
+    echo "Using HEAD^ as branch base."
+    BRANCH_BASE="HEAD^"
+fi
+
+REVISION=1
+if [[ $BRANCH_NAME == bug/* ]]; then
+    BUG_NUMBER=${BRANCH_NAME##bug/}
+elif [[ $BRANCH_NAME == review/* ]]; then
+    BUG_NUMBER=${BRANCH_NAME##review/}
+    BUG_NUMBER=${BUG_NUMBER%%/*}
+    NEAREST_TAG=$(git describe --abbrev=0 --tags $BRANCH_NAME)
+    REVISION=${NEAREST_TAG##*-}
+    REVISION=$(($REVISION+1))
+else
+    read -p "Bug number: " BUG_NUMBER
+fi
+echo "Using:"
+echo "  Bug:      $BUG_NUMBER"
+echo "  Revision: $REVISION"
+
+function reviewdone()
+{
+    while true; do
+        NEAREST_TAG=$(git describe --abbrev=0 --tags $BRANCH_NAME)
+        if [[ $NEAREST_TAG == $BUG_NUMBER-revision-* ]]; then
+            echo "Deleting tag $NEAREST_TAG"
+            git tag -d $NEAREST_TAG
+        else
+            break
+        fi
+    done
+    echo "Deleting branch $BRANCH_NAME"
+    git branch -D $BRANCH_NAME
+}
+
+function review()
+{
+    PATCH_FILE=$(mktemp -t git-review.XXXXX)
+
+    NEW_BRANCH="review/$BUG_NUMBER"
+    if [[ $BRANCH_NAME == bug/* ]]; then
+        echo "Renaming branch $BRANCH_NAME to $NEW_BRANCH..."
+        git branch -m $BRANCH_NAME $NEW_BRANCH
+    else
+        git rev-parse review/$BUG_NUMBER &>/dev/null
+        if [ $? -ne 0 ]; then
+            echo "Creating new branch $NEW_BRANCH..."
+            git branch $NEW_BRANCH
+        fi
+    fi
+
+    echo "Tagging this revision..."
+    git tag $BUG_NUMBER-revision-$REVISION
+
+    read -p "Upload a patch? [Yn] " DO_UPLOAD
+    [ -z "$DO_UPLOAD" ] && DO_UPLOAD="y"
+    case $DO_UPLOAD in
+        y|Y|yes)
+            git diff $BRANCH_BASE..HEAD > $PATCH_FILE
+            upload_patch $PATCH_FILE
+            rm -f $PATCH_FILE
+            ;;
+        n|N|no)
+            ;;
+        *)
+            echo "Unknown: $DO_UPLOAD"
+        ;;
+    esac
+}
+
+# default if no other options are specified
+case $OPERATION in
+    review)
+        review
+        ;;
+    reviewdone)
+        reviewdone
+        ;;
+    *)
+        echo "Unknown"
+        ;;
+esac
+exit 0
+
+

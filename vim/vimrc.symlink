@@ -246,9 +246,18 @@ endif
 " problem with arrows in NERDTree ?
 " try this:
 " http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
-nnoremap <leader>f :NERDTreeToggle %<cr>
-" quit the file view after selecting a file
-let g:NERDTreeQuitOnOpen = 1
+function! OpenNERDTree()
+    if empty(getbufvar(bufnr("%"), "&buftype"))
+        " if the current buffer is a regular file, open NERDTree focused on
+        " that file
+        silent execute "normal! :NERDTreeToggle %\<CR>"
+    else
+        " otherwise, just toggle NERDTree
+        silent execute "normal! :NERDTreeToggle\<CR>"
+    endif
+endfunction
+nnoremap <silent><leader>f :call OpenNERDTree()<CR>
+let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
 " }}}
 
 " Tagbar settings {{{

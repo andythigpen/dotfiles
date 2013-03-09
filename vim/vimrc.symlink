@@ -58,7 +58,7 @@ set smartindent       " do clever autoindenting
 " }}}
 
 " 15 Folding {{{
-"set nofoldenable
+set nofoldenable
 
 " \z is slightly faster to type than zA to toggle a fold
 nnoremap <leader>z zA
@@ -72,14 +72,6 @@ set wildmenu        " command-line completion shows a list of matches
 " insert new lines and stay in normal mode
 nnoremap <silent> zj o<Esc>
 nnoremap <silent> zk O<Esc>
-" }}}
-
-" Vimscript file settings {{{
-augroup filetype_vim
-    " enable folding based on markers for vimscript files
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
 " }}}
 
 " Pathogen settings {{{
@@ -138,7 +130,7 @@ endfunction
 " when appropriate
 nnoremap <silent><leader>[ :call GotoQuickfixOrBuffer("previous")<cr>
 nnoremap <silent><leader>] :call GotoQuickfixOrBuffer("next")<cr>
-" use \' to switch back and forth between last opened buffer
+" use \backspace to switch back and forth between last opened buffer
 nnoremap <silent><leader><BS> <c-^>
 
 " Toggle quick-fix {{{
@@ -200,12 +192,8 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
 " }}}
 
 " Supertab settings {{{
+" set supertab to determine the context depending upon surrounding text
 let g:SuperTabDefaultCompletionType = "context"
-" let g:SuperTabLongestEnhanced = 1
-" let g:SuperTabLongestHighlight = 1
-let g:SuperTabCrMaping = 0
-" show a menu, preview, and automatically output the longest match
-" set completeopt=menu,preview,longest
 " }}}
 
 " cscope settings {{{
@@ -258,7 +246,7 @@ endif
 " problem with arrows in NERDTree ?
 " try this:
 " http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
-nnoremap <leader>f :NERDTreeToggle<cr>
+nnoremap <leader>f :NERDTreeToggle %<cr>
 " quit the file view after selecting a file
 let g:NERDTreeQuitOnOpen = 1
 " }}}
@@ -298,6 +286,10 @@ function! ToggleTerminal(cmd)
         let g:terminal_instance = conque_term#open(a:cmd, ['topleft split', 'resize 20', ''], 0)
     endif
 endfunction
+let g:ConqueTerm_SessionSupport = 1
+let g:ConqueTerm_InsertOnEnter = 1
+let g:ConqueTerm_StartMessages = 1
+let g:ConqueTerm_CWInsert = 1
 nnoremap <silent><leader>sh :call ToggleTerminal('bash')<CR>
 inoremap <silent><leader>sh <Esc>:call ToggleTerminal('bash')<CR>
 " }}}

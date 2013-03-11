@@ -34,7 +34,9 @@ endfunction
 
 function! s:DeleteBuffer()
     let num = expand("<abuf>")
-    call remove(g:BufferListMRU, num)
+    if has_key(g:BufferListMRU, num)
+        call remove(g:BufferListMRU, num)
+    endif
 endfunction
 
 function! s:SortMRU(i1, i2)

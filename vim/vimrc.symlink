@@ -195,6 +195,7 @@ let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
 " Supertab settings {{{
 " set supertab to determine the context depending upon surrounding text
 let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestHighlight = 1                  " preselect first match
 " }}}
 
 " cscope settings {{{
@@ -259,6 +260,7 @@ function! OpenNERDTree()
 endfunction
 nnoremap <silent><leader>f :call OpenNERDTree()<CR>
 let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
+let g:NERDTreeShowBookmarks = 1     " show bookmarks by default
 " }}}
 
 " Tagbar settings {{{

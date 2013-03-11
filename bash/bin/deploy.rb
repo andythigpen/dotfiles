@@ -234,6 +234,7 @@ say "<%= color('Using configuration: #{configuration}', YELLOW) %>"
   say "  <%= color('host', CYAN) %>     #{sftp.session.host}"
   # host = sftp.session.host
   after_commands = {}
+  uploaded_files = []
 
   @config[:modules].each do |name, mod|
     next if !mod[:enabled]
@@ -243,6 +244,7 @@ say "<%= color('Using configuration: #{configuration}', YELLOW) %>"
     dirs = mod[:dirs] || []
     files.each do |file|
       upload(sftp, file[:local].gsub(/:configuration:/, configuration), file[:remote]) do |sftp,file|
+        uploaded_files << file
         next if mod[:after].nil?
         after_commands[name] << mod[:after] if mod[:after].is_a?(Symbol)
         after_commands[name] += mod[:after] if mod[:after].is_a?(Array)
@@ -250,6 +252,7 @@ say "<%= color('Using configuration: #{configuration}', YELLOW) %>"
     end
     dirs.each do |dir|
       upload_dir(sftp, dir[:local].gsub(/:configuration:/, configuration), dir[:remote]) do |sftp,file|
+        uploaded_files << file
         next if mod[:after].nil?
         after_commands[name] << mod[:after] if mod[:after].is_a?(Symbol)
         after_commands[name] += mod[:after] if mod[:after].is_a?(Array)
@@ -294,6 +297,13 @@ say "<%= color('Using configuration: #{configuration}', YELLOW) %>"
   commands_map.each do |name, cmd|
     command = cmd[:command]
     name = cmd[:name] || command
+
+    if cmd[:fileregex]
+      if !uploaded_files.any? {|file| file.match(cmd[:fileregex]) }
+        say "  <%= color('command', YELLOW) %>  No files matched."
+        next
+      end
+    end
 
     say "  <%= color('command', GREEN) %>  #{name}"
     puts ssh.exec!(command)

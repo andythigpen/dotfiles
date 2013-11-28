@@ -1,0 +1,25 @@
+
+set -g default-terminal "screen-256color" 
+source ~/.tmuxcolors-256.conf
+
+# use screen-like key bindings
+set -g prefix C-a
+unbind C-b
+bind-key a send-prefix
+bind-key C-a last-window        # previous window
+
+# easier to remember split windows key bindings
+bind \ split-window -h
+bind - split-window -v
+
+# vi movement keys for panes
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# reload ~/.tmux.conf
+bind r source-file ~/.tmux.conf \; display "Reloaded..."

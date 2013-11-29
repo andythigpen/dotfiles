@@ -107,8 +107,8 @@ update_submodules() {
 
 echo
 
-install_dotfiles
 update_submodules
+install_dotfiles
 
 echo
 echo "Done."

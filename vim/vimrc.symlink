@@ -7,6 +7,34 @@
 
 set nocompatible  " disables vi compatibility
 
+" Vundle plugins {{{
+filetype off                  " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" My bundles here:
+"
+" original repos on GitHub
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'vim-scripts/a.vim'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'vim-scripts/vimwiki'
+Bundle 'ervandew/supertab'
+Bundle 'majutsushi/tagbar'
+Bundle 'Raimondi/delimitMate'
+Bundle 'kien/ctrlp.vim'
+Bundle 'SirVer/ultisnips'
+
+filetype plugin indent on     " required!
+" }}}
+
 " 2 Moving around, searching and patterns {{{
 set incsearch     " show match for partly typed search command
 set ignorecase    " ignore case when using a search pattern
@@ -72,13 +100,6 @@ set wildmenu        " command-line completion shows a list of matches
 " insert new lines and stay in normal mode
 nnoremap <silent> zj o<Esc>
 nnoremap <silent> zk O<Esc>
-" }}}
-
-" Pathogen settings {{{
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
-" call pathogen#runtime_append_all_bundles()
-" call pathogen#helptags()
 " }}}
 
 " Colorscheme settings {{{

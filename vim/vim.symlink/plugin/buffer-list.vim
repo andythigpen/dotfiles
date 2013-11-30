@@ -55,10 +55,11 @@ function! s:GetBufferList(num)
         let buf = {}
         let parts = split(line, '"')
         let parts[0] = substitute(parts[0], '\s', '', 'g')
-        let buf.line = substitute(parts[-1], '\s', '', 'g')
+        let buf.lineno = substitute(parts[-1], '\s', '', 'g')
         let buf.bufnr = str2nr(parts[0])
         let buf.attrs = strpart(parts[0], match(parts[0], '[^0-9]'))
-        let buf.str = line
+        " chop off the buffer number
+        let buf.str = strpart(line, strlen(matchstr(line, '\s\+[0-9]\+')))
         let buf.name = parts[1]
         let buf.mru = get(g:BufferListMRU, buf.bufnr, 0)
         let buf.unlisted = stridx(buf['attrs'], 'u') != -1
@@ -76,11 +77,15 @@ function! s:GetBufferList(num)
 endfunction
 
 function! s:BuildBufferMenu()
+    let idx = 1
     for b in s:buflist
         if !b.unlisted
-            call append(line('$'), b.str)
+            let nwidth = 4 - strwidth(idx)
+            let str = repeat(" ", nwidth) . idx . b.str . " [" . b.bufnr . "] "
+            call append(line('$'), str)
             " create a number mapping for each buffer
-            execute "nnoremap <silent><buffer> ". b.bufnr ." :call <SID>CloseBufferList(". b.bufnr .")<CR>\<CR>"
+            execute "nnoremap <silent><buffer> ". idx ." :call <SID>CloseBufferList(". b.bufnr .")<CR>\<CR>"
+            let idx += 1
         endif
     endfor
 endfunction

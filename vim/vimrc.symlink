@@ -291,10 +291,9 @@ let g:tagbar_autofocus = 1
 let g:tagbar_autoshowtag = 1
 " }}}
 
-" makeprg settings {{{
-nnoremap <silent><leader>md :make! dbg<CR>
-nnoremap <silent><leader>mr :make! rel<CR>
-nnoremap <silent><leader>mu :make! uiservice-dbg<CR>
+" makeprg/keywordprg settings {{{
+nnoremap <silent><leader>m :make!<CR>
+set keywordprg=man
 " }}}
 
 " Powerline settings {{{

@@ -331,3 +331,7 @@ if exists("+wildignore")
 endif
 let g:ctrlp_use_caching = 1
 " }}}
+
+let g:dispatch_handlers = [ 'tmux' ]
+nnoremap <leader>d :Dispatch<CR>
+nnoremap <leader>c :Console<CR>

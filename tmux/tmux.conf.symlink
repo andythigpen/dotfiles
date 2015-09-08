@@ -20,6 +20,12 @@ bind l select-pane -R
 
 # use vim keybindings in copy mode
 setw -g mode-keys vi
+# vi copy keys
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
 
 # reload ~/.tmux.conf
 bind r source-file ~/.tmux.conf \; display "Reloaded..."
+
+set -g status-left '#[fg=colour240]#H #[fg=black] #[default] '
+set -g status-right '#[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=colour240]%Y-%m-%d'

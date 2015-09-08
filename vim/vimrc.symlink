@@ -33,6 +33,10 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'SirVer/ultisnips'
 Bundle 'tpope/vim-projectionist'
 Bundle 'tpope/vim-dispatch'
+Bundle 'JulesWang/css.vim'
+Bundle 'cakebaker/scss-syntax.vim'
+Bundle 'rstacruz/sparkup'
+Bundle 'tpope/vim-surround'
 
 filetype plugin indent on     " required!
 " }}}

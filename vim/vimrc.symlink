@@ -317,3 +317,10 @@ set noshowmode          " powerline includes this info in the statusline
 let g:UltiSnipsListSnippets = "<leader><tab>"
 let g:UltiSnipsEditSplit = "vertical"
 " }}}
+
+" ctrlp settings {{{
+if exists("+wildignore")
+    set wildignore+=*.o,*.pyc,*/.git/*        " Linux/MacOSX
+endif
+let g:ctrlp_use_caching = 1
+" }}}

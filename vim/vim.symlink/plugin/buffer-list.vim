@@ -86,7 +86,7 @@ function! s:BuildBufferMenu()
     let idx = 1
     for b in s:buflist
         if !b.unlisted
-            let nwidth = 4 - strwidth(idx)
+            let nwidth = 4 - strlen(idx)
             let str = repeat(" ", nwidth) . idx . b.str . " [" . b.bufnr . "] "
             call append(line('$'), str)
             " create a number mapping for each buffer
@@ -97,16 +97,18 @@ function! s:BuildBufferMenu()
 endfunction
 
 function! s:SelectBuffer()
-    let bufnr = str2nr(getline("."))
-    if bufnr
+    let idx = str2nr(getline("."))
+    if idx
+        let bufnr = s:buflist[idx - 1].bufnr
         call s:CloseBufferList(bufnr)
     endif
 endfunction
 
 function! s:DeleteSelectedBuffer()
-    let bufnr = str2nr(getline("."))
-    if bufnr
-        silent let buf = s:GetBufferList(bufnr)
+    let idx = str2nr(getline("."))
+    if idx
+        let buf = s:buflist[idx - 1]
+        let bufnr = buf.bufnr
         if stridx(buf['attrs'], '+') != -1
             let curbuf = bufnr(g:BufferListName)
             let choice = confirm(buf['name'] . " has been modified.", "&Save\n&Do not Save\n&Cancel", 0)

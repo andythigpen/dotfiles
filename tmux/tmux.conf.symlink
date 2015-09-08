@@ -8,15 +8,18 @@ unbind C-b
 bind-key a send-prefix
 bind-key C-a last-window        # previous window
 
+# reduce the repeat time
+set -g repeat-time 300
+
 # easier to remember split windows key bindings
 bind \ split-window -h
 bind - split-window -v
 
 # vi movement keys for panes
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
 
 # use vim keybindings in copy mode
 setw -g mode-keys vi

@@ -272,9 +272,9 @@ endif
 " try this:
 " http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
 function! OpenNERDTree()
-    if empty(getbufvar(bufnr("%"), "&buftype"))
-        " if the current buffer is a regular file, open NERDTree focused on
-        " that file
+    if !empty(expand('%')) && empty(getbufvar(bufnr("%"), "&buftype"))
+        " if the current buffer is a regular file with a filename, open
+        " NERDTree focused on that file
         silent execute "normal! :NERDTreeToggle %\<CR>"
     else
         " otherwise, just toggle NERDTree

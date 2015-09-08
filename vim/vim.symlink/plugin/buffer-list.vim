@@ -16,6 +16,12 @@ augroup END
 let g:BufferListMRU = {}
 let s:buflist = []
 
+function! s:EnterBufListBuffer()
+    if winbufnr(2) == -1
+        quit!
+    endif
+endfunction
+
 function! s:EnterBuffer()
     let num = expand("<abuf>")
     if buflisted(num + 0) == 0
@@ -100,6 +106,20 @@ endfunction
 function! s:DeleteSelectedBuffer()
     let bufnr = str2nr(getline("."))
     if bufnr
+        silent let buf = s:GetBufferList(bufnr)
+        if stridx(buf['attrs'], '+') != -1
+            let curbuf = bufnr(g:BufferListName)
+            let choice = confirm(buf['name'] . " has been modified.", "&Save\n&Do not Save\n&Cancel", 0)
+            if choice == 1
+                silent execute "normal! :".bufnr."b\<CR>:w\<CR>:".curbuf."b\<CR>"
+                echo "Saved."
+            elseif choice == 2
+                echo "Not Saved."
+            else
+                echo "Canceled."
+                return
+            endif
+        endif
         silent execute "normal! :".bufnr."bdelete\<CR>"
         for i in range(0, len(s:buflist))
             if s:buflist[i].bufnr == bufnr
@@ -148,6 +168,8 @@ function! s:CreateBufferWindow()
     nnoremap <silent><buffer> o :call <SID>SelectBuffer()<CR>
     nnoremap <silent><buffer> d :call <SID>DeleteSelectedBuffer()<CR>
     nnoremap <silent><buffer> q :call <SID>CloseBufferList(0)<CR>
+
+    autocmd BufEnter <buffer> call s:EnterBufListBuffer()
 endfunction
 
 function! s:CloseBufferList(bufnr)

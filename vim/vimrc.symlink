@@ -37,6 +37,9 @@ Bundle 'JulesWang/css.vim'
 Bundle 'cakebaker/scss-syntax.vim'
 Bundle 'rstacruz/sparkup'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-tbone'
+Bundle 'christoomey/vim-tmux-navigator'
+Bundle 'tpope/vim-abolish'
 
 filetype plugin indent on     " required!
 " }}}

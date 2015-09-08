@@ -312,3 +312,8 @@ let g:Powerline_mode_cs = ' SB '
 
 set noshowmode          " powerline includes this info in the statusline
 " }}}
+
+" ultisnips settings {{{
+let g:UltiSnipsListSnippets = "<leader><tab>"
+let g:UltiSnipsEditSplit = "vertical"
+" }}}

@@ -1,7 +1,13 @@
 snippet date "Date" !w
-`date +%F`
+`!v strftime('%F')`
 endsnippet
 
 snippet time "Time" !w
-`date +%r`
+`!v strftime('%r')`
+endsnippet
+
+snippet uuid "UUID" !w
+`!p import uuid
+if not snip.c:
+    snip.rv = str(uuid.uuid4())`
 endsnippet

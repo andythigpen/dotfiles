@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tmux -2 -S /tmp/pairs attach-session -t "$1"

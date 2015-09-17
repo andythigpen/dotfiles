@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+#  Pair programming session that allows users to connect to the same session.
+#  Expects a user/group named 'pair' on the system.
+#  To add permission for a user to connect, add their public key to the
+#  /home/pair/.ssh/authorized_keys file like the following (use -r in command
+#  for read-only):
+#
+#       command="/usr/bin/tmux -2 -S /tmp/pairs attach -t pair" PUBLIC-KEY
+#
+PAIR_GROUP=pair
+PAIR_SOCKET=/tmp/pairs
+SESSION_NAME=$1
+WORKING_DIR=$HOME
+
+tmux -2 -S "$PAIR_SOCKET" new-session -d -s "$SESSION_NAME" -n pair \
+    -c "$WORKING_DIR" vim
+tmux -S "$PAIR_SOCKET" split-window -t "$SESSION_NAME:pair" -c "$WORKING_DIR" -h
+tmux -S "$PAIR_SOCKET" split-window -t "$SESSION_NAME:pair" -c "$WORKING_DIR" -v
+tmux -S "$PAIR_SOCKET" select-layout -t "$SESSION_NAME:pair" main-vertical
+
+# update ownership of pairs socket file so that 'pair' users can connect
+chgrp $PAIR_GROUP "$PAIR_SOCKET"
+
+tmux -2 -S "$PAIR_SOCKET" attach-session -t "$SESSION_NAME"

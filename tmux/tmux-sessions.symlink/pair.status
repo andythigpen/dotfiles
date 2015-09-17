@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tmux -S /tmp/pairs has-session -t "$1" &>/dev/null;

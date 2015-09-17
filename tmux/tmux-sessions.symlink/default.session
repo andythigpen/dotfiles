@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SESSION_NAME=$1
+WORKING_DIR=$HOME
+
+tmux -2 new-session -d -s "$SESSION_NAME" -n dev -c "$WORKING_DIR" vim
+tmux split-window -t "$SESSION_NAME:dev" -c "$WORKING_DIR" -h
+tmux split-window -t "$SESSION_NAME:dev" -c "$WORKING_DIR" -v
+tmux select-layout -t "$SESSION_NAME:dev" main-vertical
+
+tmux select-window -t "$SESSION_NAME:dev"
+tmux -2 attach-session -t "$SESSION_NAME"

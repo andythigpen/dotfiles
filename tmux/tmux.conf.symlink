@@ -35,8 +35,6 @@ setw -g mode-keys vi
 # vi copy keys
 bind-key -t vi-copy 'v' begin-selection
 bind-key -t vi-copy 'y' copy-selection
-unbind p
-bind p paste-buffer
 
 # reload ~/.tmux.conf
 bind r source-file ~/.tmux.conf \; display "Reloaded..."

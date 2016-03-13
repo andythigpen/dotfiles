@@ -10,7 +10,7 @@ set nocompatible  " disables vi compatibility
 " Vundle plugins {{{
 filetype off                  " required!
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 " let Vundle manage Vundle

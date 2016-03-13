@@ -11,35 +11,37 @@ set nocompatible  " disables vi compatibility
 filetype off                  " required!
 
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " My bundles here:
 "
 " original repos on GitHub
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/a.vim'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'ervandew/supertab'
-Bundle 'majutsushi/tagbar'
-Bundle 'Raimondi/delimitMate'
-Bundle 'kien/ctrlp.vim'
-Bundle 'SirVer/ultisnips'
-Bundle 'tpope/vim-projectionist'
-Bundle 'tpope/vim-dispatch'
-Bundle 'JulesWang/css.vim'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'rstacruz/sparkup'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-tbone'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'tpope/vim-abolish'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-scripts/a.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-scripts/vimwiki'
+Plugin 'ervandew/supertab'
+Plugin 'majutsushi/tagbar'
+Plugin 'Raimondi/delimitMate'
+Plugin 'kien/ctrlp.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'tpope/vim-projectionist'
+Plugin 'tpope/vim-dispatch'
+Plugin 'JulesWang/css.vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'rstacruz/sparkup'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-tbone'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tpope/vim-abolish'
+
+call vundle#end()
 
 filetype plugin indent on     " required!
 " }}}

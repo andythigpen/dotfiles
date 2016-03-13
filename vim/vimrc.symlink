@@ -29,7 +29,6 @@ Plugin 'vim-scripts/vimwiki'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'Raimondi/delimitMate'
-Plugin 'kien/ctrlp.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-dispatch'
@@ -40,6 +39,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-tbone'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-abolish'
+Plugin 'Shougo/unite.vim'
 
 call vundle#end()
 
@@ -334,6 +334,19 @@ endif
 let g:ctrlp_use_caching = 1
 " }}}
 
+" Dispatch settings {{{
 let g:dispatch_handlers = [ 'tmux' ]
 nnoremap <leader>d :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
+" }}}
+
+" Unite settings {{{
+call unite#custom#profile('default', 'context', {
+\   'winheight': 10,
+\   'direction': 'botright',
+\ })
+" recursive file search like ctrlp
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <C-p> :<C-u>Unite -start-insert -prompt=> file_rec<CR>
+nnoremap <leader>l :<C-u>Unite -keep-focus buffer<CR>
+" }}}

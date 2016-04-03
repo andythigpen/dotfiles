@@ -27,6 +27,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
+Plug 'jeetsukumaran/vim-buffergator'
 
 call plug#end()
 " }}}
@@ -304,4 +305,12 @@ nnoremap <C-p> :FZF<CR>
 let g:dispatch_handlers = [ 'tmux' ]
 nnoremap <leader>d :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
+" }}}
+
+" buffergator settings {{{
+let g:buffergator_viewport_split_policy = "B"
+let g:buffergator_hsplit_size = 10
+let g:buffergator_sort_regime = "mru"
+let g:buffergator_suppress_keymaps = 1
+nnoremap <silent><leader>l :BuffergatorOpen<CR>
 " }}}

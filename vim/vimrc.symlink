@@ -28,6 +28,7 @@ Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'jeetsukumaran/vim-buffergator'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 call plug#end()
 " }}}

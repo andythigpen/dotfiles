@@ -10,7 +10,6 @@ set nocompatible  " disables vi compatibility
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'nanotech/jellybeans.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'vim-airline/vim-airline'
@@ -29,6 +28,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'flazz/vim-colorschemes'
+Plug 'felixhummel/setcolors.vim'
 
 call plug#end()
 " }}}
@@ -111,7 +112,8 @@ let g:jellybeans_overrides = {
 \                 'attr': '' },
 \}
 
-colorscheme jellybeans
+set background=dark
+colorscheme hybrid
 " }}}
 
 " Generic leader mappings {{{

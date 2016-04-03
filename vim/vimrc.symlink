@@ -16,7 +16,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'vim-airline/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
@@ -318,11 +318,8 @@ let g:UltiSnipsListSnippets = "<leader><tab>"
 let g:UltiSnipsEditSplit = "vertical"
 " }}}
 
-" ctrlp settings {{{
-if exists("+wildignore")
-    set wildignore+=*.o,*.pyc,*/.git/*        " Linux/MacOSX
-endif
-let g:ctrlp_use_caching = 1
+" fzf settings {{{
+nnoremap <C-p> :FZF<CR>
 " }}}
 
 " dispatch settings {{{

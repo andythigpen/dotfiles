@@ -174,31 +174,9 @@ nnoremap <leader>a :A<cr>
 " }}}
 
 " Restore cursor postion {{{
-" uses mkview to restore folds/cursor/etc. for appropriate buffers only
-let g:skipview_files = []
-function! MakeViewCheck()
-    if has('quickfix') && &buftype =~ 'nofile'
-        return 0        " Buffer is marked as not a file
-    elseif empty(glob(expand('%:p')))
-        return 0        " File does not exist on disk
-    elseif len($TEMP) && expand('%:p:h') == $TEMP
-        return 0        " We're in a temp dir
-    elseif len($TMP) && expand('%:p:h') == $TMP
-        return 0        " Also in temp dir
-    elseif index(g:skipview_files, expand('%')) >= 0
-        return 0        " File is in skip list
-    endif
-    return 1
-endfunction
-
-augroup restore_cursor
-    autocmd!
-    au BufWritePost,BufLeave,BufWinLeave ?* if MakeViewCheck() | mkview | endif
-    au BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
-augroup END
-
+" implementation moved to autoload/restore_view.vim
 " only save folds/cursor info for views, not local mappings, etc.
-set viewoptions=folds,cursor,slash,unix
+set viewoptions=cursor,folds,slash,unix
 " }}}
 
 " Vimwiki settings {{{

@@ -1,3 +1,2 @@
 tags
-vim/vim.symlink/bundle/**
-~vim/vim.symlink/bundle/vundle
+vim/vim.symlink/plugged/**

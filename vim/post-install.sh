@@ -1,3 +1,3 @@
 #!/bin/bash
 
-vim +BundleInstall +qall
+vim +PluginInstall +qall

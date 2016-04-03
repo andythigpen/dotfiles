@@ -7,41 +7,28 @@
 
 set nocompatible  " disables vi compatibility
 
-" Vundle plugins {{{
-filetype off                  " required!
+" Plugins {{{
+call plug#begin('~/.vim/plugged')
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+Plug 'nanotech/jellybeans.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tomtom/tcomment_vim'
+Plug 'vim-airline/vim-airline'
+Plug 'majutsushi/tagbar'
+Plug 'Raimondi/delimitMate'
+Plug 'kien/ctrlp.vim'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-dispatch'
+Plug 'JulesWang/css.vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'rstacruz/sparkup'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-tbone'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-abolish'
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
-
-" My bundles here:
-"
-" original repos on GitHub
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/a.vim'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'ervandew/supertab'
-Bundle 'majutsushi/tagbar'
-Bundle 'Raimondi/delimitMate'
-Bundle 'kien/ctrlp.vim'
-Bundle 'SirVer/ultisnips'
-Bundle 'tpope/vim-projectionist'
-Bundle 'tpope/vim-dispatch'
-Bundle 'JulesWang/css.vim'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'rstacruz/sparkup'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-tbone'
-Bundle 'christoomey/vim-tmux-navigator'
-Bundle 'tpope/vim-abolish'
-
-filetype plugin indent on     " required!
+call plug#end()
 " }}}
 
 " 2 Moving around, searching and patterns {{{
@@ -305,19 +292,25 @@ nnoremap <silent><leader>m :make!<CR>
 set keywordprg=man
 " }}}
 
-" Powerline settings {{{
-" shorten the powerline mode indicators
-let g:Powerline_mode_n = ' N '
-let g:Powerline_mode_i = ' I '
-let g:Powerline_mode_R = ' R '
-let g:Powerline_mode_v = ' V '
-let g:Powerline_mode_V = ' VL '
-let g:Powerline_mode_cv = ' VB '
-let g:Powerline_mode_s = ' S '
-let g:Powerline_mode_S = ' SL '
-let g:Powerline_mode_cs = ' SB '
+" airline settings {{{
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+" shorten the airline mode indicators
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ '' : 'V',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ '' : 'S',
+    \ }
 
-set noshowmode          " powerline includes this info in the statusline
+set noshowmode          " airline includes this info in the statusline
 " }}}
 
 " ultisnips settings {{{
@@ -332,6 +325,8 @@ endif
 let g:ctrlp_use_caching = 1
 " }}}
 
+" dispatch settings {{{
 let g:dispatch_handlers = [ 'tmux' ]
 nnoremap <leader>d :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
+" }}}

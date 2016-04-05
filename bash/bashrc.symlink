@@ -71,4 +71,4 @@ if [ -f ~/.fzf.bash ]; then
 fi
 
 # add machine local settings here
-[ -f ~/.bashrc.local ] && source ~/.bashrc.local
+[ -f ~/.bashrc_local ] && source ~/.bashrc_local

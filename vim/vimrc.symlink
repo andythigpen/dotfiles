@@ -30,6 +30,7 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'flazz/vim-colorschemes'
 Plug 'felixhummel/setcolors.vim'
+Plug 'kburdett/vim-nuuid'
 
 call plug#end()
 " }}}
@@ -56,7 +57,9 @@ set hlsearch          " highlight all matches for the last used search pattern
 if version >= 700     " map spell check
     noremap <leader>sp :set spell!<CR>
 endif
-set colorcolumn=80    " display a column at 80 chars
+
+" change bg color after 80 chars
+let &colorcolumn=join(range(81,999),",")
 " }}}
 
 " 6 Multiple windows {{{

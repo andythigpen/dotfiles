@@ -27,7 +27,7 @@ Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'flazz/vim-colorschemes'
 Plug 'felixhummel/setcolors.vim'
 
@@ -315,4 +315,9 @@ let g:buffergator_hsplit_size = 10
 let g:buffergator_sort_regime = "mru"
 let g:buffergator_suppress_keymaps = 1
 nnoremap <silent><leader>l :BuffergatorOpen<CR>
+" }}}
+
+" YouCompleteMe settings {{{
+" do not bind to <leader>d
+let g:ycm_key_detailed_diagnostics = ''
 " }}}

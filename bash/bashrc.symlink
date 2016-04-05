@@ -62,7 +62,13 @@ fi
 set -o vi
 
 # fzf support
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if [ -f ~/.fzf.bash ]; then
+    source ~/.fzf.bash
+    # use ag, if available
+    if which ag &>/dev/null; then
+        export FZF_DEFAULT_COMMAND='ag -l -g ""'
+    fi
+fi
 
 # add machine local settings here
 [ -f ~/.bashrc.local ] && source ~/.bashrc.local

@@ -307,3 +307,13 @@ nnoremap <silent><leader>l :BuffergatorOpen<CR>
 " do not bind to <leader>d
 let g:ycm_key_detailed_diagnostics = ''
 " }}}
+
+" projectionist settings {{{
+" alternate file key mapping support projections (<leader>a)
+if !exists('g:projectionist_transformations')
+    let g:projectionist_transformations = {}
+endif
+function! g:projectionist_transformations.escapespace(input, o) abort
+    return substitute(a:input, ' ', '\\\\ ', 'g')
+endfunction
+" }}}

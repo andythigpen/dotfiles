@@ -182,20 +182,6 @@ nnoremap <leader>a :A<cr>
 set viewoptions=cursor,folds,slash,unix
 " }}}
 
-" Vimwiki settings {{{
-" turn off auto formatting so that TAB still works for snippets
-let g:vimwiki_table_auto_fmt = 0
-let g:vimwiki_table_mappings = 0
-" automatically export to HTML on save
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_export': 1}]
-" }}}
-
-" Supertab settings {{{
-" set supertab to determine the context depending upon surrounding text
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestHighlight = 1                  " preselect first match
-" }}}
-
 " cscope settings {{{
 if has("cscope")
     set cscopetag           " always search cscope databases and tag files

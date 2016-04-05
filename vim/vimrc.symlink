@@ -177,6 +177,10 @@ endfunction
 
 " toggle alternate file (switches from .h to .c/cpp/etc)
 nnoremap <leader>a :A<cr>
+
+" deploy shortcuts
+nnoremap <silent><leader>dd :!deploy<CR>
+nnoremap <silent><leader>dc :!deploy -hm<CR>
 " }}}
 
 " Restore cursor postion {{{

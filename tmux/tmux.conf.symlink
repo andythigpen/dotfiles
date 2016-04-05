@@ -1,5 +1,5 @@
 
-set -g default-terminal "screen-256color" 
+set -g default-terminal "screen-256color"
 source ~/.tmuxcolors-256.conf
 
 # default width (80 chars + line numbers)
@@ -43,4 +43,8 @@ bind-key -t vi-copy 'y' copy-selection
 bind r source-file ~/.tmux.conf \; display "Reloaded..."
 
 set -g status-left '#[fg=colour240]#H #[fg=black] #[default] '
-set -g status-right '#[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=colour240]%Y-%m-%d'
+set -g status-right '#(~/.tmux-status/options.sh) #[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=colour240]%Y-%m-%d'
+set-option -g status-interval 1
+
+# add synchronize panes binding
+bind g set-window-option synchronize-panes \; display "Toggled synchronize panes"

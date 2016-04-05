@@ -255,7 +255,6 @@ let g:tagbar_autoshowtag = 1
 " }}}
 
 " makeprg/keywordprg settings {{{
-nnoremap <silent><leader>m :make!<CR>
 set keywordprg=man
 " }}}
 
@@ -293,6 +292,7 @@ nnoremap <C-p> :FZF<CR>
 let g:dispatch_handlers = [ 'tmux' ]
 nnoremap <leader>d :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
+nnoremap <leader>m :Make<CR>
 " }}}
 
 " buffergator settings {{{

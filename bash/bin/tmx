@@ -73,4 +73,4 @@ if tmx_status "$TMX_NAME"; then
     exit 0
 fi
 
-bash -x $TMX_SESSION_SCRIPT $1
+bash $TMX_SESSION_SCRIPT $1

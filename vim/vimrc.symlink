@@ -317,3 +317,8 @@ function! g:projectionist_transformations.escapespace(input, o) abort
     return substitute(a:input, ' ', '\\\\ ', 'g')
 endfunction
 " }}}
+
+" load local config, if it exists
+if filereadable(glob("~/.vimrc_local"))
+    source ~/.vimrc_local
+endif

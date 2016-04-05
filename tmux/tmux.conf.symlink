@@ -2,8 +2,8 @@
 set -g default-terminal "screen-256color"
 source ~/.tmuxcolors-256.conf
 
-# default width (80 chars + line numbers)
-set -g main-pane-width 84
+# default width (80 chars + 4 line numbers + 1 gutter)
+set -g main-pane-width 85
 
 # use screen-like key bindings
 set -g prefix C-a

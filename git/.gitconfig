@@ -1,6 +1,5 @@
-[user]
-    name =
-    email = 
+[include]
+    path = ~/.gitauthor
 [color]
     ui = auto
 [core]

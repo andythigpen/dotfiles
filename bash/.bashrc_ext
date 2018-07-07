@@ -1,0 +1,29 @@
+# git PS1
+if [[ $(type -t __git_ps1) == "function" ]]; then
+    export PS1='\u:\W\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '
+else
+    export PS1="[\u@\h \W]\\$ "
+fi
+
+# aliases
+alias vi='vim'
+alias tmux='tmux -2'
+
+# environment variables
+export EDITOR=vim
+export PATH=$PATH:~/bin
+
+# use vi mode
+set -o vi
+
+# fzf support
+if [ -f ~/.fzf.bash ]; then
+    source ~/.fzf.bash
+    # use ag, if available
+    if which ag &>/dev/null; then
+        export FZF_DEFAULT_COMMAND='ag -l -g ""'
+    fi
+fi
+
+# add machine local settings here
+[ -f ~/.bashrc_local ] && source ~/.bashrc_local

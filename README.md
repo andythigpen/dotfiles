@@ -1,5 +1,9 @@
 # Dot files
 
+## Requirements
+
+* GNU stow
+
 ## Installation
 
 The installation script will attempt to backup any existing dotfiles prior to 

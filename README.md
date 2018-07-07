@@ -1,24 +1,20 @@
 # Dot files
 
-## Requirements
-
-* GNU stow
-
 ## Installation
 
-The installation script will attempt to backup any existing dotfiles prior to 
-installing those included in this repository.
-
-1. git clone git://github.com/andythigpen/dotfiles.git ~/.dotfiles
-2. cd ~/.dotfiles
-3. ./script/install.sh
+```
+git clone git://github.com/andythigpen/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+# or install specific packages like:
+# ./install.sh git tmux vim
+```
 
 ## Uninstallation
 
-The uninstall script will attempt to restore any backup files after removing
-soft-links for the files included in this repository.
-
-1. cd ~/.dotfiles
-2. ./script/uninstall.sh
-
-
+```
+cd ~/.dotfiles
+./uninstall.sh
+# or uninstall specific packages like:
+# ./uninstall.sh git tmux vim
+```

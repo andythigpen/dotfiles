@@ -1,0 +1,17 @@
+! ------------------------------------------------------------------------------
+! rofi
+! ------------------------------------------------------------------------------
+rofi.theme: material
+! rofi.width: 100
+! rofi.columns: 1
+! rofi.lines: 5
+! rofi.font: DejaVu Sans 16
+! rofi.padding: 500
+! rofi.eh: 2
+! rofi.bw: 0
+! !                                    bg  fg  bgalt   hlbg    hlfg
+! rofi.color-normal:                   #CABG,#CFG,#1f222d,#eed1d4e0,#9575cd
+! rofi.color-urgent:                   #CABG,#CFG,#eee8d5,#eedc322f,#fdf6e3
+! rofi.color-active:                   #CABG,#CFG,#eee8d5,#ee268bd2,#fdf6e3
+! rofi.color-window:                   #CABG,#CFG
+! rofi.separator-style:                none

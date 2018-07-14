@@ -1,3 +1,4 @@
 .*.swp
 post-install.sh
+gnome-terminal.sh
 README.md

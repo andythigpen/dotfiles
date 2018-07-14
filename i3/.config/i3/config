@@ -11,22 +11,39 @@
 
 set $mod Mod4
 
-set $base00 #101218
-set $base01 #1f222d
-set $base02 #252936
-set $base03 #7780a1
-set $base04 #C0C5CE
-set $base05 #d1d4e0
-set $base06 #C9CCDB
-set $base07 #ffffff
-set $base08 #ee829f
-set $base09 #f99170
-set $base0A #ffefcc
-set $base0B #a5ffe1
-set $base0C #97e0ff
-set $base0D #97bbf7
-set $base0E #c0b7f9
-set $base0F #fcc09e
+set_from_resource $color0 color0 282a2e
+set_from_resource $color8 color8 4e5d64
+
+# red
+set_from_resource $color1 color1 f13333
+set_from_resource $color9 color9 ee687e
+
+# green
+set_from_resource $color2 color2 7bac34
+set_from_resource $color10 color10 c3e88d
+
+# yellow
+set_from_resource $color3 color3 de9461
+set_from_resource $color11 color11 ffe57f
+
+# blue
+set_from_resource $color4 color4 5f819d
+set_from_resource $color12 color12 82aaff
+
+# magenta
+set_from_resource $color5 color5 85678f
+set_from_resource $color13 color13 c792ea
+
+# cyan
+set_from_resource $color6 color6 3a6779
+set_from_resource $color14 color14 89ddff
+
+# white
+set_from_resource $color7 color7 aab6c1
+set_from_resource $color15 color15 f1f5f2
+
+set_from_resource $colorfg foreground eceff1
+set_from_resource $colorbg background 1a1e20
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -181,11 +198,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Widow Colours
-#                         border  background text    indicator
-  client.focused          $base01 $base01    $base07 $base0F
-  client.focused_inactive $base02 $base02    $base03 $base0F
-  client.unfocused        $base02 $base02    $base03 $base0F
-  client.urgent           $base02 $base08    $base00 $base0F
+#                         border        background   text        indicator
+  client.focused          $colorbg      $colorbg     $color15    $color4
+  client.focused_inactive $colorbg      $colorbg     $color7     $color4
+  client.unfocused        $colorbg      $colorbg     $color7     $color4
+  client.urgent           $color1       $color9      $color15    $color4
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -193,14 +210,14 @@ bar {
         status_command i3status
         position top
         colors {
-              separator $base03
-              background $base01
-              statusline $base05
-#                                border  background text
-              focused_workspace  $base01 $base01    $base07
-              active_workspace   $base01 $base02    $base03
-              inactive_workspace $base01 $base01    $base03
-urgent_workspace $base01 $base01 $base08
+              separator $color8
+              background $colorbg
+              statusline $color7
+              #                  border     background  text
+              focused_workspace  $colorbg   $colorbg    $colorfg
+              active_workspace   $colorbg   $colorbg    $color7
+              inactive_workspace $colorbg   $colorbg    $color7
+              urgent_workspace   $color9    $color9     $color15
         }
 }
 

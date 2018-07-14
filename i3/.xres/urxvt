@@ -2,4 +2,11 @@
 ! urxvt
 ! ------------------------------------------------------------------------------
 URxvt.font: xft:monospace:size=10
-URxvt.scrollBar: false
+URxvt.scrollBar: true
+URxvt.scrollBar_floating: true
+URxvt.scrollBar_right: true
+URxvt.thickness: 5
+URxvt.scrollstyle: plain
+URxvt.scrollColor: #C04
+URxvt.iso14755: false
+URxvt.iso14755_52: false

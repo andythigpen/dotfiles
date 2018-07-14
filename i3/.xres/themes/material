@@ -1,45 +1,44 @@
 ! ------------------------------------------------------------------------------
 ! Colors
 ! material theme
-! colors from https://github.com/ntpeters/base16-materialtheme-scheme/blob/master/material.yaml
 ! ------------------------------------------------------------------------------
 #define CONCAT(A, B) CONCAT_(A, B)
 #define CONCAT_(A, B) A##B
 
 ! black
-#define C00  263238
-#define C08  F07178
+#define C00  282a2e
+#define C08  4e5d64
 
 ! red
-#define C01  2E3C43
-#define C09  F78C6C
+#define C01  f13333
+#define C09  ee687e
 
 ! green
-#define C02  314549
-#define C10  FFCB6B
+#define C02  7bac34
+#define C10  c3e88d
 
 ! yellow
-#define C03  546E7A
-#define C11  C3E88D
+#define C03  de9461
+#define C11  ffe57f
 
 ! blue
-#define C04  B2CCD6
-#define C12  89DDFF
+#define C04  5f819d
+#define C12  82aaff
 
 ! magenta
-#define C05  EEFFFF
-#define C13  82AAFF
+#define C05  85678f
+#define C13  c792ea
 
 ! cyan
-#define C06  EEFFFF
-#define C14  C792EA
+#define C06  3a6779
+#define C14  89ddff
 
 ! white
-#define C07  FFFFFF
-#define C15  FF5370
+#define C07  aab6c1
+#define C15  f1f5f2
 
-#define CFG  aaaaaa
-#define CBG  1f222d
+#define CFG  eceff1
+#define CBG  1a1e20
 
 #define ALPHA1 EE
 

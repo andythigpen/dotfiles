@@ -239,4 +239,4 @@ exec_always feh --bg-scale ~/Pictures/wallpaper/wallpaper.jpg
 exec xmodmap ~/.xmodmap
 
 # use compton for transparency
-exec_always compton -f
+exec_always compton

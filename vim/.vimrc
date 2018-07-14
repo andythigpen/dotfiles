@@ -28,6 +28,7 @@ Plug 'tpope/vim-abolish'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'kburdett/vim-nuuid'
+Plug 'hzchirs/vim-material'
 
 call plug#end()
 " }}}
@@ -106,13 +107,18 @@ nnoremap <silent> zk O<Esc>
 
 " Colorscheme settings {{{
 set t_Co=256                " enable 256 color terminal mode
+" enable truecolor support in the terminal
+set termguicolors
+set t_8f=[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
 
 set background=dark
-colorscheme hybrid
+colorscheme vim-material
 
 " adjust theme colors
-highlight ColorColumn ctermbg=235
-highlight LineNr ctermfg=238
+highlight Normal guibg=#1a1e20
+highlight ColorColumn guibg=#1d2224
+highlight LineNr guibg=#1d2224
 " }}}
 
 " Generic leader mappings {{{
@@ -279,6 +285,7 @@ let g:airline_mode_map = {
     \ 'S'  : 'S',
     \ '' : 'S',
     \ }
+let g:airline_theme='material'
 
 set noshowmode          " airline includes this info in the statusline
 " }}}

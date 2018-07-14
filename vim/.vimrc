@@ -20,7 +20,6 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
 Plug 'JulesWang/css.vim'
-Plug 'cakebaker/scss-syntax.vim'
 Plug 'rstacruz/sparkup'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
@@ -28,10 +27,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'flazz/vim-colorschemes'
-Plug 'felixhummel/setcolors.vim'
 Plug 'kburdett/vim-nuuid'
-Plug 'mfukar/robotframework-vim', { 'for': 'robot' }
 
 call plug#end()
 " }}}

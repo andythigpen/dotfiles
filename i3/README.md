@@ -1,7 +1,7 @@
 
 
 ```
-apt install i3 rofi compton fonts-font-awesome urxvt
+apt install i3 rofi compton fonts-font-awesome i3blocks
 # optional
-# apt install lxappearance
+# apt install lxappearance urxvt
 ```

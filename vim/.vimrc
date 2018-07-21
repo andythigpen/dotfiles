@@ -112,13 +112,17 @@ set termguicolors
 set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
+" full lines for splits/folds
+set fillchars=vert:│,fold:─
+
 set background=dark
 colorscheme vim-material
 
 " adjust theme colors
-highlight Normal guibg=#1a1e20
-highlight ColorColumn guibg=#1d2224
-highlight LineNr guibg=#1d2224
+highlight Normal guibg=#1A1E20
+highlight ColorColumn guibg=#1D2224
+highlight LineNr guibg=#1D2224
+highlight Error guibg=#990000
 " }}}
 
 " Generic leader mappings {{{

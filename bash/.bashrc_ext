@@ -11,7 +11,7 @@ alias tmux='tmux -2'
 
 # environment variables
 export EDITOR=vim
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/bin:~/.local/bin
 
 # use vi mode
 set -o vi

@@ -30,6 +30,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'kburdett/vim-nuuid'
 Plug 'hzchirs/vim-material'
 Plug 'python-mode/python-mode'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 " }}}

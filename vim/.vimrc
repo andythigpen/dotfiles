@@ -29,6 +29,7 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'kburdett/vim-nuuid'
 Plug 'hzchirs/vim-material'
+Plug 'python-mode/python-mode'
 
 call plug#end()
 " }}}
@@ -75,6 +76,9 @@ set showcmd           " show (partial) command keys in the status line
 
 " allow bs over autoindent, line breaks, start of insert
 set backspace=start,eol,indent
+
+" do not display a preview window on autocomplete
+set completeopt-=preview
 " }}}
 
 " 14 Tabs and indenting {{{
@@ -290,6 +294,7 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 let g:airline_theme='material'
+let g:airline_highlighting_cache = 1
 
 set noshowmode          " airline includes this info in the statusline
 " }}}
@@ -331,6 +336,11 @@ endif
 function! g:projectionist_transformations.escapespace(input, o) abort
     return substitute(a:input, ' ', '\\\\ ', 'g')
 endfunction
+" }}}
+
+" python-mode settings {{{
+let g:pymode_python = 'python3'
+let g:pymode_options_colorcolumn = 0
 " }}}
 
 " load local config, if it exists

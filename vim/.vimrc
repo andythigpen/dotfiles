@@ -42,11 +42,12 @@ set smartcase     " override 'ignorecase' when pattern has upper case characters
 " }}}
 
 " 4 Displaying text {{{
-set scrolloff=3     " number of screen lines to show around the cursor
-set linebreak       " wrap long lines at a character in 'breakat'
-set lazyredraw      " don't redraw while executing macros
-set number          " show line numbers
-set numberwidth=5   " line number gutter width
+set scrolloff=3             " number of screen lines to show around the cursor
+set linebreak               " wrap long lines at a character in 'breakat'
+set lazyredraw              " don't redraw while executing macros
+set relativenumber number   " show line numbers
+set numberwidth=5           " line number gutter width
+set cmdheight=2             " height of the bottom cmd bar in lines
 " }}}
 
 " 5 Syntax, highlighting and spelling {{{
@@ -65,6 +66,12 @@ let &colorcolumn=join(range(81,999),",")
 " 6 Multiple windows {{{
 set laststatus=2      " 0, 1 or 2; when to use a status line for the last window
 set hidden            " don't unload a buffer when no longer shown in a window
+
+" easier navigation between windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 " }}}
 
 " 11 Messages and info {{{
@@ -90,7 +97,7 @@ set softtabstop=4     " if non-zero, number of spaces to insert for a <Tab>
 set shiftround        " round to 'shiftwidth' for "<<" and ">>"
 set expandtab         " expand <Tab> to spaces in Insert mode
 set autoindent        " automatically set the indent of a new line
-set smartindent       " do clever autoindenting
+"set smartindent       " do clever autoindenting
 " }}}
 
 " 15 Folding {{{
@@ -102,6 +109,7 @@ nnoremap <leader>z zA
 
 " 20 Command line editing {{{
 set wildmenu        " command-line completion shows a list of matches
+set wildignore+=*.pyc,*.o,*.obj,*.swp
 " }}}
 
 " Newline mappings {{{
@@ -180,6 +188,7 @@ function! QuickfixToggle()
         endif
     else
         let g:quickfix_return_to_window = winnr()
+        Copen!
         copen
     endif
 endfunction
@@ -264,6 +273,7 @@ endfunction
 nnoremap <silent><leader>f :call OpenNERDTree()<CR>
 let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
 let g:NERDTreeShowBookmarks = 1     " show bookmarks by default
+let g:NERDTreeRespectWildIgnore = 1 " respect wildignore
 " }}}
 
 " Tagbar settings {{{
@@ -301,7 +311,7 @@ set noshowmode          " airline includes this info in the statusline
 " }}}
 
 " ultisnips settings {{{
-let g:UltiSnipsListSnippets = "<leader><tab>"
+let g:UltiSnipsExpandTrigger = "<c-e>"
 let g:UltiSnipsEditSplit = "vertical"
 " }}}
 
@@ -311,9 +321,11 @@ nnoremap <C-p> :FZF<CR>
 
 " dispatch settings {{{
 let g:dispatch_handlers = [ 'tmux' ]
-nnoremap <leader>d :Dispatch<CR>
+nnoremap <leader>d :Dispatch!<CR>
+nnoremap <leader>D :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
-nnoremap <leader>m :Make<CR>
+nnoremap <leader>m :Make!<CR>
+nnoremap <leader>M :Make<CR>
 " }}}
 
 " buffergator settings {{{
@@ -342,6 +354,24 @@ endfunction
 " python-mode settings {{{
 let g:pymode_python = 'python3'
 let g:pymode_options_colorcolumn = 0
+" }}}
+
+" delimitMate settings {{{
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_jump_expansion = 1
+let g:delimitMate_balance_matchpairs = 1
+au FileType python let b:delimitMate_nesting_quotes = ['"', '''']
+
+" Resolves an issue with YCM and delimitMate
+" https://github.com/Valloric/YouCompleteMe/issues/2696
+imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
+
+function! YcmOnDeleteChar()
+  if pumvisible()
+    return "\<C-y>"
+  endif
+  return ""
+endfunction
 " }}}
 
 " load local config, if it exists

@@ -1,0 +1,2 @@
+andyt ALL=(root) NOPASSWD: /sbin/poweroff
+andyt ALL=(root) NOPASSWD: /sbin/reboot

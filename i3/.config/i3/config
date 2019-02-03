@@ -177,6 +177,7 @@ assign [class="Catia.py"]       $workspace3
 
 # pop-up dialogs using yad
 for_window [class="Yad"]        floating enable
+for_window [class="Nautilus"]   floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -213,7 +214,7 @@ bindsym $mod+r mode "resize"
 
 
 default_border pixel 3
-hide_edge_borders    both
+hide_edge_borders    smart
 
 # Widow Colours
 #                         border        background   text        indicator

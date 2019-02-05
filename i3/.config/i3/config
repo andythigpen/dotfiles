@@ -176,8 +176,9 @@ assign [class="Cadence.py"]     $workspace3
 assign [class="Catia.py"]       $workspace3
 
 # pop-up dialogs using yad
-for_window [class="Yad"]        floating enable
-for_window [class="Nautilus"]   floating enable
+for_window [class="Yad"]            floating enable
+for_window [class="Nautilus"]       floating enable
+for_window [class="Pavucontrol"]    floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

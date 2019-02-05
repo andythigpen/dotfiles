@@ -336,7 +336,7 @@ label = %date% %time%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume-prefix = " "
+format-volume-prefix = "%{A1:pavucontrol &:} %{A}"
 format-volume-foreground = ${colors.foreground-alt}
 format-volume = <label-volume> <bar-volume>
 label-volume = %percentage%%

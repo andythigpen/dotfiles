@@ -45,9 +45,6 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-; font-0 = fixed:pixelsize=10;1
-; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-; font-2 = siji:pixelsize=10;1
 font-0 = DejaVu Sans Mono:style=Book:size=10
 font-1 = Material Design Icons:style=Regular:size=16;2
 font-2 = FontAwesome:style=Regular:size=13
@@ -74,28 +71,9 @@ cursor-scroll = ns-resize
 enable-ipc = true
 
 
-; material icons
-; ubuntu = 
-; full wifi = 
-; cpu = 
-; power = 
-; memory = 
-
-
 [module/xwindow]
 type = internal/xwindow
 label = %{T4}%title:0:30:...%%{T-}
-
-
-; [module/filesystem]
-; type = internal/fs
-; interval = 60
-;
-; mount-0 = /
-;
-; label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
-; label-unmounted = %mountpoint% not mounted
-; label-unmounted-foreground = ${colors.foreground-alt}
 
 
 [module/i3]
@@ -165,13 +143,6 @@ icon-next = 
 label-song-maxlen = 25
 label-song-ellipsis = true
 
-; [module/cpu]
-; type = internal/cpu
-; interval = 2
-; format-prefix = " "
-; format-prefix-foreground = ${colors.foreground-alt}
-; format-underline = #f90000
-; label = %percentage:2%%
 
 [module/cpu]
 type = internal/cpu
@@ -179,25 +150,10 @@ interval = 2
 
 format = %{A1:gnome-system-monitor -p:}<ramp-load>%{A}
 format-prefix = "%{A1:gnome-system-monitor -p:} %{A}"
-; format-background = #ff3260
 format-foreground = ${colors.foreground-alt}
-; format-underline = #da375b
 
 label-foreground = ${colors.foreground-alt}
 label = %percentage:3%%
-
-; bar-load-format = %fill%%indicator%%empty%
-; bar-load-width = 10
-;
-; bar-load-gradient = true
-; bar-load-foreground-0 = #00ff00
-; bar-load-foreground-1 = #ff9900
-; bar-load-foreground-2 = #ff0000
-
-; The fill, indicator and empty icon can be configured like any <label>
-; bar-load-fill = x
-; bar-load-indicator = x
-; bar-load-empty = x
 
 ramp-load-0 = ▁
 ramp-load-0-font = 2
@@ -224,6 +180,7 @@ ramp-load-7 = █
 ramp-load-7-font = 2
 ramp-load-7-foreground = #ff5555
 
+
 [module/memory]
 type = internal/memory
 interval = 2
@@ -231,8 +188,6 @@ format = %{A1:gnome-system-monitor -r:}<ramp-used>%{A}
 format-prefix = "%{A1:gnome-system-monitor -r:} %{A}"
 format-prefix-foreground = ${colors.foreground-alt}
 label-foreground = ${colors.foreground-alt}
-; format-underline = #4bffdc
-; label = %percentage_used%%
 label = %percentage_used:3%%
 ramp-used-0 = ▁
 ramp-used-0-font = 2
@@ -259,6 +214,7 @@ ramp-used-7 = █
 ramp-used-7-font = 2
 ramp-used-7-foreground = #ff5555
 
+
 [module/wlan]
 type = internal/network
 interface = wlx000e3b0e3ac3
@@ -266,9 +222,7 @@ interval = 3.0
 
 format-connected-prefix = " "
 format-connected = <ramp-signal>
-; format-connected-underline = #9f78e1
 format-connected-foreground = ${colors.foreground-alt}
-; label-connected =
 
 format-disconnected-prefix = " "
 format-disconnected-underline = #c80013
@@ -300,22 +254,6 @@ ramp-signal-7 = █
 ramp-signal-7-font = 2
 ramp-signal-7-foreground = ${colors.foreground-alt}
 
-
-; [module/eth]
-; type = internal/network
-; interface = 
-; interval = 3.0
-;
-; format-connected-underline = #55aa55
-; format-connected-prefix = " "
-; format-connected-prefix-foreground = ${colors.foreground-alt}
-; label-connected = %local_ip%
-;
-; format-disconnected =
-; ;format-disconnected = <label-disconnected>
-; ;format-disconnected-underline = ${self.format-connected-underline}
-; ;label-disconnected = %ifname% disconnected
-; ;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
@@ -364,33 +302,6 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-[module/alsa]
-type = internal/alsa
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/powermenu]
 type = custom/text
@@ -405,34 +316,6 @@ content = 
 content-foreground = ${colors.foreground-alt}
 click-left = nautilus &
 
-; [module/powermenu]
-; type = custom/menu
-;
-; expand-right = true
-;
-; format-spacing = 1
-;
-; label-open = 
-; label-open-foreground = ${colors.foreground-alt}
-; label-close =  cancel
-; label-close-foreground = ${colors.secondary}
-; label-separator = |
-; label-separator-foreground = ${colors.foreground-alt}
-;
-; menu-0-0 = reboot
-; menu-0-0-exec = menu-open-1
-; menu-0-1 = power off
-; menu-0-1-exec = menu-open-2
-;
-; menu-1-0 = cancel
-; menu-1-0-exec = menu-open-0
-; menu-1-1 = reboot
-; menu-1-1-exec = sudo reboot
-;
-; menu-2-0 = power off
-; menu-2-0-exec = sudo poweroff
-; menu-2-1 = cancel
-; menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
@@ -441,6 +324,7 @@ screenchange-reload = true
 ;compositing-foreground = source
 ;compositing-border = over
 ;pseudo-transparency = false
+
 
 [global/wm]
 margin-top = 5

@@ -31,6 +31,7 @@ Plug 'kburdett/vim-nuuid'
 Plug 'hzchirs/vim-material'
 Plug 'python-mode/python-mode'
 Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 " }}}
@@ -372,6 +373,12 @@ function! YcmOnDeleteChar()
   endif
   return ""
 endfunction
+" }}}
+
+" gutentags settings {{{
+let g:gutentags_modules = ['ctags', 'cscope']
+let g:gutentags_file_list_command = 'rg --files'
+let g:gutentags_cache_dir = '~/.vim/gutentags'
 " }}}
 
 " load local config, if it exists

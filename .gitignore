@@ -1,5 +1,6 @@
 tags
 vim/.vim/plugged/**
 vim/.vim/.netrwhist
+vim/.vim/gutentags/**
 bash/.bashrc_local
 .*.swp

@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+
+import argparse
+import glob
+import os
+import sys
+import libtmux
+
+
+def print_bash_completion(working_dir, project, prefix):
+    if project == "bashscript":
+        comp = """#/usr/bin/env bash
+
+_workon_completions()
+{
+  local cur
+  COMPREPLY=()   # Array variable storing the possible completions.
+  cur=${COMP_WORDS[COMP_CWORD]}
+
+  case "$cur" in
+    -*)
+    COMPREPLY=( $( compgen -W '-c -p -w -s -h' -- $cur ) );;
+    *)
+    COMPREPLY=( $( ${COMP_WORDS[@]} -c ) )
+    ;;
+  esac
+
+  return 0
+}
+
+complete -F _workon_completions workon
+"""
+        print(comp)
+    else:
+        results = get_matching_dirs(working_dir, prefix, project)
+        path = os.path.expanduser(f"{working_dir}/{prefix}{project}")
+        for result in results:
+            result = result.replace(path, '', 1)
+            print(f"{project}{result}")
+
+
+def get_matching_dirs(working_dir, prefix, project):
+    path = os.path.expanduser(f"{working_dir}/{prefix}{project}*")
+    return glob.glob(path)
+
+
+def find_start_dir(working_dir, project, prefix=''):
+    exact = os.path.expanduser(f"{working_dir}/{project}")
+    if os.path.exists(exact):
+        return exact
+    exact = os.path.expanduser(f"{working_dir}/{prefix}{project}")
+    if os.path.exists(exact):
+        return exact
+    results = get_matching_dirs(working_dir, prefix, project)
+    if results:
+        print('Found matches: %s' % ' '.join(results))
+        return results[0]
+    return None
+
+
+def workon(project, start_dir):
+    server = libtmux.Server()
+    session = server.find_where({"session_name": "dev"})
+    if session is None:
+        print("Session 'dev' not found")
+        return
+    window = session.find_where({"window_name": project})
+    if window is not None:
+        window.select_window()
+        return
+    window = session.new_window(
+        window_name=project,
+        start_directory=start_dir,
+    )
+    pane1 = window.attached_pane
+    pane1.send_keys('vim', enter=True)
+    window.split_window(start_directory=start_dir, vertical=True)
+    window.select_layout('main-vertical')
+
+
+def workstop(project):
+    server = libtmux.Server()
+    session = server.find_where({"session_name": "dev"})
+    if session is None:
+        print("Session 'dev' not found")
+        return
+    if project:
+        window = session.find_where({"window_name": project})
+    else:
+        window = session.attached_window
+    if window is None:
+        print(f"Window '{project}' not found")
+        return
+    print('Exiting...')
+    # save any work before exiting just in case
+    for pane in window.panes:
+        if pane.get('pane_current_command') == 'vim':
+            pane.send_keys('', enter=False, suppress_history=False)
+            pane.send_keys(':wqa!')
+            pane.send_keys('C-d', enter=False, suppress_history=False)
+    window.kill_window()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='work on')
+    parser.add_argument('-c', '--completion', action='store_true',
+                        help='bash completion script')
+    parser.add_argument('-p', '--prefix', default="",
+                        help='project prefix')
+    parser.add_argument('-w', '--workdir', default="~/working-copy",
+                        help='working directory')
+    parser.add_argument('-s', '--stop', action='store_true',
+                        help='stop working on project')
+    parser.add_argument('name', default='', nargs='?', help='service name')
+    args = parser.parse_args()
+
+    if args.completion:
+        project = args.name
+        print_bash_completion(args.workdir, project, args.prefix)
+        sys.exit(0)
+
+    project = args.name
+    if args.stop:
+        workstop(project)
+        sys.exit(0)
+
+    if not project:
+        print("Must specify a project name")
+        sys.exit(1)
+
+    start_dir = find_start_dir(args.workdir, project, args.prefix)
+    if start_dir is None:
+        print('Unable to find a matching project')
+        sys.exit(1)
+    workon(project, start_dir)

@@ -16,22 +16,27 @@ Plug 'vim-airline/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
 Plug 'JulesWang/css.vim'
-Plug 'rstacruz/sparkup'
+" Plug 'rstacruz/sparkup'
+Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
-Plug 'jeetsukumaran/vim-buffergator'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'kburdett/vim-nuuid'
 Plug 'hzchirs/vim-material'
-Plug 'python-mode/python-mode'
+" Plug 'python-mode/python-mode'
 Plug 'tpope/vim-fugitive'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+"Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 " }}}
@@ -61,7 +66,7 @@ if version >= 700     " map spell check
 endif
 
 " change bg color after 80 chars
-let &colorcolumn=join(range(81,999),",")
+let &colorcolumn=join(range(81,81),",")
 " }}}
 
 " 6 Multiple windows {{{
@@ -78,6 +83,7 @@ nnoremap <C-H> <C-W><C-H>
 " 11 Messages and info {{{
 set ruler             " show cursor position below each window
 set showcmd           " show (partial) command keys in the status line
+set shortmess+=c      " coc.nvim - don't give |ins-completion-menu| messages
 " }}}
 
 " 13 Editing text {{{
@@ -88,6 +94,8 @@ set backspace=start,eol,indent
 
 " do not display a preview window on autocomplete
 set completeopt-=preview
+" do not select the first item
+set completeopt+=noselect
 " }}}
 
 " 14 Tabs and indenting {{{
@@ -108,9 +116,21 @@ set nofoldenable
 nnoremap <leader>z zA
 " }}}
 
+" 10 Swap file {{{
+set updatetime=300  " helps with coc.nvim
+" }}}
+
 " 20 Command line editing {{{
 set wildmenu        " command-line completion shows a list of matches
 set wildignore+=*.pyc,*.o,*.obj,*.swp
+" }}}
+
+" 25 Various {{{
+set signcolumn=yes
+" }}}
+
+" 25 Various {{{
+set signcolumn=yes
 " }}}
 
 " Newline mappings {{{
@@ -136,7 +156,11 @@ colorscheme vim-material
 highlight Normal guibg=#1A1E20
 highlight ColorColumn guibg=#1D2224
 highlight LineNr guibg=#1D2224
+highlight SignColumn guibg=#1D2224
 highlight Error guibg=#990000
+highlight SignColumn guibg=#1D2224
+highlight Pmenu guibg=#313236
+highlight CursorLine guibg=#313236
 " }}}
 
 " Generic leader mappings {{{
@@ -200,9 +224,25 @@ endfunction
 " toggle alternate file (switches from .h to .c/cpp/etc)
 nnoremap <leader>a :A<cr>
 
+" toggle line numbers / sign column
+nnoremap <silent><leader>n :call ToggleColumn()<CR>
+function! ToggleColumn()
+    if !exists("b:column_on") || b:column_on
+        set signcolumn=no
+        set nonumber
+        set norelativenumber
+        let b:column_on=0
+    else
+        set signcolumn=yes
+        set number
+        set relativenumber
+        let b:column_on=1
+    endif
+endfunction
+
 " deploy shortcuts
-nnoremap <silent><leader>dd :!deploy<CR>
-nnoremap <silent><leader>dc :!deploy -hm<CR>
+" nnoremap <silent><leader>dd :!deploy<CR>
+" nnoremap <silent><leader>dc :!deploy -hm<CR>
 " }}}
 
 " Restore cursor postion {{{
@@ -318,6 +358,7 @@ let g:UltiSnipsEditSplit = "vertical"
 
 " fzf settings {{{
 nnoremap <C-p> :FZF<CR>
+nnoremap <silent><leader>b :Buffers<CR>
 " }}}
 
 " dispatch settings {{{
@@ -327,19 +368,6 @@ nnoremap <leader>D :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
 nnoremap <leader>m :Make!<CR>
 nnoremap <leader>M :Make<CR>
-" }}}
-
-" buffergator settings {{{
-let g:buffergator_viewport_split_policy = "B"
-let g:buffergator_hsplit_size = 10
-let g:buffergator_sort_regime = "mru"
-let g:buffergator_suppress_keymaps = 1
-nnoremap <silent><leader>l :BuffergatorOpen<CR>
-" }}}
-
-" YouCompleteMe settings {{{
-" do not bind to <leader>d
-let g:ycm_key_detailed_diagnostics = ''
 " }}}
 
 " projectionist settings {{{
@@ -353,8 +381,8 @@ endfunction
 " }}}
 
 " python-mode settings {{{
-let g:pymode_python = 'python3'
-let g:pymode_options_colorcolumn = 0
+" let g:pymode_python = 'python3'
+" let g:pymode_options_colorcolumn = 0
 " }}}
 
 " delimitMate settings {{{
@@ -365,20 +393,138 @@ au FileType python let b:delimitMate_nesting_quotes = ['"', '''']
 
 " Resolves an issue with YCM and delimitMate
 " https://github.com/Valloric/YouCompleteMe/issues/2696
-imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
-
-function! YcmOnDeleteChar()
-  if pumvisible()
-    return "\<C-y>"
-  endif
-  return ""
-endfunction
+" imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
+"
+" function! YcmOnDeleteChar()
+"   if pumvisible()
+"     return "\<C-y>"
+"   endif
+"   return ""
+" endfunction
 " }}}
 
 " gutentags settings {{{
-let g:gutentags_modules = ['ctags', 'cscope']
-let g:gutentags_file_list_command = 'rg --files'
-let g:gutentags_cache_dir = '~/.vim/gutentags'
+" let g:gutentags_modules = ['ctags', 'cscope']
+" let g:gutentags_file_list_command = 'rg --files'
+" let g:gutentags_cache_dir = '~/.vim/gutentags'
+" }}}
+
+" emmet-vim settings {{{
+" let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+  \      'extends' : 'jsx',
+  \  },
+  \}
+" }}}
+
+" coc.nvim settings {{{
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+"nmap <silent> <C-d> <Plug>(coc-range-select)
+"xmap <silent> <C-d> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
 " load local config, if it exists

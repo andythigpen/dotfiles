@@ -21,7 +21,6 @@ Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
 Plug 'JulesWang/css.vim'
-" Plug 'rstacruz/sparkup'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
@@ -29,14 +28,12 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'kburdett/vim-nuuid'
 Plug 'hzchirs/vim-material'
-" Plug 'python-mode/python-mode'
 Plug 'tpope/vim-fugitive'
-" Plug 'ludovicchabant/vim-gutentags'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-"Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
+Plug 'kshenoy/vim-signature'
 
 call plug#end()
 " }}}
@@ -153,14 +150,19 @@ set background=dark
 colorscheme vim-material
 
 " adjust theme colors
-highlight Normal guibg=#1A1E20
-highlight ColorColumn guibg=#1D2224
-highlight LineNr guibg=#1D2224
-highlight SignColumn guibg=#1D2224
-highlight Error guibg=#990000
-highlight SignColumn guibg=#1D2224
-highlight Pmenu guibg=#313236
-highlight CursorLine guibg=#313236
+highlight Normal ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#181c1e
+highlight ColorColumn guibg=#1b1f21
+highlight LineNr guibg=#1b1f21
+highlight SignColumn guibg=#1b1f21
+" highlight Error guibg=#990000
+" highlight Pmenu guibg=#313236
+" highlight CursorLine guibg=#313236
+highlight Search cterm=bold,underline ctermfg=15 gui=bold,underline guifg=#ffffff guibg=none
+highlight Folded ctermfg=59 guifg=#5c6370 guibg=none
+highlight CursorLineNr cterm=bold ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#1b1f21
+highlight SignatureMarkText ctermfg=11 guifg=#5D818E guibg=#1b1f21
+highlight GitGutterAdd guifg=#1f5e47
+highlight GitGutterChange guifg=#aa9e75
 " }}}
 
 " Generic leader mappings {{{
@@ -525,6 +527,10 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" }}}
+
+" terminal settings {{{
+tnoremap <Esc> <C-\><C-n>
 " }}}
 
 " load local config, if it exists

@@ -146,23 +146,34 @@ set t_8b=[48;2;%lu;%lu;%lum
 " full lines for splits/folds
 set fillchars=vert:│,fold:─
 
+" adjust theme colors
+function! CustomHighlights() abort
+    highlight Normal ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#181c1e
+    highlight ColorColumn guibg=#1b1f21
+    highlight LineNr guibg=#1b1f21
+    highlight SignColumn guibg=#1b1f21
+    highlight Error guifg=#2d343a guibg=#b74951
+    highlight CursorLine guibg=#313236
+    highlight Search cterm=bold,underline ctermfg=15 gui=bold,underline guifg=#ffffff guibg=none
+    highlight Folded ctermfg=59 guifg=#5c6370 guibg=none
+    highlight CursorLineNr cterm=bold ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#1b1f21
+    highlight SignatureMarkText ctermfg=11 guifg=#5D818E guibg=#1b1f21
+    highlight GitGutterAdd guifg=#1f5e47
+    highlight GitGutterChange guifg=#aa9e75
+
+    highlight WildMenu ctermfg=238 ctermbg=167 guifg=#41484f guibg=#4dacfd
+    highlight Pmenu ctermfg=0 ctermbg=13 guifg=#dce2e4 guibg=#313236
+    highlight PmenuSel cterm=bold ctermfg=123 ctermbg=167 gui=bold guifg=#353a3f guibg=#4dacfd
+    highlight CocErrorSign cterm=bold ctermfg=238 ctermbg=167 gui=bold guifg=#2d343a guibg=#b74951
+endfunction
+augroup CustomColors
+    autocmd!
+    autocmd ColorScheme vim-material call CustomHighlights()
+augroup END
+
 set background=dark
 colorscheme vim-material
 
-" adjust theme colors
-highlight Normal ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#181c1e
-highlight ColorColumn guibg=#1b1f21
-highlight LineNr guibg=#1b1f21
-highlight SignColumn guibg=#1b1f21
-" highlight Error guibg=#990000
-" highlight Pmenu guibg=#313236
-" highlight CursorLine guibg=#313236
-highlight Search cterm=bold,underline ctermfg=15 gui=bold,underline guifg=#ffffff guibg=none
-highlight Folded ctermfg=59 guifg=#5c6370 guibg=none
-highlight CursorLineNr cterm=bold ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#1b1f21
-highlight SignatureMarkText ctermfg=11 guifg=#5D818E guibg=#1b1f21
-highlight GitGutterAdd guifg=#1f5e47
-highlight GitGutterChange guifg=#aa9e75
 " }}}
 
 " Generic leader mappings {{{

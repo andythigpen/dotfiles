@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if ! $(which entr &>/dev/null); then
+    echo "Missing entr executable"
+    exit 1
+fi
+
+if ! $(which ag &>/dev/null); then
+    echo "Missing ag executable"
+    exit 1
+fi
+
+if [ "$#" == "0" ]; then
+    echo "usage: $0 <ag opts> -- <program>"
+    echo "Missing separator (--) and program."
+    exit 2
+fi
+
+AG_ARGS=""
+while (($#)); do
+    if [ "$1" = "--" ]; then
+        shift
+        break
+    fi
+    AG_ARGS="$AG_ARGS $1"
+    shift
+done
+
+if [ "$#" == "0" ]; then
+    echo "usage: $0 <ag opts> -- <program>"
+    echo "Missing program."
+    exit 2
+fi
+
+while true; do
+    ag -l $AG_ARGS | entr -r -d $@
+done

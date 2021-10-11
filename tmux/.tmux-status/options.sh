@@ -4,7 +4,7 @@ flags=""
 
 opt=$(tmux show-window-option synchronize-panes)
 if [[ "$opt" == *"on" ]]; then
-    flags="${flags}sync"
+    flags="${flags}#[fg=yellow,bold]sync"
 fi
 
 # disk usage
@@ -19,4 +19,6 @@ mcolor="white,dim"
 [ ${mfree%%%} -gt 85 ] && mcolor="yellow,bold"
 [ ${mfree%%%} -gt 90 ] && mcolor="red,bold"
 
-echo "  $flags #[default,dim]| #[default] #[fg=$mcolor]$mfree  #[default]#[fg=$dcolor]$dfree #[default]"
+targets=$(toggle-target status)
+
+echo "  $flags #[default,dim]|$targets #[default] #[fg=$mcolor]$mfree  #[default]#[fg=$dcolor]$dfree #[default]"

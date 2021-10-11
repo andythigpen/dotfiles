@@ -6,7 +6,7 @@ _tmx()
     [ $len -gt 2 ] && return
 
     # build a list of keywords for auto-completion
-    local sessions=$(find ~/.tmux-sessions/ -name '*.session' -exec basename {} .session \;)
+    local sessions=$(tmuxp ls)
 
     # generate possible matches
     COMPREPLY=($(compgen -W "${sessions}" $cur))

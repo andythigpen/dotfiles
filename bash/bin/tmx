@@ -1,2 +1,7 @@
 #!/bin/bash
-tmuxp load "$@"
+if [ -z "$@" ]; then
+    echo "Loading dev..."
+    tmuxp load -y dev
+else
+    tmuxp load "$@"
+fi

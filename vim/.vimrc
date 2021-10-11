@@ -7,6 +7,8 @@
 
 set nocompatible  " disables vi compatibility
 
+let g:vimspector_enable_mappings = 'HUMAN'
+
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
@@ -34,6 +36,12 @@ Plug 'mxw/vim-jsx'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'kshenoy/vim-signature'
+Plug 'mhinz/vim-startify'
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
+Plug 'vim-test/vim-test'
+Plug 'fannheyward/coc-pyright', {'do': ':split term://npm install && npm run build'}
+Plug 'neoclide/coc-yaml', {'do': ':split term://npm install'}
+Plug 'qpkorr/vim-bufkill'
 
 call plug#end()
 " }}}
@@ -126,10 +134,6 @@ set wildignore+=*.pyc,*.o,*.obj,*.swp
 set signcolumn=yes
 " }}}
 
-" 25 Various {{{
-set signcolumn=yes
-" }}}
-
 " Newline mappings {{{
 " insert new lines and stay in normal mode
 nnoremap <silent> zj o<Esc>
@@ -153,6 +157,7 @@ function! CustomHighlights() abort
     highlight LineNr guibg=#1b1f21
     highlight SignColumn guibg=#1b1f21
     highlight Error guifg=#2d343a guibg=#b74951
+    highlight Todo guibg=NONE guifg=#FF5370 gui=NONE,bold
     highlight CursorLine guibg=#313236
     highlight Search cterm=bold,underline ctermfg=15 gui=bold,underline guifg=#ffffff guibg=none
     highlight Folded ctermfg=59 guifg=#5c6370 guibg=none
@@ -164,7 +169,16 @@ function! CustomHighlights() abort
     highlight WildMenu ctermfg=238 ctermbg=167 guifg=#41484f guibg=#4dacfd
     highlight Pmenu ctermfg=0 ctermbg=13 guifg=#dce2e4 guibg=#313236
     highlight PmenuSel cterm=bold ctermfg=123 ctermbg=167 gui=bold guifg=#353a3f guibg=#4dacfd
-    highlight CocErrorSign cterm=bold ctermfg=238 ctermbg=167 gui=bold guifg=#2d343a guibg=#b74951
+    highlight CocErrorSign gui=bold guifg=#b74951
+    highlight CocInfoSign ctermfg=12 guifg=#15aabf
+    highlight CocWarningSign ctermfg=130 guifg=#ff922b
+
+    highlight airline_error guibg=#b74951
+    highlight airline_warning guibg=#ff922b
+
+    " tabline
+    highlight TabLine gui=none guibg=#313236
+    highlight TabLineFill guibg=#0f0f0f
 endfunction
 augroup CustomColors
     autocmd!
@@ -346,17 +360,34 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 " shorten the airline mode indicators
 let g:airline_mode_map = {
-    \ '__' : '-',
-    \ 'n'  : 'N',
-    \ 'i'  : 'I',
-    \ 'R'  : 'R',
-    \ 'c'  : 'C',
-    \ 'v'  : 'V',
-    \ 'V'  : 'V',
-    \ '' : 'V',
-    \ 's'  : 'S',
-    \ 'S'  : 'S',
-    \ '' : 'S',
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ ''     : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ ''     : 'V',
+    \ }
+let g:airline_filetype_overrides = {
+    \ 'coc-explorer': [ 'CoC Explorer', '' ],
+    \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
+    \ 'help':  [ 'Help', '%f' ],
+    \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
+    \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
+    \ 'startify': [ 'startify', '' ],
+    \ 'vim-plug': [ 'Plugins', '' ],
+    \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
     \ }
 let g:airline_theme='material'
 let g:airline_highlighting_cache = 1
@@ -376,6 +407,8 @@ nnoremap <silent><leader>b :Buffers<CR>
 
 " dispatch settings {{{
 let g:dispatch_handlers = [ 'tmux' ]
+let g:dispatch_compilers = {
+    \ 'pipenv run': ''}
 nnoremap <leader>d :Dispatch!<CR>
 nnoremap <leader>D :Dispatch<CR>
 nnoremap <leader>c :Console<CR>
@@ -391,11 +424,7 @@ endif
 function! g:projectionist_transformations.escapespace(input, o) abort
     return substitute(a:input, ' ', '\\\\ ', 'g')
 endfunction
-" }}}
-
-" python-mode settings {{{
-" let g:pymode_python = 'python3'
-" let g:pymode_options_colorcolumn = 0
+nnoremap <silent> <space>r  :<C-u>Start!<cr>
 " }}}
 
 " delimitMate settings {{{
@@ -414,12 +443,6 @@ au FileType python let b:delimitMate_nesting_quotes = ['"', '''']
 "   endif
 "   return ""
 " endfunction
-" }}}
-
-" gutentags settings {{{
-" let g:gutentags_modules = ['ctags', 'cscope']
-" let g:gutentags_file_list_command = 'rg --files'
-" let g:gutentags_cache_dir = '~/.vim/gutentags'
 " }}}
 
 " emmet-vim settings {{{
@@ -446,13 +469,16 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+else
+    inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -470,8 +496,10 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+   call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+   execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
@@ -498,15 +526,29 @@ augroup end
 " nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>do  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 "nmap <silent> <C-d> <Plug>(coc-range-select)
@@ -542,6 +584,58 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " terminal settings {{{
 tnoremap <Esc> <C-\><C-n>
+" }}}
+
+" vim-test settings {{{
+let test#strategy = 'dispatch'
+let test#enabled_runners = ["ruby#rspec", "python#pytest"]
+
+nmap <silent> <space>t :TestNearest<CR>
+nmap <silent> <space>tf :TestFile<CR>
+nmap <silent> <space>ts :TestSuite<CR>
+nmap <silent> <space>tl :TestLast<CR>
+" }}}
+
+" startify settings {{{
+let g:startify_change_to_dir = 0
+let g:startify_change_to_vcs_root = 1
+let g:startify_lists = [
+    \ { 'type': 'dir',       'header': ['    MRU '. getcwd()] },
+    \ { 'type': 'files',     'header': ['    MRU']            },
+    \ { 'type': 'sessions',  'header': ['    Sessions']       },
+    \ { 'type': 'bookmarks', 'header': ['    Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['    Commands']       },
+    \ ]
+" }}}
+
+" vim-tmux-navigator settings {{{
+let g:tmux_navigator_disable_when_zoomed = 1
+" }}}
+
+" fugitive settings {{{
+function! ToggleGStatus()
+  if buflisted(bufname('.git/index'))
+    bd .git/index
+  else
+    Git
+    20wincmd_
+  endif
+endfunction
+command! ToggleGStatus :call ToggleGStatus()
+nnoremap <silent> <leader>g :ToggleGStatus<cr>
+
+augroup fugitive_au
+  autocmd!
+  autocmd FileType fugitive setlocal winfixheight
+augroup END
+" }}}
+
+" vimspector settings {{{
+nnoremap <silent> <F2> :VimspectorReset<CR>
+" }}}
+
+" bufkill settings {{{
+let g:BufKillCreateMappings=0
 " }}}
 
 " load local config, if it exists

@@ -1,0 +1,92 @@
+#!/bin/bash
+
+TARGET=$1
+TARGETS_FILE=$(realpath ~/.config/toggle-target/targets.sh)
+
+target_status() {
+    tcolor="dim"
+    target="$1"
+    name="$2"
+    icon="$3"
+    macro_key="$4"
+    total=0
+    active=0
+    inactive=0
+    for service in $(systemctl --user list-dependencies --plain $target); do
+        state=$(systemctl --user show --property=ActiveState $service)
+        if echo "$state" | grep '=active' &>/dev/null; then
+            active=$((active + 1))
+        else
+            inactive=$((inactive + 1))
+        fi
+        total=$((total + 1))
+    done
+
+    if [ $active -eq $total ]; then
+        tcolor="colour46,bold"
+        if [ $macro_key -gt 0 ]; then
+            bdn9 key set --on -k $macro_key -l 0 100 200 120 &>/dev/null &
+        fi
+    elif [ $inactive -eq $total ]; then
+        tcolor="colour242,dim"
+        if [ $macro_key -gt 0 ]; then
+            bdn9 key off -k $macro_key -l 0 &>/dev/null &
+        fi
+    else
+        tcolor="colour214,dim"
+        if [ $macro_key -gt 0 ]; then
+            bdn9 key set --on -k $macro_key -l 0 15 240 120 &>/dev/null &
+        fi
+    fi
+    echo "#[fg=$tcolor]$icon $name#[default]"
+}
+
+case "$1" in
+    [0-9])
+        if [ ! -e $TARGETS_FILE ]; then
+            exit
+        fi
+        source $TARGETS_FILE
+        TARGET=${TARGETS[$1]}
+        ;;
+    "-e")
+        mkdir -p $(dirname $TARGETS_FILE)
+        exec $EDITOR $TARGETS_FILE
+        ;;
+    "status")
+        if [ ! -e $TARGETS_FILE ]; then
+            echo "#[fg=colour239,dim]-"
+            exit
+        fi
+        source $TARGETS_FILE
+        if [ ${#TARGETS[@]} -eq 0 ]; then
+            echo "#[fg=colour239,dim]-"
+            exit
+        fi
+        status=""
+        for idx in ${!TARGETS[@]}; do
+            target="${TARGETS[$idx]}"
+            name="${TARGET_NAMES[$idx]:-$target}"
+            icon="${TARGET_ICONS[$idx]:-}"
+            macro_key="${TARGET_MACROS[$idx]:-0}"
+            tstatus=$(target_status $target $name $icon $macro_key)
+            if [ -z "$status" ]; then
+                status="$tstatus"
+            else
+                status="$status $tstatus"
+            fi
+        done
+        echo "$status"
+        exit
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+systemctl --user is-active $TARGET &>/dev/null && systemctl --user stop $TARGET || systemctl --user start $TARGET
+
+# refresh the status line for any tmux clients just in case
+for client in $(tmux list-clients -F '#{client_tty}'); do
+    tmux refresh-client -S -t $client
+done

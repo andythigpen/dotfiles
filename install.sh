@@ -5,7 +5,7 @@ OS=$(awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"')
 
 source $DIR/common.sh
 
-DEPS=(stow silversearcher-ag build-essential cmake python3-dev)
+DEPS=(stow silversearcher-ag build-essential cmake python3-dev ripgrep)
 
 if [ "$OS" = "Ubuntu" ]; then
     info "Installing package dependencies"

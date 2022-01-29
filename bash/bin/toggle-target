@@ -23,12 +23,12 @@ target_status() {
     done
 
     if [ $active -eq $total ]; then
-        tcolor="colour46,bold"
+        tcolor="colour34,bold"
         if [ $macro_key -gt 0 ]; then
             bdn9 key set --on -k $macro_key -l 0 100 200 120 &>/dev/null &
         fi
     elif [ $inactive -eq $total ]; then
-        tcolor="colour242,dim"
+        tcolor="colour208,dim"
         if [ $macro_key -gt 0 ]; then
             bdn9 key off -k $macro_key -l 0 &>/dev/null &
         fi
@@ -66,14 +66,14 @@ case "$1" in
         status=""
         for idx in ${!TARGETS[@]}; do
             target="${TARGETS[$idx]}"
-            name="${TARGET_NAMES[$idx]:-$target}"
+            name="${TARGET_NAMES[$idx]:-$(basename -s .target $target)}"
             icon="${TARGET_ICONS[$idx]:-}"
             macro_key="${TARGET_MACROS[$idx]:-0}"
             tstatus=$(target_status $target $name $icon $macro_key)
             if [ -z "$status" ]; then
                 status="$tstatus"
             else
-                status="$status $tstatus"
+                status="$status  $tstatus"
             fi
         done
         echo "$status"

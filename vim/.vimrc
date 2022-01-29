@@ -19,7 +19,7 @@ Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
 Plug 'JulesWang/css.vim'
@@ -42,6 +42,18 @@ Plug 'vim-test/vim-test'
 Plug 'fannheyward/coc-pyright', {'do': ':split term://npm install && npm run build'}
 Plug 'neoclide/coc-yaml', {'do': ':split term://npm install'}
 Plug 'qpkorr/vim-bufkill'
+
+if has('nvim')
+" Tree sitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make'}
+end
 
 call plug#end()
 " }}}
@@ -166,19 +178,55 @@ function! CustomHighlights() abort
     highlight GitGutterAdd guifg=#1f5e47
     highlight GitGutterChange guifg=#aa9e75
 
+    " identifier
+    highlight Identifier guifg=#BB9DE3
+
     highlight WildMenu ctermfg=238 ctermbg=167 guifg=#41484f guibg=#4dacfd
     highlight Pmenu ctermfg=0 ctermbg=13 guifg=#dce2e4 guibg=#313236
     highlight PmenuSel cterm=bold ctermfg=123 ctermbg=167 gui=bold guifg=#353a3f guibg=#4dacfd
-    highlight CocErrorSign gui=bold guifg=#b74951
-    highlight CocInfoSign ctermfg=12 guifg=#15aabf
-    highlight CocWarningSign ctermfg=130 guifg=#ff922b
+
+    " coc signs
+    highlight CocErrorSign gui=bold guifg=#b74951 guibg=#1b1f21
+    highlight CocInfoSign ctermfg=12 guifg=#15aabf guibg=#1b1f21
+    highlight CocHintSign ctermfg=12 guifg=#15aabf guibg=#1b1f21
+    highlight CocWarningSign ctermfg=130 guifg=#ff922b guibg=#1b1f21
 
     highlight airline_error guibg=#b74951
     highlight airline_warning guibg=#ff922b
 
     " tabline
-    highlight TabLine gui=none guibg=#313236
-    highlight TabLineFill guibg=#0f0f0f
+    highlight TabLine gui=none guibg=#272e36
+    highlight TabLineSel gui=none guibg=#455A64
+    highlight TabLineFill guifg=#181c1e
+
+    " treesitter highlights
+    highlight TSBoolean         guibg=NONE
+    highlight TSConstant        guibg=NONE
+    highlight TSConstructor     guibg=NONE
+    highlight TSKeyword         guibg=NONE
+    highlight TSKeywordOperator guibg=NONE
+    highlight TSLabel           guibg=NONE
+    highlight TSOperator        guibg=NONE
+    highlight TSParameter       guibg=NONE
+    highlight TSProperty        guibg=NONE
+    highlight TSPunctBracket    guibg=NONE
+    highlight TSPunctDelimiter  guibg=NONE
+    highlight TSPunctSpecial    guibg=NONE
+    highlight TSSymbol          guibg=NONE
+    highlight TSTag             guibg=NONE
+    highlight TSTagAttribute    guibg=NONE
+    highlight TSTagDelimiter    guibg=NONE
+    highlight TSVariable        guibg=NONE
+    highlight TSVariableBuiltIn guibg=NONE
+
+    " telescope
+    highlight TelescopeBorder guifg=#272e36 guibg=#272e36
+    highlight TelescopeNormal guibg=#272e36
+    highlight TelescopePreviewTitle guifg=#272e36 guibg=#e67e80
+    highlight TelescopePromptTitle guifg=#272e36 guibg=#83c092
+    highlight TelescopeResultsTitle guifg=#272e36 guibg=#83c092
+    highlight TelescopePromptNormal guibg=#455A64
+    highlight TelescopePromptBorder guifg=#455A64 guibg=#455A64
 endfunction
 augroup CustomColors
     autocmd!
@@ -342,6 +390,7 @@ nnoremap <silent><leader>f :call OpenNERDTree()<CR>
 let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
 let g:NERDTreeShowBookmarks = 1     " show bookmarks by default
 let g:NERDTreeRespectWildIgnore = 1 " respect wildignore
+let g:NERDTreeWinSize = 50          " window width
 " }}}
 
 " Tagbar settings {{{
@@ -392,17 +441,56 @@ let g:airline_filetype_overrides = {
 let g:airline_theme='material'
 let g:airline_highlighting_cache = 1
 
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.paste = ''
+let g:airline_symbols.spell = '暈'
+let g:airline_symbols.linenr = '  '
+let g:airline_symbols.maxlinenr = '☰ '
+let g:airline_symbols.colnr = '  '
+
+" this may have a small performance penalty
+let g:airline_skip_empty_sections = 1
+
+" airline whitespace
+let g:airline#extensions#whitespace#trailing_format = '%s ﲒ'
+let g:airline#extensions#whitespace#mixed_indent_format = '%s '
+let g:airline#extensions#whitespace#long_format = '%s 蝹'
+let g:airline#extensions#whitespace#mixed_indent_file_format = '%s '
+let g:airline#extensions#whitespace#conflicts_format = '%s '
+
+" airline coc
+let airline#extensions#coc#error_symbol = '𥉉'
+let airline#extensions#coc#warning_symbol = ' '
+
+" override parts to set the minwidth
+call airline#parts#define('linenr', {
+      \ 'raw': '%{g:airline_symbols.linenr}%3l',
+      \ 'accent': 'bold'})
+call airline#parts#define('maxlinenr', {
+      \ 'raw': '/%3L%{g:airline_symbols.maxlinenr}',
+      \ 'accent': 'bold'})
+call airline#parts#define('colnr', {
+      \ 'raw': '%{g:airline_symbols.colnr}%3v',
+      \ 'accent': 'bold'})
+
+" override to set minwidth for percentage
+let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p', 'linenr', 'maxlinenr', 'colnr'])
+
 set noshowmode          " airline includes this info in the statusline
 " }}}
 
 " ultisnips settings {{{
-let g:UltiSnipsExpandTrigger = "<c-e>"
-let g:UltiSnipsEditSplit = "vertical"
+" let g:UltiSnipsExpandTrigger = "<c-e>"
+" let g:UltiSnipsEditSplit = "vertical"
 " }}}
 
 " fzf settings {{{
-nnoremap <C-p> :FZF<CR>
-nnoremap <silent><leader>b :Buffers<CR>
+" nnoremap <C-p> :FZF<CR>
+" nnoremap <silent><leader>b :Buffers<CR>
 " }}}
 
 " dispatch settings {{{
@@ -411,7 +499,7 @@ let g:dispatch_compilers = {
     \ 'pipenv run': ''}
 nnoremap <leader>d :Dispatch!<CR>
 nnoremap <leader>D :Dispatch<CR>
-nnoremap <leader>c :Console<CR>
+" nnoremap <leader>c :Console<CR>
 nnoremap <leader>m :Make!<CR>
 nnoremap <leader>M :Make<CR>
 " }}}
@@ -432,17 +520,6 @@ let g:delimitMate_expand_cr = 1
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_balance_matchpairs = 1
 au FileType python let b:delimitMate_nesting_quotes = ['"', '''']
-
-" Resolves an issue with YCM and delimitMate
-" https://github.com/Valloric/YouCompleteMe/issues/2696
-" imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
-"
-" function! YcmOnDeleteChar()
-"   if pumvisible()
-"     return "\<C-y>"
-"   endif
-"   return ""
-" endfunction
 " }}}
 
 " emmet-vim settings {{{
@@ -479,6 +556,8 @@ endif
 " format on enter, <cr> could be remapped by other vim plugin
 " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? "\<C-y>"
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -588,7 +667,7 @@ tnoremap <Esc> <C-\><C-n>
 
 " vim-test settings {{{
 let test#strategy = 'dispatch'
-let test#enabled_runners = ["ruby#rspec", "python#pytest"]
+let test#enabled_runners = ["ruby#rspec", "python#pytest", "rust#cargotest"]
 
 nmap <silent> <space>t :TestNearest<CR>
 nmap <silent> <space>tf :TestFile<CR>
@@ -613,16 +692,46 @@ let g:tmux_navigator_disable_when_zoomed = 1
 " }}}
 
 " fugitive settings {{{
+function! GetBufferList()
+  return filter(range(1,bufnr('$')), 'buflisted(v:val)')
+endfunction
+
+function! GetMatchingBuffers(pattern)
+  return filter(GetBufferList(), 'bufname(v:val) =~ a:pattern')
+endfunction
+
+function! WipeMatchingBuffers(pattern)
+  let l:matchlist = GetMatchingBuffers(a:pattern)
+
+  let l:count = len(l:matchlist)
+  if l:count < 1
+    " echo 'No buffers found matching pattern ' . a:pattern
+    return
+  endif
+
+  if l:count == 1
+    let l:suffix = ''
+  else
+    let l:suffix = 's'
+  endif
+
+  exec 'bw ' . join(l:matchlist, ' ')
+  " echo 'Wiped ' . l:count . ' buffer' . l:suffix . '.'
+endfunction
+
+command! Gdiffoff call WipeMatchingBuffers('fugitive://')
+
 function! ToggleGStatus()
   if buflisted(bufname('.git/index'))
     bd .git/index
+    Gdiffoff
   else
     Git
-    20wincmd_
+    15wincmd_
   endif
 endfunction
 command! ToggleGStatus :call ToggleGStatus()
-nnoremap <silent> <leader>g :ToggleGStatus<cr>
+" nnoremap <silent> <leader>g :ToggleGStatus<cr>
 
 augroup fugitive_au
   autocmd!
@@ -636,6 +745,141 @@ nnoremap <silent> <F2> :VimspectorReset<CR>
 
 " bufkill settings {{{
 let g:BufKillCreateMappings=0
+" }}}
+
+" telescope settings {{{
+if has('nvim')
+    nnoremap <silent><leader>b :Telescope buffers<CR>
+
+    lua << EOF
+function clear_prompt()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-u>", true, true, true), "n", true)
+end
+
+local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
+-- Global remapping
+------------------------
+require('telescope').setup{
+  defaults = {
+    path_display = {"smart"},
+    mappings = {
+      n = {
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-a>"] = actions.select_all,
+        ["<C-b>"] = actions.results_scrolling_up,
+        ["<C-f>"] = actions.results_scrolling_down,
+        ["<PageUp>"] = actions.preview_scrolling_up,
+        ["<PageDown>"] = actions.preview_scrolling_down,
+      },
+      i = {
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-u>"] = clear_prompt,
+        ["<C-a>"] = actions.select_all,
+        ["<C-b>"] = actions.results_scrolling_up,
+        ["<C-f>"] = actions.results_scrolling_down,
+        ["<PageUp>"] = actions.preview_scrolling_up,
+        ["<PageDown>"] = actions.preview_scrolling_down,
+      },
+    },
+    sorting_strategy = "ascending",
+    selection_strategy = "reset",
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        prompt_position = "top",
+      },
+      anchor = "S",
+      width = function(_, max_columns, _)
+        return max_columns - 14
+      end,
+      height = 30,
+    },
+    results_title = false,
+    prompt_prefix = "  ",
+    selection_caret = "▶  ",
+    entry_prefix = "   ",
+  },
+  pickers = {
+    find_files = {
+      -- theme = "ivy",
+      results_title = false,
+    },
+    buffers = {
+      results_title = false,
+      mappings = {
+        n = {
+          ["dd"] = actions.delete_buffer,
+        },
+      },
+      -- sort_lastused = true,
+      sort_mru = true,
+      ignore_current_buffer = true,
+    },
+    grep_string = {
+      path_display = { "shorten" },
+      word_match = "-w",
+      only_sort_text = true,
+      search = '',
+      results_title = false,
+      layout_config = {
+        anchor = "CENTER",
+        height = 0.85,
+      },
+    },
+    git_status = {
+      initial_mode = "normal",
+      attach_mappings = function(_, map)
+        actions.select_default:replace(function(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          if selection == nil then
+            print "[telescope] Nothing currently selected"
+            return
+          end
+          actions.close(prompt_bufnr)
+          vim.fn.histadd("cmd", "Git difftool -y -- " .. selection.value)
+          vim.cmd("Git difftool -y -- " .. selection.value)
+        end)
+        map("n", "cc", function(prompt_bufnr)
+          actions.close(prompt_bufnr)
+          vim.fn.histadd("cmd", "Git commit")
+          vim.cmd("Git commit")
+        end)
+        map("n", "s", actions.git_staging_toggle)
+        return true
+      end,
+    }
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                     -- false will only do exact matching
+      override_generic_sorter = true,   -- override the generic sorter
+      override_file_sorter = true,      -- override the file sorter
+      case_mode = "smart_case",         -- or "ignore_case" or "respect_case"
+                                        -- the default case_mode is "smart_case"
+    },
+  },
+}
+
+require('telescope').load_extension('fzf')
+EOF
+
+nnoremap <C-p> :Telescope find_files<CR>
+" nnoremap <C-g> :lua require('telescope.builtin').grep_string(require('telescope.themes').get_ivy({ path_display = {"shorten"}, word_match = "-w", only_sort_text = true, search = '' }))<CR>
+nnoremap <C-g> :Telescope grep_string<CR>
+
+nnoremap <silent> <leader>g :Telescope git_status<CR>
+" nnoremap <C-g> :Telescope live_grep<CR>
+endif
+" }}}
+
+" coc-snippets settings {{{
+imap <C-e> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
 " }}}
 
 " load local config, if it exists

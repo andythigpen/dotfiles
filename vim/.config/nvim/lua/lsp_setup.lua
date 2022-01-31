@@ -3,7 +3,6 @@ local M = {}
 -- DEBUGGING: vim.lsp.set_log_level("debug")
 
 local nvim_lsp = require('lspconfig')
--- DEBUGGING: vim.lsp.set_log_level("debug")
 
 -- completion capabilities
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -31,14 +30,14 @@ function M.is_floating_window_open()
 end
 
 function M.open_diagnostic()
-  if M.is_floating_window_open() then
+  local mode = vim.api.nvim_get_mode()
+  if mode.mode ~= "n" or M.is_floating_window_open() then
     return
   end
   vim.diagnostic.open_float(nil, {focus=false})
 end
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua require('lsp_setup').open_diagnostic()]]
 -- end diagnostic configuration
-
 
 
 local border = {
@@ -90,10 +89,16 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+-- Format command, autoformat
+vim.cmd [[
+command! -nargs=0 Format :lua vim.lsp.buf.formatting_sync({}, 3000)
+autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync({}, 3000)
+]]
 
 -- Reference server configurations at https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
 -- Python (pyright)
+-- npm i -g pyright
 nvim_lsp.pyright.setup{
   capabilities = capabilities,
   on_attach = on_attach,
@@ -105,6 +110,23 @@ nvim_lsp.rls.setup{
   capabilities = capabilities,
   on_attach = on_attach,
   handlers = handlers,
+}
+
+-- EFM (https://github.com/mattn/efm-langserver)
+nvim_lsp.efm.setup{
+  init_options = { documentFormatting = true },
+  filetypes = { 'python', 'lua' },
+  settings = {
+    rootMarkers = {".git/"},
+    languages = {
+      lua = {
+        {formatCommand = "lua-format -i", formatStdin = true},
+      },
+      python = {
+        {formatCommand = "black --quiet -", formatStdin = true},
+      },
+    },
+  },
 }
 
 return M

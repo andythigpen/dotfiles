@@ -1,6 +1,7 @@
 -- Setup nvim-cmp.
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local lspkind = require('lspkind')
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -8,6 +9,12 @@ local has_words_before = function()
 end
 
 cmp.setup({
+  experimental = {
+    ghost_text = true,
+  },
+  formatting = {
+    format = lspkind.cmp_format({with_text = true}),
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -63,16 +70,10 @@ cmp.setup.cmdline('/', {
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
+  keyword_length = 3,
   sources = cmp.config.sources({
     { name = 'path' }
   }, {
-    { name = 'cmdline' }
+    { name = 'cmdline', keyword_length = 3 }
   })
 })
-
--- -- Setup lspconfig.
--- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
--- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
--- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
---   capabilities = capabilities
--- }

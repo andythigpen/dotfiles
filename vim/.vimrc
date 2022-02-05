@@ -28,7 +28,6 @@ Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'kburdett/vim-nuuid'
-Plug 'hzchirs/vim-material'
 Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -38,6 +37,9 @@ Plug 'mhinz/vim-startify'
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 Plug 'vim-test/vim-test'
 Plug 'qpkorr/vim-bufkill'
+
+" colorscheme
+Plug 'marko-cerovac/material.nvim'
 
 if has('nvim')
 " Tree sitter {{{
@@ -248,8 +250,8 @@ augroup CustomColors
 augroup END
 
 set background=dark
-colorscheme vim-material
-
+let g:material_style = 'deep ocean'
+colorscheme material
 " }}}
 
 " Generic leader mappings {{{

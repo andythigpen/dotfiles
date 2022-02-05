@@ -61,8 +61,10 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 " }}}
 
-" snippets
+" snippets {{{
 Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+" }}}
 
 " lsp helpers {{{
 Plug 'neovim/nvim-lspconfig'
@@ -424,11 +426,6 @@ let g:tagbar_autoshowtag = 1
 
 " makeprg/keywordprg settings {{{
 set keywordprg=man
-" }}}
-
-" ultisnips settings {{{
-" let g:UltiSnipsExpandTrigger = "<c-e>"
-" let g:UltiSnipsEditSplit = "vertical"
 " }}}
 
 " fzf settings {{{
@@ -818,11 +815,6 @@ nnoremap <C-g> :Telescope grep_string<CR>
 " nnoremap <silent> <leader>g :Telescope git_status<CR>
 " nnoremap <C-g> :Telescope live_grep<CR>
 endif
-" }}}
-
-" coc-snippets settings {{{
-" imap <C-e> <Plug>(coc-snippets-expand)
-" vmap <C-j> <Plug>(coc-snippets-select)
 " }}}
 
 " load local config, if it exists

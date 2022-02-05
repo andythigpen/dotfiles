@@ -1,0 +1,32 @@
+snippet if 
+	if (${1:/* condition */}) {
+	    ${0:/* code */}
+	}
+
+snippet el else statement
+	else {
+	    ${0:/* code */}
+	}
+
+snippet eli else if statement
+	else if (${1:/* condition */}) {
+	    ${0:/* code */}
+	}
+
+snippet wh while loop
+	while (${1:/* condition */}) {
+	    ${0:/* code */}
+	}
+
+snippet for for loop
+	for (${1:int i = 0}; ${2:/* condition */}; ${3:++${1/(\S+\s+)?(\w+).*/(?1:$2)/}}) {
+	    ${0:/* code */}
+	}
+
+snippet do do while loop
+	do {
+	    ${0:/* code */}
+	} while(${1:/* condition */});
+
+snippet inc include
+	#include ${0}

@@ -6,4 +6,5 @@ source ~/.vimrc
 " load lua configuration
 lua require('user.cmp')
 lua require('user.lsp')
+lua require('user.snippets')
 lua require('user.statusline')

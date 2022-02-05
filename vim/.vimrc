@@ -14,7 +14,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
-Plug 'vim-airline/vim-airline'
 Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -70,6 +69,13 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'onsails/lspkind-nvim'
 " }}}
+
+" status line {{{
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'kyazdani42/nvim-web-devicons'
+" }}}
+
 end
 
 call plug#end()
@@ -418,85 +424,6 @@ let g:tagbar_autoshowtag = 1
 
 " makeprg/keywordprg settings {{{
 set keywordprg=man
-" }}}
-
-" airline settings {{{
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-" shorten the airline mode indicators
-let g:airline_mode_map = {
-    \ '__'     : '-',
-    \ 'c'      : 'C',
-    \ 'i'      : 'I',
-    \ 'ic'     : 'I',
-    \ 'ix'     : 'I',
-    \ 'n'      : 'N',
-    \ 'multi'  : 'M',
-    \ 'ni'     : 'N',
-    \ 'no'     : 'N',
-    \ 'R'      : 'R',
-    \ 'Rv'     : 'R',
-    \ 's'      : 'S',
-    \ 'S'      : 'S',
-    \ ''     : 'S',
-    \ 't'      : 'T',
-    \ 'v'      : 'V',
-    \ 'V'      : 'V',
-    \ ''     : 'V',
-    \ }
-let g:airline_filetype_overrides = {
-    \ 'coc-explorer': [ 'CoC Explorer', '' ],
-    \ 'fugitive': ['fugitive', '%{airline#util#wrap(airline#extensions#branch#get_head(),80)}'],
-    \ 'help':  [ 'Help', '%f' ],
-    \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
-    \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
-    \ 'startify': [ 'startify', '' ],
-    \ 'vim-plug': [ 'Plugins', '' ],
-    \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
-    \ }
-let g:airline_theme='material'
-let g:airline_highlighting_cache = 1
-
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.paste = ''
-let g:airline_symbols.spell = '暈'
-let g:airline_symbols.linenr = '  '
-let g:airline_symbols.maxlinenr = '☰ '
-let g:airline_symbols.colnr = '  '
-
-" this may have a small performance penalty
-let g:airline_skip_empty_sections = 1
-
-" airline whitespace
-let g:airline#extensions#whitespace#trailing_format = '%s ﲒ'
-let g:airline#extensions#whitespace#mixed_indent_format = '%s '
-let g:airline#extensions#whitespace#long_format = '%s 蝹'
-let g:airline#extensions#whitespace#mixed_indent_file_format = '%s '
-let g:airline#extensions#whitespace#conflicts_format = '%s '
-
-" airline coc
-let airline#extensions#coc#error_symbol = '𥉉'
-let airline#extensions#coc#warning_symbol = ' '
-
-" override parts to set the minwidth
-call airline#parts#define('linenr', {
-      \ 'raw': '%{g:airline_symbols.linenr}%3l',
-      \ 'accent': 'bold'})
-call airline#parts#define('maxlinenr', {
-      \ 'raw': '/%3L%{g:airline_symbols.maxlinenr}',
-      \ 'accent': 'bold'})
-call airline#parts#define('colnr', {
-      \ 'raw': '%{g:airline_symbols.colnr}%3v',
-      \ 'accent': 'bold'})
-
-" override to set minwidth for percentage
-let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p', 'linenr', 'maxlinenr', 'colnr'])
-
-set noshowmode          " airline includes this info in the statusline
 " }}}
 
 " ultisnips settings {{{

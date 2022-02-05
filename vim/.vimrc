@@ -65,6 +65,7 @@ Plug 'L3MON4D3/LuaSnip'
 
 " lsp helpers {{{
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'onsails/lspkind-nvim'
 " }}}
 end

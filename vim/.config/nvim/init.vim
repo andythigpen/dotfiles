@@ -4,5 +4,5 @@ let &packpath = &runtimepath
 source ~/.vimrc
 
 " load lua configuration
-lua require('cmp_setup')
-lua require('lsp_setup')
+lua require('user.cmp')
+lua require('user.lsp')

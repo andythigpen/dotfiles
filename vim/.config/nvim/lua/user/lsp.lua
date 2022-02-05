@@ -36,7 +36,7 @@ function M.open_diagnostic()
   end
   vim.diagnostic.open_float(nil, {focus=false})
 end
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua require('lsp_setup').open_diagnostic()]]
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnostic()]]
 -- end diagnostic configuration
 
 

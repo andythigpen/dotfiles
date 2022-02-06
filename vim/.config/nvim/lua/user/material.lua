@@ -34,6 +34,12 @@ require('material').setup{
     SignatureMarkText = { fg = '#3B3F51', bg = '#0F111A' },
     CursorLineNr = { fg = '#EEFFFF' },
     CursorLine = { bg = '#0F111A' },
+    VertSplit = { fg = '#090B10', bg = '#090B10' },
+    TabLineSel = { bg = '#1F2233', fg = '#A6ACCD' },
+    DiffAdd = { bg = '#12261E' },
+    DiffDelete = { bg = '#301A1F' },
+    DiffChange = { bg = '#12261E' },
+    DiffText = { bg = '#1D572C' },
   },
 }
 

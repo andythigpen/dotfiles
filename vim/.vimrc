@@ -187,7 +187,7 @@ set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
 " full lines for splits/folds
-set fillchars=vert:│,fold:─
+set fillchars=vert:\ ,fold:─
 
 " adjust theme colors
 function! CustomHighlights() abort

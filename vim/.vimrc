@@ -34,13 +34,16 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'mhinz/vim-startify'
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
-Plug 'vim-test/vim-test'
 Plug 'qpkorr/vim-bufkill'
+
+" testing {{{
+Plug 'vim-test/vim-test'
+Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
+" }}}
 
 " colorscheme
 Plug 'marko-cerovac/material.nvim'
 
-if has('nvim')
 " Tree sitter {{{
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
@@ -79,8 +82,6 @@ Plug 'nvim-lualine/lualine.nvim'
 " If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
 " }}}
-
-end
 
 call plug#end()
 " }}}

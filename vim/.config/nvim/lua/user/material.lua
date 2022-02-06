@@ -16,6 +16,7 @@ require('material').setup{
     "fugitive",
     "tagbar",
     "nerdtree",
+    "UltestSummary",
   },
 
   high_visibility = {

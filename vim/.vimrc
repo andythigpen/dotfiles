@@ -26,7 +26,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
-Plug 'kburdett/vim-nuuid'
 Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -34,7 +33,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 Plug 'qpkorr/vim-bufkill'
-
+Plug 'lukas-reineke/virt-column.nvim'
 Plug 'startup-nvim/startup.nvim'
 
 " testing {{{

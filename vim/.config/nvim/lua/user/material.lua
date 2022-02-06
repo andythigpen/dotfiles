@@ -42,3 +42,7 @@ vim.cmd [[
   let g:material_style = 'deep ocean'
   colorscheme material
 ]]
+
+
+-- color column
+require("virt-column").setup()

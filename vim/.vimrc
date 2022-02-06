@@ -36,6 +36,9 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'lukas-reineke/virt-column.nvim'
 Plug 'startup-nvim/startup.nvim'
 
+" lua development
+Plug 'rafcamlet/nvim-luapad'
+
 " testing {{{
 Plug 'vim-test/vim-test'
 Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }

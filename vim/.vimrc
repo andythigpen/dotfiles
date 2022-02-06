@@ -32,9 +32,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kshenoy/vim-signature'
-Plug 'mhinz/vim-startify'
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
 Plug 'qpkorr/vim-bufkill'
+
+Plug 'startup-nvim/startup.nvim'
 
 " testing {{{
 Plug 'vim-test/vim-test'

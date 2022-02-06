@@ -259,8 +259,6 @@ augroup CustomColors
 augroup END
 
 set background=dark
-let g:material_style = 'deep ocean'
-colorscheme material
 " }}}
 
 " Generic leader mappings {{{

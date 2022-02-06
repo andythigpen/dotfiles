@@ -71,6 +71,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'onsails/lspkind-nvim'
+Plug 'j-hui/fidget.nvim'
 " }}}
 
 " status line {{{

@@ -30,12 +30,14 @@ require('material').setup{
   lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
 
   custom_highlights = {
-    -- CursorLine = { fg = '#0000FF', gui = 'underline' },
-    -- LineNr = { bg = '#FF0000' }
-  } -- Overwrite highlights with your own
+    SignatureMarkText = { fg = '#3B3F51', bg = '#0F111A' },
+    CursorLineNr = { fg = '#EEFFFF' },
+    CursorLine = { bg = '#0F111A' },
+  },
 }
 
 vim.cmd [[
+  set cursorline
   let g:material_style = 'deep ocean'
   colorscheme material
 ]]

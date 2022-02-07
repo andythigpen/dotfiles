@@ -39,6 +39,11 @@ Plug 'startup-nvim/startup.nvim'
 " lua development
 Plug 'rafcamlet/nvim-luapad'
 
+" debugging {{{
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+" }}}
+
 " testing {{{
 Plug 'vim-test/vim-test'
 Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
@@ -484,10 +489,12 @@ tnoremap <Esc> <C-\><C-n>
 let test#strategy = 'dispatch'
 let test#enabled_runners = ["ruby#rspec", "python#pytest", "rust#cargotest"]
 
-nmap <silent> <space>t :TestNearest<CR>
-nmap <silent> <space>tf :TestFile<CR>
+nmap <silent> <space>tt :UltestSummary<CR>
+nmap <silent> <space>tn :UltestNearest<CR>
+nmap <silent> <space>tf :Ultest<CR>
 nmap <silent> <space>ts :TestSuite<CR>
-nmap <silent> <space>tl :TestLast<CR>
+nmap <silent> <space>tl :UltestLast<CR>
+nmap <silent> <space>tc :UltestClear<CR>
 " }}}
 
 " vim-tmux-navigator settings {{{
@@ -544,6 +551,7 @@ augroup END
 
 " vimspector settings {{{
 nnoremap <silent> <F2> :VimspectorReset<CR>
+nnoremap <silent> <space>dr :VimspectorReset<CR>
 " }}}
 
 " bufkill settings {{{

@@ -564,6 +564,13 @@ nnoremap <silent> <space>dr :VimspectorReset<CR>
 let g:BufKillCreateMappings=0
 " }}}
 
+" vim-floaterm settings {{{
+let g:floaterm_wintype='split'
+let g:floaterm_height=15
+nnoremap <silent> <leader>1 :FloatermToggle term1<CR>
+nnoremap <silent> <leader>2 :FloatermToggle term2<CR>
+" }}}
+
 " load local config, if it exists
 if filereadable(glob("~/.vimrc_local"))
     source ~/.vimrc_local

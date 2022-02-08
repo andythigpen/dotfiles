@@ -494,6 +494,12 @@ let test#enabled_runners = ["ruby#rspec", "python#pytest", "rust#cargotest"]
 
 " iterm doesn't display the default correctly for some reason
 let g:ultest_running_sign = '羽'
+" let the subprocess think it's in an interactive session so it will print out
+" colors, etc.
+let g:ultest_use_pty = 1
+
+nmap ]t <Plug>(ultest-next-fail)
+nmap [t <Plug>(ultest-prev-fail)
 
 nmap <silent> <space>tt :UltestSummary<CR>
 nmap <silent> <space>tn :UltestNearest<CR>

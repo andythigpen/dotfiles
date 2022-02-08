@@ -6,6 +6,7 @@ source ~/.vimrc
 " load lua configuration
 lua require('user.startup')
 lua require('user.material')
+lua require('user.telescope')
 lua require('user.cmp')
 lua require('user.lsp')
 lua require('user.snippets')

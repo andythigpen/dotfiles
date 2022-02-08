@@ -1,8 +1,8 @@
 
 local function prequire(...)
-local status, lib = pcall(require, ...)
-if (status) then return lib end
-    return nil
+  local status, lib = pcall(require, ...)
+  if (status) then return lib end
+  return nil
 end
 
 local ls = prequire('luasnip')

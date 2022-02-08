@@ -31,6 +31,10 @@ end
 
 function M.open_diagnostic()
   local mode = vim.api.nvim_get_mode()
+  local ok, lib = pcall(require, 'toggle_lsp_diagnostics')
+  if ok and not lib.settings.all then
+    return
+  end
   if mode.mode ~= "n" or M.is_floating_window_open() then
     return
   end
@@ -75,19 +79,19 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>Trouble lsp_definitions<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>Trouble lsp_type_definitions<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>Trouble lsp_implementations<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>Trouble lsp_references<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>Telescope diagnostics<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>Trouble document_diagnostics<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>s', '<cmd>Telescope lsp_workspace_symbols<CR>', opts)
 end
 
@@ -138,5 +142,14 @@ require("fidget").setup{}
 
 -- LSP signature help
 require("lsp_signature").setup{}
+
+-- Toggle diagnostics plugin
+require("toggle_lsp_diagnostics").init{ virtual_text = false }
+
+-- LSP diagnostics helpers
+require("trouble").setup{
+  -- if there's only one entry, automatically jump to it for these modes
+  auto_jump = {"lsp_definitions", "lsp_implementations", "lsp_type_definitions"},
+}
 
 return M

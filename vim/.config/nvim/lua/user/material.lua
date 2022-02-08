@@ -17,6 +17,7 @@ require('material').setup{
     "tagbar",
     "nerdtree",
     "UltestSummary",
+    "aerial",
   },
 
   high_visibility = {

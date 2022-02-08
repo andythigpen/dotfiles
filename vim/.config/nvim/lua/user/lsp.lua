@@ -93,6 +93,9 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>Trouble document_diagnostics<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>s', '<cmd>Telescope lsp_workspace_symbols<CR>', opts)
+
+  -- setup aerial plugin for right-hand outline view
+  require("aerial").on_attach(client, bufnr)
 end
 
 -- Format command, autoformat

@@ -14,7 +14,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
-Plug 'majutsushi/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -36,6 +35,8 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'lukas-reineke/virt-column.nvim'
 Plug 'startup-nvim/startup.nvim'
 Plug 'ThePrimeagen/harpoon'
+Plug 'voldikss/vim-floaterm'
+Plug 'stevearc/aerial.nvim'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'
@@ -427,13 +428,6 @@ let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
 let g:NERDTreeShowBookmarks = 1     " show bookmarks by default
 let g:NERDTreeRespectWildIgnore = 1 " respect wildignore
 let g:NERDTreeWinSize = 50          " window width
-" }}}
-
-" Tagbar settings {{{
-nnoremap <silent><leader>t :TagbarToggle<CR>
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-let g:tagbar_autoshowtag = 1
 " }}}
 
 " makeprg/keywordprg settings {{{

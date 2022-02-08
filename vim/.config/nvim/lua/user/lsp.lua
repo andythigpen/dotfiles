@@ -136,4 +136,7 @@ end)
 -- LSP status
 require("fidget").setup{}
 
+-- LSP signature help
+require("lsp_signature").setup{}
+
 return M

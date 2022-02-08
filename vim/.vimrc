@@ -70,7 +70,6 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 " }}}
 
 " snippets {{{
@@ -83,6 +82,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'onsails/lspkind-nvim'
 Plug 'j-hui/fidget.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 " }}}
 
 " status line {{{

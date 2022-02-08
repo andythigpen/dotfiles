@@ -485,9 +485,12 @@ let g:user_emmet_settings = {
 tnoremap <Esc> <C-\><C-n>
 " }}}
 
-" vim-test settings {{{
+" vim-test / ultest settings {{{
 let test#strategy = 'dispatch'
 let test#enabled_runners = ["ruby#rspec", "python#pytest", "rust#cargotest"]
+
+" iterm doesn't display the default correctly for some reason
+let g:ultest_running_sign = '羽'
 
 nmap <silent> <space>tt :UltestSummary<CR>
 nmap <silent> <space>tn :UltestNearest<CR>

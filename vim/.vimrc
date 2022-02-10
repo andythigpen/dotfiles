@@ -12,7 +12,6 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -37,6 +36,7 @@ Plug 'startup-nvim/startup.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'voldikss/vim-floaterm'
 Plug 'stevearc/aerial.nvim'
+Plug 'kyazdani42/nvim-tree.lua'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'
@@ -84,6 +84,7 @@ Plug 'j-hui/fidget.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'stevearc/dressing.nvim'
 " }}}
 
 " status line {{{
@@ -407,27 +408,6 @@ if exists("+undofile")
     set undofile                " save undo history to a file
     set undodir=~/.vimundo      " directory to save undo files in
 endif
-" }}}
-
-" NERDTree settings {{{
-" problem with arrows in NERDTree ?
-" try this:
-" http://stackoverflow.com/questions/3766204/vim-doesnt-support-unicode
-function! OpenNERDTree()
-    if !empty(expand('%')) && empty(getbufvar(bufnr("%"), "&buftype"))
-        " if the current buffer is a regular file with a filename, open
-        " NERDTree focused on that file
-        silent execute "normal! :NERDTreeToggle %\<CR>"
-    else
-        " otherwise, just toggle NERDTree
-        silent execute "normal! :NERDTreeToggle\<CR>"
-    endif
-endfunction
-nnoremap <silent><leader>f :call OpenNERDTree()<CR>
-let g:NERDTreeQuitOnOpen = 1        " quit the file view after selecting a file
-let g:NERDTreeShowBookmarks = 1     " show bookmarks by default
-let g:NERDTreeRespectWildIgnore = 1 " respect wildignore
-let g:NERDTreeWinSize = 50          " window width
 " }}}
 
 " makeprg/keywordprg settings {{{

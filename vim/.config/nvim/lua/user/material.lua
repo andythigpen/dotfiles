@@ -18,6 +18,7 @@ require('material').setup{
     "nerdtree",
     "UltestSummary",
     "aerial",
+    "vim-plug",
   },
 
   high_visibility = {

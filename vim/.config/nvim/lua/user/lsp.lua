@@ -44,21 +44,22 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnost
 -- end diagnostic configuration
 
 
-local border = {
-  {"🭽", "FloatBorder"},
-  {"▔", "FloatBorder"},
-  {"🭾", "FloatBorder"},
-  {"▕", "FloatBorder"},
-  {"🭿", "FloatBorder"},
-  {"▁", "FloatBorder"},
-  {"🭼", "FloatBorder"},
-  {"▏", "FloatBorder"},
-}
+-- this doesn't work on iterm for some reason
+-- local border = {
+--   {"🭽", "FloatBorder"},
+--   {"▔", "FloatBorder"},
+--   {"🭾", "FloatBorder"},
+--   {"▕", "FloatBorder"},
+--   {"🭿", "FloatBorder"},
+--   {"▁", "FloatBorder"},
+--   {"🭼", "FloatBorder"},
+--   {"▏", "FloatBorder"},
+-- }
 
 -- LSP settings (for overriding per client)
 local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border}),
+  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
+  -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}),
 }
 
 
@@ -79,8 +80,8 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>Trouble lsp_definitions<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>Trouble lsp_type_definitions<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definitions()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gy', '<cmd>lua vim.lsp.buf.type_definitions()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>Trouble lsp_implementations<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>Trouble lsp_references<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -110,33 +111,55 @@ local lsp_installer = require("nvim-lsp-installer")
 -- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
 -- or if the server is already installed).
 lsp_installer.on_server_ready(function(server)
-    local opts = {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      handlers = handlers,
-    }
+  local opts = {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    handlers = handlers,
+  }
 
-    -- (optional) Customize the options passed to the server
-    if server.name == "efm" then
-      opts.init_options = { documentFormatting = true }
-      opts.filetypes = { 'python', 'lua' }
-      opts.settings = {
-        rootMarkers = {".git/"},
-        languages = {
-          lua = {
-            {formatCommand = "lua-format -i", formatStdin = true},
-          },
-          python = {
-            {formatCommand = "black --quiet -", formatStdin = true},
-          },
+  -- (optional) Customize the options passed to the server
+  if server.name == "efm" then
+    opts.init_options = { documentFormatting = true }
+    opts.filetypes = { 'python', 'lua' }
+    opts.settings = {
+      rootMarkers = {".git/"},
+      languages = {
+        lua = {
+          {formatCommand = "lua-format -i", formatStdin = true},
         },
-      }
-    end
+        python = {
+          {formatCommand = "black --quiet -", formatStdin = true},
+        },
+      },
+    }
+  elseif server.name == "sumneko_lua" then
+    local runtime_path = vim.split(package.path, ';')
+    table.insert(runtime_path, "lua/?.lua")
+    table.insert(runtime_path, "lua/?/init.lua")
+    opts.settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+          runtime_path = runtime_path,
+        },
+        diagnostics = {
+          globals = {'vim'},
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+        },
+        telemetry = {
+          -- do not send telemetry data
+          enable = false,
+        },
+      },
+    }
+  end
 
-    -- This setup() function will take the provided server configuration and decorate it with the necessary properties
-    -- before passing it onwards to lspconfig.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
+  -- This setup() function will take the provided server configuration and decorate it with the necessary properties
+  -- before passing it onwards to lspconfig.
+  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  server:setup(opts)
 end)
 -- end LSP installer configuration
 
@@ -144,7 +167,9 @@ end)
 require("fidget").setup{}
 
 -- LSP signature help
-require("lsp_signature").setup{}
+require("lsp_signature").setup{
+  hint_enable = false,
+}
 
 -- Toggle diagnostics plugin
 require("toggle_lsp_diagnostics").init{ virtual_text = false }

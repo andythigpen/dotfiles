@@ -1,5 +1,13 @@
 -- startup dashboard configuration
 
+local M = {}
+
+-- Runs git up and then displays a picker for the branches
+function M:git_update()
+  vim.call('FugitiveExecute', 'up')
+  vim.cmd[[Telescope git_branches]]
+end
+
 local settings = {
   -- every line should be same width without escaped \
   header = {
@@ -30,11 +38,12 @@ local settings = {
     title = "Basic Commands",
     margin = 5,
     content = {
-      { " Recent Files", "Telescope oldfiles", "r" },
+      { " Recent Files", "Telescope oldfiles only_cwd=true", "r" },
       { " Find File", "Telescope find_files", "f" },
       { " Find Word", "Telescope live_grep", "g" },
+      { " Git Branches", "lua require('user.startup').git_update()", "b" },
       { " New File", "enew", "n" },
-      { " Quit", "qa", "q" },
+      { " Quit", "q", "q" },
     },
     highlight = "String",
     default_color = "",
@@ -91,3 +100,5 @@ local settings = {
 }
 
 require("startup").setup(settings)
+
+return M

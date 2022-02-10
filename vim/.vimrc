@@ -51,9 +51,6 @@ Plug 'vim-test/vim-test'
 Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
 " }}}
 
-" colorscheme
-Plug 'marko-cerovac/material.nvim'
-
 " Tree sitter {{{
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
@@ -94,6 +91,9 @@ Plug 'nvim-lualine/lualine.nvim'
 " If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
 " }}}
+
+" colorscheme - this should occur after lualine in the runtimepath
+Plug 'marko-cerovac/material.nvim'
 
 call plug#end()
 " }}}

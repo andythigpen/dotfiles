@@ -140,7 +140,19 @@ require("lsp_signature").setup{
 }
 
 -- Toggle diagnostics plugin
-require("toggle_lsp_diagnostics").init{ virtual_text = false }
+local toggle_lsp_diagnostics = require("toggle_lsp_diagnostics")
+toggle_lsp_diagnostics.init{ virtual_text = false }
+
+function M.toggle_diagnostics()
+  if toggle_lsp_diagnostics.settings.all then
+    toggle_lsp_diagnostics.turn_off_diagnostics()
+  else
+    toggle_lsp_diagnostics.turn_on_diagnostics_default()
+  end
+end
+vim.cmd [[
+nnoremap <silent> <space>d :lua require('user.lsp').toggle_diagnostics()<CR>
+]]
 
 -- LSP diagnostics helpers
 require("trouble").setup{

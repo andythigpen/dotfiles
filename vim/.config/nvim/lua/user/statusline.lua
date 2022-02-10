@@ -11,7 +11,7 @@ local function mode_format(str)
 end
 
 lualine.setup {
-  extensions = {'fugitive', 'nerdtree', 'quickfix'},
+  extensions = {'fugitive', 'nvim-tree', 'quickfix', 'aerial', 'ultest'},
   sections = {
     lualine_a = {
       -- shorten the mode output to just the first character

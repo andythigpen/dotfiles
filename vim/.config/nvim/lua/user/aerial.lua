@@ -2,6 +2,7 @@
 require("aerial").setup{
   max_width = 50,
   min_width = 50,
+  default_direction = "right",
   filter_kind = {
     "Class",
     "Constructor",

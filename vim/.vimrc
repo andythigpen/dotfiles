@@ -37,6 +37,7 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'voldikss/vim-floaterm'
 Plug 'stevearc/aerial.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'rafcamlet/tabline-framework.nvim'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'

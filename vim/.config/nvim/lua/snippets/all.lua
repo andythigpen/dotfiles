@@ -2,7 +2,7 @@ local ls = require('luasnip')
 local s = ls.snippet
 local f = ls.function_node
 
-local uuid = require("lib.uuid")
+local uuid = require('lib.uuid')
 uuid.randomseed(os.time())
 
 -- define global snippets
@@ -13,4 +13,4 @@ local snippets = {
   s("uuid", {f(function() return uuid() end)}),
 }
 
-require('user.snippets.util').register('all', snippets)
+return snippets

@@ -3,7 +3,7 @@
 local M = {}
 
 -- Runs git up and then displays a picker for the branches
-function M:git_update()
+function M.git_update()
   vim.call('FugitiveExecute', 'up')
   vim.cmd[[Telescope git_branches]]
 end

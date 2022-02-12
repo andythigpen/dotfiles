@@ -93,15 +93,15 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>a', '<cmd>Trouble document_diagnostics<CR>', mapping_opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>s', '<cmd>Telescope lsp_workspace_symbols<CR>', mapping_opts)
 
+  -- Add Format command, automatically format on save
+  vim.cmd [[
+  command! -buffer -nargs=0 Format :lua vim.lsp.buf.formatting_sync({}, 3000)
+  autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync({}, 3000)
+  ]]
+
   -- setup aerial plugin for right-hand outline view
   require("aerial").on_attach(client, bufnr)
 end
-
--- Format command, autoformat
-vim.cmd [[
-command! -nargs=0 Format :lua vim.lsp.buf.formatting_sync({}, 3000)
-autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync({}, 3000)
-]]
 
 -- LSP installer configuration
 local lsp_installer = require("nvim-lsp-installer")

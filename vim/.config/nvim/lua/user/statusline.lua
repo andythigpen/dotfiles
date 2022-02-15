@@ -23,6 +23,7 @@ lualine.setup {
     },
     lualine_x = {
       {'ultest', cond = function() return vim.call('ultest#is_test_file') == 1 end},
+      'run_service',
       'encoding',
       'fileformat',
       'filetype'

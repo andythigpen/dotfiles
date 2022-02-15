@@ -8,7 +8,7 @@ local M = lualine_require.require('lualine.component'):extend()
 
 local default_options = {
   colored = true,
-  icon_only = false,
+  icon_only = true,
 }
 
 function M:init(options)
@@ -16,27 +16,17 @@ function M:init(options)
   self.options = vim.tbl_deep_extend('keep', self.options or {}, default_options)
 end
 
-local function ultest_status()
-  local ok, devicons = pcall(require, 'ultest')
-  if ok then
-    return vim.call('ultest#status')
-  end
-  return nil
-end
-
 function M.update_status()
-  local status = ultest_status()
-  if status == nil then
-    return ''
-  elseif status.running > 0 then
-    local total = status.passed + status.failed
-    return tostring(total) .. ' / ' .. tostring(status.tests)
-  elseif status.failed > 0 then
-    return tostring(status.failed)
-  elseif status.passed > 0 then
-    return tostring(status.passed)
+  local ok, run_service = pcall(require, 'user.run_service')
+  if ok then
+    local status = run_service.status()
+    if status == 2 then
+      return 'running'
+    elseif status == 1 then
+      return 'configured'
+    end
   end
-  return ''
+  return ''
 end
 
 function M:apply_icon()
@@ -45,17 +35,15 @@ function M:apply_icon()
   end
 
   local icon, icon_highlight_group
-  local ok, devicons = pcall(require, 'ultest')
+  local ok, run_service = pcall(require, 'user.run_service')
   if ok then
-    local status = vim.call('ultest#status')
-    if status.running > 0 then
-      icon = ''
-    elseif status.failed > 0 then
-      icon = '✖'
-      icon_highlight_group = 'UltestFail'
-    elseif status.passed > 0 then
-      icon = '✔'
-      icon_highlight_group = 'UltestPass'
+    local status = run_service.status()
+    if status == 2 then
+      icon =  ""
+      icon_highlight_group = 'DiagnosticWarn'
+    elseif status == 1 then
+      icon =  ""
+      icon_highlight_group = 'DiagnosticHint'
     end
 
     if icon and icon_highlight_group and self.options.colored then

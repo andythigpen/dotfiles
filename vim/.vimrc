@@ -421,7 +421,7 @@ set keywordprg=man
 " }}}
 
 " dispatch settings {{{
-let g:dispatch_handlers = [ 'tmux' ]
+let g:dispatch_handlers = [ 'terminal', 'tmux' ]
 let g:dispatch_compilers = {
     \ 'pipenv run': ''}
 nnoremap <leader>d :Dispatch!<CR>
@@ -439,7 +439,8 @@ endif
 function! g:projectionist_transformations.escapespace(input, o) abort
     return substitute(a:input, ' ', '\\\\ ', 'g')
 endfunction
-nnoremap <silent> <space>r  :<C-u>Start!<cr>
+" nnoremap <silent> <space>r  :<C-u>Start!<cr>
+nnoremap <silent> <space>r  :lua require('user.run_service').run()<CR>
 " }}}
 
 " delimitMate settings {{{
@@ -548,6 +549,8 @@ let g:BufKillCreateMappings=0
 " vim-floaterm settings {{{
 let g:floaterm_wintype='split'
 let g:floaterm_height=15
+let g:floaterm_autoinsert=v:false
+nnoremap <silent> <leader>` :lua require('user.run_service').toggle()<CR>
 nnoremap <silent> <leader>1 :FloatermToggle term1<CR>
 nnoremap <silent> <leader>2 :FloatermToggle term2<CR>
 " }}}

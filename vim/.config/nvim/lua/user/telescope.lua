@@ -124,6 +124,5 @@ telescope.load_extension('fzf')
 vim.cmd [[
 nnoremap <silent><leader>b :Telescope buffers<CR>
 nnoremap <C-p> :Telescope find_files<CR>
-" nnoremap <C-g> :lua require('telescope.builtin').grep_string(require('telescope.themes').get_ivy({ path_display = {"shorten"}, word_match = "-w", only_sort_text = true, search = '' }))<CR>
-nnoremap <C-g> :Telescope grep_string<CR>
+nnoremap <C-g> :Telescope live_grep<CR>
 ]]

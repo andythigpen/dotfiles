@@ -13,7 +13,6 @@ let g:vimspector_enable_mappings = 'HUMAN'
 call plug#begin('~/.vim/plugged')
 
 Plug 'tomtom/tcomment_vim'
-Plug 'Raimondi/delimitMate'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-projectionist'
@@ -38,6 +37,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'stevearc/aerial.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rafcamlet/tabline-framework.nvim'
+Plug 'windwp/nvim-autopairs'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'
@@ -441,13 +441,6 @@ function! g:projectionist_transformations.escapespace(input, o) abort
 endfunction
 " nnoremap <silent> <space>r  :<C-u>Start!<cr>
 nnoremap <silent> <space>r  :lua require('user.terminal').run()<CR>
-" }}}
-
-" delimitMate settings {{{
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_jump_expansion = 1
-let g:delimitMate_balance_matchpairs = 1
-au FileType python let b:delimitMate_nesting_quotes = ['"', '''']
 " }}}
 
 " emmet-vim settings {{{

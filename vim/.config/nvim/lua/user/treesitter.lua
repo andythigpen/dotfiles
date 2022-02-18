@@ -9,6 +9,9 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     disable = {},
   },
+  endwise = {
+    enable = true,
+  },
   ensure_installed = {
     "tsx",
     "toml",

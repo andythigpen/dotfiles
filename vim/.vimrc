@@ -38,6 +38,7 @@ Plug 'stevearc/aerial.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rafcamlet/tabline-framework.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'RRethy/nvim-treesitter-endwise'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'

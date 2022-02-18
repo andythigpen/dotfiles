@@ -35,6 +35,7 @@ function M.toggle(name, opts, cmd)
   local bufnr = vim.fn["floaterm#terminal#get_bufnr"](name)
   if bufnr == -1 then
     vim.fn["floaterm#new"](0, cmd, { [vim.type_idx] = vim.types.dictionary }, opts)
+    return
   elseif bufnr == 0 then
     vim.fn["floaterm#toggle"](0, 0, name)
     return

@@ -17,9 +17,9 @@ function M:init(options)
 end
 
 function M.update_status()
-  local ok, run_service = pcall(require, 'user.run_service')
+  local ok, terminal = pcall(require, 'user.terminal')
   if ok then
-    local status = run_service.status()
+    local status = terminal.status()
     if status == 2 then
       return 'running'
     elseif status == 1 then
@@ -35,9 +35,9 @@ function M:apply_icon()
   end
 
   local icon, icon_highlight_group
-  local ok, run_service = pcall(require, 'user.run_service')
+  local ok, terminal = pcall(require, 'user.terminal')
   if ok then
-    local status = run_service.status()
+    local status = terminal.status()
     if status == 2 then
       icon =  ""
       icon_highlight_group = 'DiagnosticWarn'

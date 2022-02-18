@@ -12,6 +12,7 @@ require('material').setup{
 
   contrast_filetypes = { -- Specify which filetypes get the contrasted (darker) background
     "terminal",
+    "floaterm",
     "qf",                -- quickfix
     "fugitive",
     "tagbar",
@@ -42,6 +43,7 @@ require('material').setup{
     DiffDelete = { bg = '#301A1F' },
     DiffChange = { bg = '#12261E' },
     DiffText = { bg = '#1D572C' },
+    Floaterm = { bg = '#090B10' },
   },
 }
 

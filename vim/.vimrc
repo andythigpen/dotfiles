@@ -87,6 +87,7 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'stevearc/dressing.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 " }}}
 
 " status line {{{

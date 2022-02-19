@@ -147,6 +147,26 @@ set showcmd           " show (partial) command keys in the status line
 set shortmess+=c      " don't give |ins-completion-menu| messages
 " }}}
 
+" 12 Selecting text {{{
+" requires tmux 3.2+, also only want to set when using tmux
+let tmux_version = split($TMUX_VERSION, '\.')
+if len(tmux_version) >= 2 && tmux_version[0] >= 3 && tmux_version[1] >= 2
+    set clipboard=unnamedplus
+    let g:clipboard = {
+        \   'name': 'tmux-osc52',
+        \   'copy': {
+        \     '+': ['tmux', 'load-buffer', '-w', '-'],
+        \     '*': ['tmux', 'load-buffer', '-w', '-'],
+        \   },
+        \   'paste': {
+        \     '+': ['tmux', 'save-buffer', '-'],
+        \     '*': ['tmux', 'save-buffer', '-'],
+        \   },
+        \   'cache-enabled': 1,
+        \ }
+endif
+" }}}
+
 " 13 Editing text {{{
 "set showmatch         " when inserting a bracket, briefly jump to its match
 

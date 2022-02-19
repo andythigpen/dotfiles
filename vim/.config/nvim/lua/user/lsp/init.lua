@@ -184,7 +184,7 @@ require("trouble").setup({
 	auto_jump = { "lsp_definitions", "lsp_implementations", "lsp_type_definitions" },
 })
 vim.cmd([[
-nnoremap <silent> <space>x :TroubleClose
+nnoremap <silent> <space>x :TroubleClose<CR>
 ]])
 
 local null_ls = require("null-ls")

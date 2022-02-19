@@ -1,8 +1,8 @@
 -- Extension for ultest
 local M = {}
 
-M.sections = { lualine_a = { 'filetype' } }
+M.sections = { lualine_a = { "filetype" } }
 
-M.filetypes = { 'UltestSummary' }
+M.filetypes = { "UltestSummary" }
 
 return M

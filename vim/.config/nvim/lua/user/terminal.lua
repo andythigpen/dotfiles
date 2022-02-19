@@ -18,7 +18,7 @@ function M.toggle_if_running(name)
   if not M.is_running(name) then
     return
   end
-  vim.fn["floaterm#toggle"](0, 0, name)
+  M.toggle(name)
 end
 
 local function win_exists(winid)

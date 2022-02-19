@@ -20,6 +20,7 @@ require('material').setup{
     "UltestSummary",
     "aerial",
     "vim-plug",
+    "Trouble",
   },
 
   high_visibility = {

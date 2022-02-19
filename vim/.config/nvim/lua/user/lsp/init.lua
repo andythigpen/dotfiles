@@ -183,6 +183,9 @@ require("trouble").setup({
 	-- if there's only one entry, automatically jump to it for these modes
 	auto_jump = { "lsp_definitions", "lsp_implementations", "lsp_type_definitions" },
 })
+vim.cmd([[
+nnoremap <silent> <space>x :TroubleClose
+]])
 
 local null_ls = require("null-ls")
 null_ls.setup({

@@ -1,9 +1,16 @@
 -- tree configuration
 
-require("nvim-tree").setup({
+local M = {}
+
+local nvim_tree = require("nvim-tree")
+local view = require("nvim-tree.view")
+
+nvim_tree.setup({
 	update_focused_file = {
 		enable = true,
+		update_cwd = true,
 	},
+	update_cwd = true,
 	view = {
 		width = 50,
 		mappings = {
@@ -36,7 +43,19 @@ require("nvim-tree").setup({
 	},
 })
 
+-- Fix behavior in NvimTreeFindFileToggle
+-- I don't know why but it doesn't correctly focus the file when opening the window.
+function M.toggle()
+	if view.is_visible() then
+		view.close()
+	else
+		nvim_tree.find_file(true)
+	end
+end
+
 -- key mappings
 vim.cmd([[
-nnoremap <silent><leader>f :NvimTreeToggle<CR>
+nnoremap <silent><leader>f :lua require('user.tree').toggle()<CR>
 ]])
+
+return M

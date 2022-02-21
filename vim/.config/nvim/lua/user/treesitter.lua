@@ -7,7 +7,7 @@ require("nvim-treesitter.configs").setup({
 	},
 	indent = {
 		enable = true,
-		disable = { "ruby" },
+		disable = { "ruby", "go" },
 	},
 	endwise = {
 		enable = true,

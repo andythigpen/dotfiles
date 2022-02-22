@@ -45,6 +45,9 @@ require("material").setup({
 		DiffChange = { bg = "#12261E" },
 		DiffText = { bg = "#1D572C" },
 		Floaterm = { bg = "#090B10" },
+		TermStatusDefault = { fg = "#A6ACCD" },
+		TermStatusRunning = { fg = "#C792EA" },
+		TermStatusFocused = { fg = "Orange" },
 	},
 })
 

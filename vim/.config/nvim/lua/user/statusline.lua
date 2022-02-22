@@ -10,6 +10,14 @@ local function mode_format(str)
 	return mode
 end
 
+local function term_running(name)
+	local ok, terminal = pcall(require, "user.terminal")
+	if ok then
+		return terminal.is_running(name)
+	end
+	return false
+end
+
 lualine.setup({
 	extensions = { "fugitive", "nvim-tree", "quickfix", "aerial", "ultest" },
 	sections = {
@@ -29,6 +37,24 @@ lualine.setup({
 				end,
 			},
 			"terminal",
+			{
+				"terminal",
+				term_name = "term1",
+				icon_running = "",
+				icon_default = "",
+				cond = function()
+					return term_running("term1")
+				end,
+			},
+			{
+				"terminal",
+				term_name = "term2",
+				icon_running = "",
+				icon_default = "",
+				cond = function()
+					return term_running("term2")
+				end,
+			},
 			"encoding",
 			"fileformat",
 			"filetype",

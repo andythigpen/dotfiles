@@ -3,8 +3,9 @@ local M = {}
 M.term_name = "run_service"
 
 -- Returns 2 if running, 1 if configured and not running, 0 otherwise
-function M.status()
-	if M.is_running() then
+function M.status(name)
+	name = name or M.term_name
+	if M.is_running(name) then
 		return 2
 	end
 	if M.is_configured() then
@@ -23,6 +24,17 @@ end
 
 local function win_exists(winid)
 	return vim.fn.empty(vim.fn.getwininfo(winid)) == 0
+end
+
+function M.is_visible(name)
+	local bufnr = vim.fn["floaterm#terminal#get_bufnr"](name)
+	if bufnr == -1 then
+		return false
+	elseif bufnr == 0 then
+		return true
+	end
+	local winid = vim.fn.getbufvar(bufnr, "floaterm_winid", -1)
+	return winid ~= -1 and win_exists(winid)
 end
 
 -- changes behavior I don't like in FloatermToggle

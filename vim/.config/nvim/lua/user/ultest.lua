@@ -26,16 +26,11 @@ function M.update_test_status()
 end
 
 function M.test(cmd)
-	local prev_python_path = vim.env.PYTHONPATH
-	vim.env.PYTHONPATH = "."
 	pcall(vim.cmd, cmd)
-
 	if bdn9.is_enabled() then
 		bdn9.test_running()
 		vim.defer_fn(M.update_test_status, 500)
 	end
-
-	vim.env.PYTHONPATH = prev_python_path
 end
 
 function M.clear()

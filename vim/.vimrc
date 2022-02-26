@@ -493,11 +493,11 @@ nmap ]t <Plug>(ultest-next-fail)
 nmap [t <Plug>(ultest-prev-fail)
 
 nmap <silent> <space>tt :UltestSummary<CR>
-nmap <silent> <space>tn :UltestNearest<CR>
-nmap <silent> <space>tf :Ultest<CR>
-nmap <silent> <space>ts :TestSuite<CR>
-nmap <silent> <space>tl :UltestLast<CR>
-nmap <silent> <space>tc :UltestClear<CR>
+nmap <silent> <space>tn :lua require('user.ultest').test('UltestNearest')<CR>
+nmap <silent> <space>tf :lua require('user.ultest').test('Ultest')<CR>
+nmap <silent> <space>ts :lua require('user.ultest').test('TestSuite')<CR>
+nmap <silent> <space>tl :lua require('user.ultest').test('UltestLast')<CR>
+nmap <silent> <space>tc :lua require('user.ultest').clear()<CR>
 " }}}
 
 " vim-tmux-navigator settings {{{
@@ -555,6 +555,12 @@ augroup END
 " vimspector settings {{{
 nnoremap <silent> <F2> :VimspectorReset<CR>
 nnoremap <silent> <space>dr :VimspectorReset<CR>
+
+augroup Bdn9Debugging
+    autocmd!
+    autocmd User VimspectorUICreated lua require('user.bdn9').debug_mode_start()
+    autocmd User VimspectorDebugEnded lua require('user.bdn9').debug_mode_end()
+augroup END
 " }}}
 
 " bufkill settings {{{

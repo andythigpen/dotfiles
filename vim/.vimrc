@@ -39,6 +39,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rafcamlet/tabline-framework.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'RRethy/nvim-treesitter-endwise'
+Plug 'andythigpen/nvim-coverage'
 
 " lua development
 Plug 'rafcamlet/nvim-luapad'

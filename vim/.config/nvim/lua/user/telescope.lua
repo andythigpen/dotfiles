@@ -9,54 +9,60 @@ local function clear_prompt()
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-u>", true, true, true), "n", true)
 end
 
+local defaults = {
+	path_display = { "smart" },
+	mappings = {
+		n = {
+			["<C-k>"] = actions.move_selection_previous,
+			["<C-j>"] = actions.move_selection_next,
+			["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+			["<C-a>"] = actions.select_all,
+			["<C-b>"] = actions.results_scrolling_up,
+			["<C-f>"] = actions.results_scrolling_down,
+			["<PageUp>"] = actions.preview_scrolling_up,
+			["<PageDown>"] = actions.preview_scrolling_down,
+			["<C-t>"] = trouble.open_with_trouble,
+		},
+		i = {
+			["<C-k>"] = actions.move_selection_previous,
+			["<C-j>"] = actions.move_selection_next,
+			["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+			["<C-u>"] = clear_prompt,
+			["<C-a>"] = actions.select_all,
+			["<C-b>"] = actions.results_scrolling_up,
+			["<C-f>"] = actions.results_scrolling_down,
+			["<PageUp>"] = actions.preview_scrolling_up,
+			["<PageDown>"] = actions.preview_scrolling_down,
+			["<C-t>"] = trouble.open_with_trouble,
+		},
+	},
+	sorting_strategy = "ascending",
+	selection_strategy = "reset",
+	layout_strategy = "horizontal",
+	layout_config = {
+		horizontal = {
+			prompt_position = "top",
+		},
+		anchor = "S",
+		width = function(_, max_columns, _)
+			return max_columns - 14
+		end,
+		height = 30,
+	},
+	results_title = false,
+	prompt_prefix = "  ",
+	selection_caret = "▶  ",
+	entry_prefix = "   ",
+}
+
+if vim.env.NVIM_FILLED_BOXES then
+	defaults.borderchars = { "⠆", "⠄", "⠇", "⠅", "⠀", "⠁", "⠃", "⠂" }
+end
+
 -- Global remapping
 ------------------------
 telescope.setup({
-	defaults = {
-		path_display = { "smart" },
-		mappings = {
-			n = {
-				["<C-k>"] = actions.move_selection_previous,
-				["<C-j>"] = actions.move_selection_next,
-				["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-				["<C-a>"] = actions.select_all,
-				["<C-b>"] = actions.results_scrolling_up,
-				["<C-f>"] = actions.results_scrolling_down,
-				["<PageUp>"] = actions.preview_scrolling_up,
-				["<PageDown>"] = actions.preview_scrolling_down,
-				["<C-t>"] = trouble.open_with_trouble,
-			},
-			i = {
-				["<C-k>"] = actions.move_selection_previous,
-				["<C-j>"] = actions.move_selection_next,
-				["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-				["<C-u>"] = clear_prompt,
-				["<C-a>"] = actions.select_all,
-				["<C-b>"] = actions.results_scrolling_up,
-				["<C-f>"] = actions.results_scrolling_down,
-				["<PageUp>"] = actions.preview_scrolling_up,
-				["<PageDown>"] = actions.preview_scrolling_down,
-				["<C-t>"] = trouble.open_with_trouble,
-			},
-		},
-		sorting_strategy = "ascending",
-		selection_strategy = "reset",
-		layout_strategy = "horizontal",
-		layout_config = {
-			horizontal = {
-				prompt_position = "top",
-			},
-			anchor = "S",
-			width = function(_, max_columns, _)
-				return max_columns - 14
-			end,
-			height = 30,
-		},
-		results_title = false,
-		prompt_prefix = "  ",
-		selection_caret = "▶  ",
-		entry_prefix = "   ",
-	},
+	defaults = defaults,
 	pickers = {
 		find_files = {
 			-- theme = "ivy",

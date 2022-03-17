@@ -42,20 +42,25 @@ vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnost
 -- end diagnostic configuration
 
 -- this doesn't work on iterm for some reason
--- local border = {
---   {"🭽", "FloatBorder"},
---   {"▔", "FloatBorder"},
---   {"🭾", "FloatBorder"},
---   {"▕", "FloatBorder"},
---   {"🭿", "FloatBorder"},
---   {"▁", "FloatBorder"},
---   {"🭼", "FloatBorder"},
---   {"▏", "FloatBorder"},
--- }
+
+local border = "rounded"
+
+if vim.env.NVIM_FILLED_BOXES then
+	border = {
+		{ "⠀", "FloatBorder" },
+		{ "⠆", "FloatBorder" },
+		{ "⠁", "FloatBorder" },
+		{ "⠄", "FloatBorder" },
+		{ "⠃", "FloatBorder" },
+		{ "⠇", "FloatBorder" },
+		{ "⠂", "FloatBorder" },
+		{ "⠅", "FloatBorder" },
+	}
+end
 
 -- LSP settings (for overriding per client)
 local handlers = {
-	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
 	-- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}),
 }
 
@@ -159,9 +164,16 @@ end)
 require("fidget").setup({})
 
 -- LSP signature help
-require("lsp_signature").setup({
+local lsp_signature_opts = {
 	hint_enable = false,
-})
+}
+if vim.env.NVIM_FILLED_BOXES then
+	lsp_signature_opts.bind = true
+	lsp_signature_opts.handler_opts = {
+		border = border,
+	}
+end
+require("lsp_signature").setup(lsp_signature_opts)
 
 -- Toggle diagnostics plugin
 local toggle_lsp_diagnostics = require("toggle_lsp_diagnostics")

@@ -39,6 +39,8 @@ function M.update_status()
 	return ""
 end
 
+local icon_hl_cache = {}
+
 function M:apply_icon()
 	if not self.options.icons_enabled then
 		return
@@ -60,17 +62,21 @@ function M:apply_icon()
 
 		if icon and icon_highlight_group and self.options.colored then
 			local highlight_color = modules.utils.extract_highlight_colors(icon_highlight_group, "fg")
-			local default_highlight = modules.highlight.format_highlight(self.options.self.section)
-			local icon_highlight = self.options.self.section .. "_" .. icon_highlight_group
-			if not modules.highlight.highlight_exists(icon_highlight .. "_normal") then
-				icon_highlight = modules.highlight.create_component_highlight_group(
-					{ fg = highlight_color },
-					icon_highlight_group,
-					self.options
-				)
-			end
+			if highlight_color then
+				local default_highlight = self:get_default_hl()
+				local icon_highlight = icon_hl_cache[highlight_color]
+				if not icon_highlight or not modules.highlight.highlight_exists(icon_highlight.name .. "_normal") then
+					icon_highlight = modules.highlight.create_component_highlight_group(
+						{ fg = highlight_color },
+						icon_highlight_group,
+						self.options,
+						false
+					)
+					icon_hl_cache[highlight_color] = icon_highlight
+				end
 
-			icon = modules.highlight.component_format_highlight(icon_highlight) .. icon .. default_highlight
+				icon = modules.highlight.component_format_highlight(icon_highlight) .. icon .. default_highlight
+			end
 		end
 	end
 

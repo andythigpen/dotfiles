@@ -483,6 +483,7 @@ tnoremap <Esc> <C-\><C-n>
 " vim-test / ultest settings {{{
 let test#strategy = 'dispatch'
 let test#enabled_runners = ["ruby#rspec", "python#pytest", "rust#cargotest"]
+let test#python#pytest#options = '--cov'
 
 " iterm doesn't display the default correctly for some reason
 let g:ultest_running_sign = '羽'

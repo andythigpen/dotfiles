@@ -47,7 +47,7 @@ function M.test_failed()
 	M.clear_timer()
 	vim.cmd([[
   silent !bdn9 key clear -l 1
-  silent !bdn9 hsv set -m 14 255 255 55
+  silent !bdn9 hsv set -m 1 255 255 55
   ]])
 	timer = vim.defer_fn(M.test_clear, 5000)
 end
@@ -59,7 +59,7 @@ function M.test_passed()
 	M.clear_timer()
 	vim.cmd([[
   silent !bdn9 key clear -l 1
-  silent !bdn9 hsv set -m 14 255 255 55
+  silent !bdn9 hsv set -m 1 85 255 55
   ]])
 	timer = vim.defer_fn(M.test_clear, 5000)
 end

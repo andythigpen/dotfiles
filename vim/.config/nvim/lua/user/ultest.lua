@@ -9,6 +9,7 @@ if not ok then
 end
 
 local bdn9 = require("user.bdn9")
+local coverage_installed, coverage = pcall(require, "coverage")
 
 local M = {}
 
@@ -22,6 +23,10 @@ function M.update_test_status()
 		bdn9.test_failed()
 	elseif status.passed > 0 then
 		bdn9.test_passed()
+	end
+	if coverage_installed then
+		-- automatically display coverage after running tests
+		coverage.load()
 	end
 end
 

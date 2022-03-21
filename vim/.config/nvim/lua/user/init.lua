@@ -11,5 +11,4 @@ require("user.statusline")
 require("user.tabline")
 require("user.autopairs")
 require("user.global")
-
-require("coverage").setup()
+require("user.coverage")

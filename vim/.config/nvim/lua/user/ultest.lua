@@ -26,7 +26,7 @@ function M.update_test_status()
 	end
 	if coverage_installed then
 		-- automatically display coverage after running tests
-		coverage.load()
+		coverage.load(true)
 	end
 end
 

@@ -20,6 +20,7 @@ local custom_highlights = {
 	TermStatusDefault = { fg = "#A6ACCD" },
 	TermStatusRunning = { fg = "#C792EA" },
 	TermStatusFocused = { fg = "Orange" },
+	helpHyperTextJump = { link = "Underlined" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

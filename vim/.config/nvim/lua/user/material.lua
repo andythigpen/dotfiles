@@ -10,7 +10,7 @@ local custom_highlights = {
 	SignatureMarkText = { fg = "#3B3F51", bg = "#0F111A" },
 	CursorLineNr = { fg = "#EEFFFF" },
 	CursorLine = { bg = "#0F111A" },
-	VertSplit = { fg = "#090B10", bg = "#090B10" },
+	VertSplit = { fg = "#464B5D", bg = "#090B10" },
 	TabLineSel = { bg = "#1F2233", fg = "#A6ACCD" },
 	DiffAdd = { bg = "#12261E" },
 	DiffDelete = { bg = "#301A1F" },
@@ -21,6 +21,8 @@ local custom_highlights = {
 	TermStatusRunning = { fg = "#C792EA" },
 	TermStatusFocused = { fg = "Orange" },
 	helpHyperTextJump = { link = "Underlined" },
+	WinSeparator = { link = "Whitespace" },
+	VirtColumn = { fg = "#232637" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

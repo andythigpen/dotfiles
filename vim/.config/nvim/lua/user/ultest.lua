@@ -32,6 +32,11 @@ end
 
 function M.test(cmd)
 	pcall(vim.cmd, cmd)
+	-- no current way to know when vim-test is done
+end
+
+function M.ultest(cmd)
+	pcall(vim.cmd, cmd)
 	if bdn9.is_enabled() then
 		bdn9.test_running()
 		vim.defer_fn(M.update_test_status, 500)

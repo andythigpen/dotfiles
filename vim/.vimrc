@@ -497,10 +497,10 @@ nmap ]t <Plug>(ultest-next-fail)
 nmap [t <Plug>(ultest-prev-fail)
 
 nmap <silent> <space>tt :UltestSummary<CR>
-nmap <silent> <space>tn :lua require('user.ultest').test('UltestNearest')<CR>
-nmap <silent> <space>tf :lua require('user.ultest').test('Ultest')<CR>
+nmap <silent> <space>tn :lua require('user.ultest').ultest('UltestNearest')<CR>
+nmap <silent> <space>tf :lua require('user.ultest').ultest('Ultest')<CR>
 nmap <silent> <space>ts :lua require('user.ultest').test('TestSuite')<CR>
-nmap <silent> <space>tl :lua require('user.ultest').test('UltestLast')<CR>
+nmap <silent> <space>tl :lua require('user.ultest').ultest('UltestLast')<CR>
 nmap <silent> <space>tc :lua require('user.ultest').clear()<CR>
 " }}}
 

@@ -127,8 +127,10 @@ if version >= 700     " map spell check
     noremap <leader>sp :set spell!<CR>
 endif
 
-" change bg color after 80 chars
-let &colorcolumn=join(range(81,81),",")
+" change bg color after 101 chars
+let &colorcolumn=join(range(101,101),",")
+
+set cursorline
 " }}}
 
 " 6 Multiple windows {{{
@@ -224,7 +226,7 @@ set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 
 " full lines for splits/folds
-set fillchars=vert:\ ,fold:─
+set fillchars=fold:─
 
 " adjust theme colors
 function! CustomHighlights() abort

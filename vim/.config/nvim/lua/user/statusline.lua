@@ -19,6 +19,9 @@ local function term_running(name)
 end
 
 lualine.setup({
+	options = {
+		globalstatus = true,
+	},
 	extensions = { "fugitive", "nvim-tree", "quickfix", "aerial", "ultest" },
 	sections = {
 		lualine_a = {

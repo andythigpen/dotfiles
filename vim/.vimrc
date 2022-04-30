@@ -132,7 +132,7 @@ let &colorcolumn=join(range(81,81),",")
 " }}}
 
 " 6 Multiple windows {{{
-set laststatus=2      " 0, 1 or 2; when to use a status line for the last window
+set laststatus=3      " 0, 1, 2, or 3; when to use a status line for the last window
 set hidden            " don't unload a buffer when no longer shown in a window
 
 " easier navigation between windows

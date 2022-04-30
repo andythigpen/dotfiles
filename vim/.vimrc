@@ -17,15 +17,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-dispatch'
-Plug 'JulesWang/css.vim'
-Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kshenoy/vim-signature'
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c'}
@@ -227,78 +223,6 @@ set t_8b=[48;2;%lu;%lu;%lum
 
 " full lines for splits/folds
 set fillchars=fold:─
-
-" adjust theme colors
-function! CustomHighlights() abort
-    highlight Normal ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#181c1e
-    highlight ColorColumn guibg=#1b1f21
-    highlight LineNr guibg=#1b1f21
-    highlight SignColumn guibg=#1b1f21
-    highlight Error guifg=#2d343a guibg=#b74951
-    highlight Todo guibg=NONE guifg=#FF5370 gui=NONE,bold
-    highlight CursorLine guibg=#313236
-    highlight Search cterm=bold,underline ctermfg=15 gui=bold,underline guifg=#ffffff guibg=none
-    highlight Folded ctermfg=59 guifg=#5c6370 guibg=none
-    highlight CursorLineNr cterm=bold ctermfg=145 ctermbg=16 guifg=#cbd1dd guibg=#1b1f21
-    highlight SignatureMarkText ctermfg=11 guifg=#5D818E guibg=#1b1f21
-    highlight GitGutterAdd guifg=#1f5e47
-    highlight GitGutterChange guifg=#aa9e75
-
-    " identifier
-    highlight Identifier guifg=#BB9DE3
-
-    highlight WildMenu ctermfg=238 ctermbg=167 guifg=#41484f guibg=#4dacfd
-    highlight Pmenu ctermfg=0 ctermbg=13 guifg=#dce2e4 guibg=#313236
-    highlight PmenuSel cterm=bold ctermfg=123 ctermbg=167 gui=bold guifg=#353a3f guibg=#4dacfd
-
-    " coc signs
-    highlight CocErrorSign gui=bold guifg=#b74951 guibg=#1b1f21
-    highlight CocInfoSign ctermfg=12 guifg=#15aabf guibg=#1b1f21
-    highlight CocHintSign ctermfg=12 guifg=#15aabf guibg=#1b1f21
-    highlight CocWarningSign ctermfg=130 guifg=#ff922b guibg=#1b1f21
-
-    highlight airline_error guibg=#b74951
-    highlight airline_warning guibg=#ff922b
-
-    " tabline
-    highlight TabLine gui=none guibg=#272e36
-    highlight TabLineSel gui=none guibg=#455A64
-    highlight TabLineFill guifg=#181c1e
-
-    " treesitter highlights
-    highlight TSBoolean         guibg=NONE
-    highlight TSConstant        guibg=NONE
-    highlight TSConstructor     guibg=NONE
-    highlight TSKeyword         guibg=NONE
-    highlight TSKeywordOperator guibg=NONE
-    highlight TSLabel           guibg=NONE
-    highlight TSOperator        guibg=NONE
-    highlight TSParameter       guibg=NONE
-    highlight TSProperty        guibg=NONE
-    highlight TSPunctBracket    guibg=NONE
-    highlight TSPunctDelimiter  guibg=NONE
-    highlight TSPunctSpecial    guibg=NONE
-    highlight TSSymbol          guibg=NONE
-    highlight TSTag             guibg=NONE
-    highlight TSTagAttribute    guibg=NONE
-    highlight TSTagDelimiter    guibg=NONE
-    highlight TSVariable        guibg=NONE
-    highlight TSVariableBuiltIn guibg=NONE
-
-    " telescope
-    highlight TelescopeBorder guifg=#272e36 guibg=#272e36
-    highlight TelescopeNormal guibg=#272e36
-    highlight TelescopePreviewTitle guifg=#272e36 guibg=#e67e80
-    highlight TelescopePromptTitle guifg=#272e36 guibg=#83c092
-    highlight TelescopeResultsTitle guifg=#272e36 guibg=#83c092
-    highlight TelescopePromptNormal guibg=#455A64
-    highlight TelescopePromptBorder guifg=#455A64 guibg=#455A64
-endfunction
-augroup CustomColors
-    autocmd!
-    autocmd ColorScheme vim-material call CustomHighlights()
-augroup END
-
 set background=dark
 " }}}
 
@@ -467,16 +391,6 @@ endfunction
 " nnoremap <silent> <space>r  :<C-u>Start!<cr>
 nnoremap <silent> <space>r  :lua require('user.terminal').run()<CR>
 " }}}
-
-" emmet-vim settings {{{
-" let g:user_emmet_leader_key='<Tab>'
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-  \      'extends' : 'jsx',
-  \  },
-  \}
-" }}}
-
 
 " terminal settings {{{
 tnoremap <Esc> <C-\><C-n>

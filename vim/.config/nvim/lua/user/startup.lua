@@ -4,8 +4,14 @@ local M = {}
 
 -- Runs git up and then displays a picker for the branches
 function M.git_update()
-	vim.call("FugitiveExecute", "up")
-	vim.cmd([[Telescope git_branches]])
+	local laststatus = vim.opt.laststatus
+	vim.opt.laststatus = 2 -- display the status line
+	vim.notify("Updating git branches...", vim.log.levels.INFO)
+	vim.schedule(function()
+		vim.call("FugitiveExecute", "up")
+		vim.cmd([[Telescope git_branches]])
+		vim.opt.laststatus = laststatus
+	end)
 end
 
 local settings = {

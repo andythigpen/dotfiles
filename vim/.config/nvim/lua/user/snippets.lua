@@ -11,6 +11,7 @@ vim.api.nvim_set_keymap("i", "<C-j>", "<Plug>luasnip-jump-next", {})
 vim.api.nvim_set_keymap("s", "<C-j>", "<Plug>luasnip-jump-next", {})
 vim.api.nvim_set_keymap("i", "<C-k>", "<Plug>luasnip-jump-prev", {})
 vim.api.nvim_set_keymap("s", "<C-k>", "<Plug>luasnip-jump-prev", {})
+vim.api.nvim_set_keymap("i", "<C-l>", "<cmd>lua require('luasnip.extras.select_choice')()<cr>", {})
 
 -- loads snippets (snipmate format) from directories named "snippets" in the runtimepath
 require("luasnip.loaders.from_snipmate").load()

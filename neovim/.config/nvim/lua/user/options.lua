@@ -1,5 +1,4 @@
 --
--- init.lua
 -- Settings are divided into groups according to the output of :options
 -- The number for each section corresponds to the section number of :options
 -- Most of the help comments beside each option come from :options as well

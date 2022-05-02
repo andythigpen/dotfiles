@@ -46,6 +46,14 @@ return require("packer").startup(function(use)
 		end,
 	})
 
+	-- text editing plugins
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
+
 	-- fuzzy find plugins
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -206,7 +214,13 @@ return require("packer").startup(function(use)
 	})
 
 	-- treesitter plugins
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+		config = function()
+			require("user.treesitter")
+		end,
+	})
 	use({ "nvim-treesitter/playground", after = "nvim-treesitter" })
 	use({ "RRethy/nvim-treesitter-endwise", after = "nvim-treesitter", ft = { "ruby", "lua", "vimscript", "bash" } })
 

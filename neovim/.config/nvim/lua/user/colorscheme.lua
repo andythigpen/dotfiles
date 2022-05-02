@@ -23,6 +23,7 @@ local custom_highlights = {
 	helpHyperTextJump = { link = "Underlined" },
 	WinSeparator = { link = "Whitespace" },
 	VirtColumn = { fg = "#232637" },
+	ColorColumn = { bg = "NONE" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

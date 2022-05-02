@@ -44,7 +44,7 @@ local function navigate_quickfix(direction)
 		if not is_quickfix_open() then
 			return
 		end
-		vim.cmd('silent! execute "normal! :c' .. direction .. '<CR>"')
+		vim.cmd('silent! execute "normal! :c' .. direction .. '\\<CR>"')
 	end
 end
 
@@ -65,8 +65,8 @@ local function toggle_quickfix()
 end
 
 keymap("n", "<leader>q", toggle_quickfix, { silent = true })
-keymap("n", "<leader>[", navigate_quickfix("previous"), { silent = true })
-keymap("n", "<leader>]", navigate_quickfix("next"), { silent = true })
+keymap("n", "q[", navigate_quickfix("previous"), { silent = true })
+keymap("n", "q]", navigate_quickfix("next"), { silent = true })
 
 -- toggle line numbers
 local display_columns = true

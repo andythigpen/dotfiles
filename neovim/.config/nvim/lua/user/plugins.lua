@@ -45,6 +45,22 @@ return require("packer").startup(function(use)
 			require("user.startup")
 		end,
 	})
+	use({
+		"s1n7ax/nvim-window-picker",
+		after = "material.nvim",
+		config = function()
+			local colors = require("material.colors")
+			require("window-picker").setup({
+				other_win_hl_color = colors.darkblue,
+			})
+		end,
+	})
+	use({
+		"rafcamlet/tabline-framework.nvim",
+		config = function()
+			require("user.tabline")
+		end,
+	})
 
 	-- text editing plugins
 	use({
@@ -53,6 +69,7 @@ return require("packer").startup(function(use)
 			require("nvim-autopairs").setup({})
 		end,
 	})
+	use("tpope/vim-abolish")
 
 	-- fuzzy find plugins
 	use({
@@ -204,9 +221,16 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use({
-		"kyazdani42/nvim-tree.lua",
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"kyazdani42/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
+			"s1n7ax/nvim-window-picker",
+		},
 		config = function()
-			require("user.nvimtree")
+			require("user.neotree")
 		end,
 	})
 	use({

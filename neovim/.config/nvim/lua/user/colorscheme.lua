@@ -24,6 +24,9 @@ local custom_highlights = {
 	WinSeparator = { link = "Whitespace" },
 	VirtColumn = { fg = "#232637" },
 	ColorColumn = { bg = "NONE" },
+	NeoTreeNormal = { link = "NormalContrast" },
+	NeoTreeSignColumn = { bg = "NONE" },
+	NeoTreeNormalNC = { link = "NeoTreeNormal" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

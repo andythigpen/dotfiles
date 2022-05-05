@@ -12,10 +12,10 @@ local custom_highlights = {
 	CursorLine = { bg = "#0F111A" },
 	VertSplit = { fg = "#464B5D", bg = "#090B10" },
 	TabLineSel = { bg = "#1F2233", fg = "#A6ACCD" },
-	DiffAdd = { bg = "#12261E" },
-	DiffDelete = { bg = "#301A1F" },
-	DiffChange = { bg = "#12261E" },
-	DiffText = { bg = "#1D572C" },
+	DiffAdd = { bg = "#283b4d" }, --{ bg = "#12261E" },
+	DiffDelete = { fg = "#4d384d", bg = "#3c2c3c" },
+	DiffChange = { bg = "#283b4d" },
+	DiffText = { bg = "#365069" },
 	Floaterm = { bg = "#090B10" },
 	TermStatusDefault = { fg = "#A6ACCD" },
 	TermStatusRunning = { fg = "#C792EA" },
@@ -27,6 +27,7 @@ local custom_highlights = {
 	NeoTreeNormal = { link = "NormalContrast" },
 	NeoTreeSignColumn = { bg = "NONE" },
 	NeoTreeNormalNC = { link = "NeoTreeNormal" },
+	DiffviewNormal = { link = "NormalContrast" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

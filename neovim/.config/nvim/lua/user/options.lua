@@ -21,7 +21,7 @@ opt.number = true -- print the line number for each line
 opt.relativenumber = true -- show line numbers
 opt.numberwidth = 5 -- line number gutter width
 opt.cmdheight = 2 -- height of the bottom cmd bar in lines
-opt.fillchars = "fold:─" -- characters to use for statusline, folds, filler lines
+opt.fillchars = "fold:─,diff:╱" -- characters to use for statusline, folds, filler lines
 
 -- 5 Syntax, highlighting, and spelling
 opt.colorcolumn = "101" -- highlight the 101 column boundary

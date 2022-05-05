@@ -258,6 +258,27 @@ return require("packer").startup(function(use)
 			require("user.fugitive")
 		end,
 	})
+	use({
+		"sindrets/diffview.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			local cb = require("diffview.config").diffview_callback
+			require("diffview").setup({
+				key_bindings = {
+					view = {
+						["<leader>f"] = cb("toggle_files"), -- Toggle the files panel.
+						["<leader>]"] = cb("select_next_entry"), -- Open the diff for the next file
+						["<leader>["] = cb("select_prev_entry"), -- Open the diff for the previous file
+					},
+					file_panel = {
+						["<leader>f"] = cb("toggle_files"), -- Toggle the files panel.
+						["<leader>]"] = cb("select_next_entry"), -- Open the diff for the next file
+						["<leader>["] = cb("select_prev_entry"), -- Open the diff for the previous file
+					},
+				},
+			})
+		end,
+	})
 
 	-- unit testing plugins
 	use("vim-test/vim-test")

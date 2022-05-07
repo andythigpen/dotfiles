@@ -64,7 +64,17 @@ return require("packer").startup(function(use)
 	use({
 		"stevearc/dressing.nvim",
 		config = function()
-			require("dressing").setup()
+			require("dressing").setup({
+				input = {
+					border = require("user.borders"),
+					winblend = 0,
+				},
+				select = {
+					builtin = {
+						border = require("user.borders"),
+					},
+				},
+			})
 		end,
 	})
 

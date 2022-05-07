@@ -29,6 +29,7 @@ local custom_highlights = {
 	NeoTreeNormalNC = { link = "NeoTreeNormal" },
 	DiffviewNormal = { link = "NormalContrast" },
 	Cursor = { bg = "NONE" },
+	FloatTitle = { link = "Normal" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then

@@ -69,3 +69,13 @@ opt.wildignore:append({ "*.pyc", "*.o", "*.obj", "*.swp" })
 
 -- 25 Various
 opt.signcolumn = "yes"
+
+-- open all folds by default
+local augroup_id = vim.api.nvim_create_augroup("OpenFolds", { clear = false })
+vim.api.nvim_create_autocmd("Syntax", {
+	group = augroup_id,
+	pattern = "*",
+	callback = function()
+		vim.cmd("normal! zR")
+	end,
+})

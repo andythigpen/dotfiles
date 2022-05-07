@@ -174,6 +174,61 @@ return require("packer").startup(function(use)
 	})
 	use("jose-elias-alvarez/null-ls.nvim")
 
+	-- debugging related plugins
+	use("mfussenegger/nvim-dap")
+	use({
+		"rcarriga/nvim-dap-ui",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("user.debugger")
+		end,
+	})
+	use({
+		"leoluz/nvim-dap-go",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			-- requires delve
+			-- go install github.com/go-delve/delve/cmd/dlv@latest
+			require("dap-go").setup()
+		end,
+	})
+	use({
+		"mfussenegger/nvim-dap-python",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			-- requires debugpy
+			-- pip install --user debugpy
+			require("dap-python").setup(vim.fn.exepath("python3"))
+			if vim.fn.filereadable("Pipfile") == 1 then
+				local stdout = ""
+				local stderr = ""
+				vim.fn.jobstart("pipenv --py", {
+					on_stdout = vim.schedule_wrap(function(_, data, _)
+						for _, line in ipairs(data) do
+							stdout = stdout .. line
+						end
+					end),
+					on_stderr = vim.schedule_wrap(function(_, data, _)
+						for _, line in ipairs(data) do
+							stderr = stderr .. line
+						end
+					end),
+					on_exit = vim.schedule_wrap(function()
+						for _, configuration in ipairs(require("dap").configurations.python) do
+							configuration.pythonPath = stdout
+						end
+					end),
+				})
+			end
+		end,
+	})
+	use({
+		"suketa/nvim-dap-ruby",
+		config = function()
+			require("dap-ruby").setup()
+		end,
+	})
+
 	-- tmux related plugins
 	use({
 		"christoomey/vim-tmux-navigator",
@@ -256,27 +311,6 @@ return require("packer").startup(function(use)
 		"tpope/vim-fugitive",
 		config = function()
 			require("user.fugitive")
-		end,
-	})
-	use({
-		"sindrets/diffview.nvim",
-		requires = "nvim-lua/plenary.nvim",
-		config = function()
-			local cb = require("diffview.config").diffview_callback
-			require("diffview").setup({
-				key_bindings = {
-					view = {
-						["<leader>f"] = cb("toggle_files"), -- Toggle the files panel.
-						["<leader>]"] = cb("select_next_entry"), -- Open the diff for the next file
-						["<leader>["] = cb("select_prev_entry"), -- Open the diff for the previous file
-					},
-					file_panel = {
-						["<leader>f"] = cb("toggle_files"), -- Toggle the files panel.
-						["<leader>]"] = cb("select_next_entry"), -- Open the diff for the next file
-						["<leader>["] = cb("select_prev_entry"), -- Open the diff for the previous file
-					},
-				},
-			})
 		end,
 	})
 

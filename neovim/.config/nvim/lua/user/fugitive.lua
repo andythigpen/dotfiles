@@ -1,48 +1,66 @@
--- TODO: convert this into lua
-vim.cmd([[
-function! GetBufferList()
-  return filter(range(1,bufnr('$')), 'buflisted(v:val)')
-endfunction
+local keymap = vim.keymap.set
 
-function! GetMatchingBuffers(pattern)
-  return filter(GetBufferList(), 'bufname(v:val) =~ a:pattern')
-endfunction
+-- fixed git status height
+local git_status_height = 15
 
-function! WipeMatchingBuffers(pattern)
-  let l:matchlist = GetMatchingBuffers(a:pattern)
+local get_buffer_list = function()
+	return vim.fn.filter(vim.fn.range(1, vim.fn.bufnr("$")), "buflisted(v:val)")
+end
 
-  let l:count = len(l:matchlist)
-  if l:count < 1
-    " echo 'No buffers found matching pattern ' . a:pattern
-    return
-  endif
+local get_matching_buffers = function(pattern)
+	local buffers = get_buffer_list()
+	pattern = vim.regex(pattern)
+	return vim.tbl_filter(function(v)
+		return pattern:match_str(vim.fn.bufname(v)) ~= nil
+	end, buffers)
+end
 
-  if l:count == 1
-    let l:suffix = ''
-  else
-    let l:suffix = 's'
-  endif
+local wipe_matching_buffers = function(pattern)
+	local matchlist = get_matching_buffers(pattern)
+	local count = vim.tbl_count(matchlist)
+	if count < 1 then
+		return
+	end
+	vim.api.nvim_exec("bw " .. vim.fn.join(matchlist, " "), true)
+end
 
-  exec 'bw ' . join(l:matchlist, ' ')
-  " echo 'Wiped ' . l:count . ' buffer' . l:suffix . '.'
-endfunction
+vim.api.nvim_create_user_command("Gdiffoff", function()
+	wipe_matching_buffers("fugitive://")
+end, {})
 
-command! Gdiffoff call WipeMatchingBuffers('fugitive://')
+local toggle_git_status = function()
+	if vim.fn.buflisted(vim.fn.bufname(".git/index")) == 1 then
+		vim.cmd("bd .git/index")
+		wipe_matching_buffers("fugitive://")
+	else
+		vim.cmd(string.format(
+			[[
+        Git
+        %swincmd_
+      ]],
+			git_status_height
+		))
+	end
+end
 
-function! ToggleGStatus()
-  if buflisted(bufname('.git/index'))
-    bd .git/index
-    Gdiffoff
-  else
-    Git
-    15wincmd_
-  endif
-endfunction
-command! ToggleGStatus :call ToggleGStatus()
-nnoremap <silent> <leader>g :ToggleGStatus<cr>
+-- toggle status command & keymap
+vim.api.nvim_create_user_command("ToggleGStatus", toggle_git_status, {})
+keymap("n", "<leader>g", toggle_git_status)
 
-augroup fugitive_au
-  autocmd!
-  autocmd FileType fugitive setlocal winfixheight
-augroup END
-]])
+-- resize the status window automatically
+local augroup_id = vim.api.nvim_create_augroup("FugitiveWinSize", {})
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup_id,
+	pattern = "fugitive",
+	callback = function()
+		vim.cmd("setlocal winfixheight")
+	end,
+})
+
+vim.api.nvim_create_autocmd("WinEnter", {
+	group = augroup_id,
+	pattern = "*.git/index",
+	callback = function()
+		vim.cmd(git_status_height .. "wincmd_")
+	end,
+})

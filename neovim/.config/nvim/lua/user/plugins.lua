@@ -61,6 +61,12 @@ return require("packer").startup(function(use)
 			require("user.tabline")
 		end,
 	})
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup()
+		end,
+	})
 
 	-- text editing plugins
 	use({
@@ -70,6 +76,12 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("tpope/vim-abolish")
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
 
 	-- fuzzy find plugins
 	use({
@@ -288,10 +300,13 @@ return require("packer").startup(function(use)
 			require("user.neotree")
 		end,
 	})
+	use("kshenoy/vim-signature")
 	use({
-		"kshenoy/vim-signature",
+		"qpkorr/vim-bufkill",
+		config = function()
+			vim.g.BufKillCreateMappings = 0
+		end,
 	})
-
 	-- treesitter plugins
 	use({
 		"nvim-treesitter/nvim-treesitter",

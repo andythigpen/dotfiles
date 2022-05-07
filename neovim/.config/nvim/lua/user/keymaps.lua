@@ -84,3 +84,6 @@ local function toggle_columns()
 	end
 end
 keymap("n", "<leader>n", toggle_columns, { silent = true })
+
+-- terminal
+keymap("t", "<Esc>", "<C-\\><C-n>")

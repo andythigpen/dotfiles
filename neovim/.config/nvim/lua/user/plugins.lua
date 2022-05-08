@@ -13,6 +13,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		install_path,
 	})
 	o.runtimepath = fn.stdpath("data") .. "/site/pack/*/start/*," .. o.runtimepath
+	vim.cmd([[packadd packer.nvim]])
 end
 
 return require("packer").startup(function(use)
@@ -203,6 +204,13 @@ return require("packer").startup(function(use)
 		requires = { "mfussenegger/nvim-dap" },
 		config = function()
 			require("user.debugger")
+		end,
+	})
+	use({
+		"theHamsta/nvim-dap-virtual-text",
+		requires = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("nvim-dap-virtual-text").setup()
 		end,
 	})
 	use({

@@ -17,6 +17,20 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require("packer").startup(function(use)
+	local local_use = function(opts)
+		local plugin_dir = "~/Projects/"
+		if type(opts) == "string" then
+			opts = { opts }
+		end
+		local path = opts[1]
+		local dir = string.gsub(path, ".*/", "")
+		opts = opts or {}
+		if vim.fn.isdirectory(vim.fn.expand(plugin_dir .. dir)) then
+			opts[1] = plugin_dir .. dir
+		end
+		use(opts)
+	end
+
 	use("wbthomason/packer.nvim")
 
 	-- colorscheme and look/feel plugins
@@ -357,7 +371,7 @@ return require("packer").startup(function(use)
 			require("user.ultest")
 		end,
 	})
-	use({
+	local_use({
 		"andythigpen/nvim-coverage",
 		requires = "nvim-lua/plenary.nvim",
 		config = function()

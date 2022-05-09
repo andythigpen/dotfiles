@@ -35,9 +35,9 @@ local toggle_git_status = function()
 	else
 		vim.cmd(string.format(
 			[[
-        Git
-        %swincmd_
-      ]],
+                Git
+                %swincmd_
+            ]],
 			git_status_height
 		))
 	end
@@ -52,7 +52,9 @@ local augroup_id = vim.api.nvim_create_augroup("FugitiveWinSize", {})
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup_id,
 	pattern = "fugitive",
-	callback = function()
+	callback = function(au)
+		-- opening neotree from the git buffer results in weird window resizing, so just disable it for now
+		vim.api.nvim_buf_set_keymap(au.buf, "n", "<leader>f", "<NOP>", { silent = true })
 		vim.cmd("setlocal winfixheight")
 	end,
 })

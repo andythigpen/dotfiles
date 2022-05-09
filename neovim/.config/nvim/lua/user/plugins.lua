@@ -25,7 +25,7 @@ return require("packer").startup(function(use)
 		local path = opts[1]
 		local dir = string.gsub(path, ".*/", "")
 		opts = opts or {}
-		if vim.fn.isdirectory(vim.fn.expand(plugin_dir .. dir)) then
+		if vim.fn.isdirectory(vim.fn.expand(plugin_dir .. dir)) ~= 0 then
 			opts[1] = plugin_dir .. dir
 		end
 		use(opts)
@@ -264,12 +264,6 @@ return require("packer").startup(function(use)
 					end),
 				})
 			end
-		end,
-	})
-	use({
-		"suketa/nvim-dap-ruby",
-		config = function()
-			require("dap-ruby").setup()
 		end,
 	})
 

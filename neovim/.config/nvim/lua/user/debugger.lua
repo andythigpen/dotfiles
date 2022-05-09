@@ -39,6 +39,13 @@ local terminate = function()
 	dap.terminate()
 end
 
+-- configure adapters
+dap.adapters.ruby = {
+	type = "executable",
+	command = "ruby",
+	args = { "readapt", "stdio" },
+}
+
 -- customize signs
 vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "WarningMsg", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "WarningMsg", linehl = "", numhl = "" })

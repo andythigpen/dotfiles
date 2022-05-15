@@ -43,7 +43,7 @@ end
 dap.adapters.ruby = {
 	type = "executable",
 	command = "ruby",
-	args = { "readapt", "stdio" },
+	args = { vim.fn.exepath("readapt"), "stdio" },
 }
 
 -- customize signs

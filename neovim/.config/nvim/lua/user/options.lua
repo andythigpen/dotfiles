@@ -64,6 +64,9 @@ opt.softtabstop = 4 -- if non-zero, number of spaces to insert for a <Tab>
 opt.shiftround = true -- round to 'shiftwidth' for "<<" and ">>"
 opt.expandtab = true -- expand <Tab> to spaces in Insert mode
 
+-- 15 folding
+opt.foldenable = false -- do not display all folds open
+
 -- 20 Command line editing
 opt.wildignore:append({ "*.pyc", "*.o", "*.obj", "*.swp" })
 

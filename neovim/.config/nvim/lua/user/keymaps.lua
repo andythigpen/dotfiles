@@ -65,8 +65,8 @@ local function toggle_quickfix()
 end
 
 keymap("n", "<leader>q", toggle_quickfix, { silent = true })
-keymap("n", "q[", navigate_quickfix("previous"), { silent = true })
-keymap("n", "q]", navigate_quickfix("next"), { silent = true })
+keymap("n", "[q", navigate_quickfix("previous"), { silent = true })
+keymap("n", "]q", navigate_quickfix("next"), { silent = true })
 
 -- toggle line numbers
 local display_columns = true

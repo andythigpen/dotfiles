@@ -259,7 +259,9 @@ return require("packer").startup(function(use)
 					end),
 					on_exit = vim.schedule_wrap(function()
 						for _, configuration in ipairs(require("dap").configurations.python) do
-							configuration.pythonPath = stdout
+							if configuration.python == nil then
+								configuration.pythonPath = stdout
+							end
 						end
 					end),
 				})
@@ -367,6 +369,7 @@ return require("packer").startup(function(use)
 	})
 	local_use({
 		"andythigpen/nvim-coverage",
+		after = "material.nvim", -- highlights are cleared unless this is after material.nvim
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
 			require("user.coverage")
@@ -375,5 +378,10 @@ return require("packer").startup(function(use)
 
 	if packer_bootstrap then
 		require("packer").sync()
+	end
+
+	-- load local configuration if available...
+	if vim.fn.filereadable(vim.fn.glob("~/.vimrc_local")) then
+		vim.cmd("source ~/.vimrc_local")
 	end
 end)

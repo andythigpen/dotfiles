@@ -335,6 +335,7 @@ return require("packer").startup(function(use)
 			vim.g.BufKillCreateMappings = 0
 		end,
 	})
+
 	-- treesitter plugins
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -345,6 +346,7 @@ return require("packer").startup(function(use)
 	})
 	use({ "nvim-treesitter/playground", after = "nvim-treesitter" })
 	use({ "RRethy/nvim-treesitter-endwise", after = "nvim-treesitter", ft = { "ruby", "lua", "vimscript", "bash" } })
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 
 	-- terminal plugins
 	use("voldikss/vim-floaterm")

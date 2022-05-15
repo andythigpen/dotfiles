@@ -29,6 +29,7 @@ require("nvim-treesitter.configs").setup({
 		"cpp",
 		"c",
 		"bash",
+		"vue",
 	},
 	playground = {
 		enable = true,
@@ -47,6 +48,9 @@ require("nvim-treesitter.configs").setup({
 			goto_node = "<cr>",
 			show_help = "?",
 		},
+	},
+	context_commentstring = { -- nvim-ts-context-commentstring
+		enable = true,
 	},
 })
 

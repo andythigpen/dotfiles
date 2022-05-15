@@ -91,6 +91,7 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", mapping_opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", mapping_opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", mapping_opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", mapping_opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>a", "<cmd>Trouble document_diagnostics<CR>", mapping_opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>s", "<cmd>Telescope lsp_workspace_symbols<CR>", mapping_opts)
 
@@ -138,7 +139,16 @@ local configure_lsp = function(server)
 end
 
 -- setup LSP configurations
-local lsp_servers = { "gopls", "pyright", "sumneko_lua", "rust_analyzer", "solargraph" }
+local lsp_servers = {
+	"gopls",
+	"pyright",
+	"sumneko_lua",
+	"rust_analyzer",
+	"solargraph",
+	"ansiblels",
+	"tsserver",
+	"volar", -- vue
+}
 
 for _, lsp in pairs(lsp_servers) do
 	configure_lsp(lsp)

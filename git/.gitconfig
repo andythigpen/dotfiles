@@ -21,3 +21,5 @@
     changelog = log --pretty="format:%cD%n%w(80,4,4)%s%n%n%b%n"
 [rerere]
     enabled = true
+[init]
+	defaultBranch = main

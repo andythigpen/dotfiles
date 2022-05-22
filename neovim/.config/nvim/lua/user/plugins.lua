@@ -101,6 +101,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("tpope/vim-abolish")
+	use("tpope/vim-surround")
 	use({
 		"numToStr/Comment.nvim",
 		config = function()

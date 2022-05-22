@@ -115,16 +115,30 @@ def get_env_pairs(cfg: ConfigParser, project: str) -> List[Tuple[str, str]]:
     return pairs
 
 
+def get_attached_session() -> Optional[libtmux.Session]:
+    """Returns the first available attached session or None.
+
+    Returns:
+        Optional[libtmux.Session]: attached session
+    """
+    server = libtmux.Server()
+    try:
+        session = server.attached_sessions
+        if session is None:
+            return None
+        return session[0]
+    except libtmux.exc.LibTmuxException:
+        return None
+
+
 def print_env(cfg: ConfigParser) -> None:
     """Prints environment variables to stdout so that they can be sourced by bash.
 
     Args:
         cfg (ConfigParser): config object
     """
-    server = libtmux.Server()
-    try:
-        session = server.find_where({"session_name": "dev"})
-    except libtmux.exc.LibTmuxException:
+    session = get_attached_session()
+    if session is None:
         return
     window = session.attached_window
     window_name = window.get("window_name")
@@ -182,10 +196,9 @@ def find_start_dir(
 
 
 def workon(cfg: ConfigParser, project: str, start_dir: str) -> None:
-    server = libtmux.Server()
-    session = server.find_where({"session_name": "dev"})
+    session = get_attached_session()
     if session is None:
-        print("Session 'dev' not found")
+        print("Attached session not found")
         return
     window = session.find_where({"window_name": project})
     if window is not None:
@@ -202,15 +215,15 @@ def workon(cfg: ConfigParser, project: str, start_dir: str) -> None:
 
     editor = cfg.get(WORKON_SETTINGS_SECTION, "editor", fallback="nvim")
     pane1 = window.attached_pane
-    pane1.send_keys(editor, enter=True)
+    if pane1 is not None:
+        pane1.send_keys(editor, enter=True)
     window.select_layout("main-vertical")
 
 
 def workstop(project):
-    server = libtmux.Server()
-    session = server.find_where({"session_name": "dev"})
+    session = get_attached_session()
     if session is None:
-        print("Session 'dev' not found")
+        print("Attached session not found")
         return
     if project:
         window = session.find_where({"window_name": project})

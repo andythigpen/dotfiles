@@ -39,6 +39,13 @@ local terminate = function()
 	dap.terminate()
 end
 
+-- focus the tab when the debugger stops
+dap.listeners.before["event_stopped"]["user"] = function()
+	if debugger_tabpage then
+		vim.api.nvim_set_current_tabpage(debugger_tabpage)
+	end
+end
+
 -- configure adapters
 dap.adapters.ruby = {
 	type = "executable",

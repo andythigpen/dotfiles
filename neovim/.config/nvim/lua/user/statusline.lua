@@ -24,7 +24,7 @@ lualine.setup({
 	options = {
 		globalstatus = true,
 	},
-	extensions = { "fugitive", "nvim-tree", "quickfix", "aerial", "ultest" },
+	extensions = { "fugitive", "nvim-tree", "quickfix", "aerial" },
 	sections = {
 		lualine_a = {
 			-- shorten the mode output to just the first character
@@ -35,12 +35,13 @@ lualine.setup({
 			{ "filename", path = 1 },
 		},
 		lualine_x = {
-			{
-				"ultest",
-				cond = function()
-					return vim.call("ultest#is_test_file") == 1
-				end,
-			},
+			-- FIXME:
+			-- {
+			-- 	"ultest",
+			-- 	cond = function()
+			-- 		return vim.call("ultest#is_test_file") == 1
+			-- 	end,
+			-- },
 			"terminal",
 			{
 				"terminal",

@@ -382,11 +382,15 @@ return require("packer").startup(function(use)
 	-- unit testing plugins
 	use("vim-test/vim-test")
 	use({
-		"rcarriga/vim-ultest",
-		after = "vim-test",
-		run = ":UpdateRemotePlugins",
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-python",
+		},
 		config = function()
-			require("user.ultest")
+			require("user.neotest")
 		end,
 	})
 	local_use({

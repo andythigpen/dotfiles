@@ -156,6 +156,22 @@ return require("packer").startup(function(use)
 	use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
 	use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
 
+	use({
+		"gelguy/wilder.nvim",
+		-- disable = true,
+		config = function()
+			local wilder = require("wilder")
+			wilder.setup({ modes = { ":", "/", "?" } })
+			wilder.set_option(
+				"renderer",
+				wilder.popupmenu_renderer({
+					-- highlighter applies highlighting to the candidates
+					highlighter = wilder.basic_highlighter(),
+				})
+			)
+		end,
+	})
+
 	-- LSP related plugins
 	use({
 		"folke/trouble.nvim",

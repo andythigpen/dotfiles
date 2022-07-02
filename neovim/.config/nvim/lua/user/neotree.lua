@@ -8,8 +8,8 @@ require("neo-tree").setup({
 		mappings = {
 			["x"] = "close_node",
 			["o"] = "open",
-			["<C-v>"] = "open_vsplit",
-			["<C-x>"] = "cut_to_clipboard",
+			["<c-v>"] = "open_vsplit",
+			["<c-x>"] = "cut_to_clipboard",
 			["H"] = "none",
 		},
 	},

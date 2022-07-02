@@ -30,6 +30,12 @@ local custom_highlights = {
 	DiffviewNormal = { link = "NormalContrast" },
 	Cursor = { bg = "NONE" },
 	FloatTitle = { link = "Normal" },
+	EnvieModeN = { fg = "#0F111A", bg = "#84FFFF" },
+	EnvieModeV = { fg = "#0F111A", bg = "#C792EA" },
+	EnvieModeI = { fg = "#0F111A", bg = "#C3E88D" },
+	EnvieModeC = { fg = "#0F111A", bg = "#FFCB6B" },
+	EnvieModeR = { fg = "#0F111A", bg = "#F07178" },
+	EnvieModeT = { fg = "#0F111A", bg = "#F07178" },
 }
 
 if vim.env.NVIM_FILLED_BOXES then
@@ -54,7 +60,6 @@ require("material").setup({
 		"fugitive",
 		"tagbar",
 		"nerdtree",
-		"UltestSummary",
 		"aerial",
 		"vim-plug",
 		"Trouble",

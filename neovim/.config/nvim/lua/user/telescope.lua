@@ -56,8 +56,13 @@ local defaults = {
 	entry_prefix = "   ",
 }
 
-if vim.env.NVIM_FILLED_BOXES then
+if vim.env.NVIM_FILLED_BOXES and not vim.g.envie_ui then
 	defaults.borderchars = { "⠆", "⠄", "⠇", "⠅", "⠀", "⠁", "⠃", "⠂" }
+end
+
+if vim.g.envie_ui then
+	defaults.border = false
+	defaults.winblend = 15
 end
 
 -- Global remapping

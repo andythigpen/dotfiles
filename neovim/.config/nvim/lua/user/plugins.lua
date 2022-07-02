@@ -59,6 +59,9 @@ return require("packer").startup(function(use)
 		config = function()
 			require("user.startup")
 		end,
+		cond = function()
+			return not vim.g.envie_ui
+		end,
 	})
 	use({
 		"s1n7ax/nvim-window-picker",

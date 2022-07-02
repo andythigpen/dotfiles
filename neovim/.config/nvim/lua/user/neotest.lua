@@ -21,6 +21,9 @@ neotest.setup({
 			ignore_file_types = { "python", "vim", "lua" },
 		}),
 	},
+	icons = {
+		running = "羽",
+	},
 })
 
 -- module functions
@@ -53,6 +56,6 @@ keymap("n", "<space>tf", function()
 end, { silent = true })
 keymap("n", "<space>ts", test("TestSuite"), { silent = true })
 keymap("n", "<space>tl", neotest.run.run_last, { silent = true })
-keymap("n", "<space>tc", M.clear, { silent = true })
+-- keymap("n", "<space>tc", M.clear, { silent = true })
 
 return M

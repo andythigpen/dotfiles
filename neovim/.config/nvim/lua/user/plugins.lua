@@ -388,6 +388,7 @@ return require("packer").startup(function(use)
 			"nvim-treesitter/nvim-treesitter",
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-neotest/neotest-python",
+			"nvim-neotest/neotest-vim-test",
 		},
 		config = function()
 			require("user.neotest")

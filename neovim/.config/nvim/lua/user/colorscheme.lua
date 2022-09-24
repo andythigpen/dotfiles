@@ -36,9 +36,10 @@ local custom_highlights = {
 	EnvieModeC = { fg = "#0F111A", bg = "#FFCB6B" },
 	EnvieModeR = { fg = "#0F111A", bg = "#F07178" },
 	EnvieModeT = { fg = "#0F111A", bg = "#F07178" },
+	EnvieColorColumn = { fg = "#232637" },
 }
 
-if vim.env.NVIM_FILLED_BOXES then
+if vim.env.NVIM_FILLED_BOXES or vim.g.envie_ui then
 	contrast.floating_windows = false
 	custom_highlights.NormalFloat = { bg = "#232637" }
 	custom_highlights.TelescopeNormal = { bg = "#232637" }
@@ -46,7 +47,7 @@ if vim.env.NVIM_FILLED_BOXES then
 	custom_highlights.TelescopeTitle = { fg = "#A6ACCD" }
 end
 
-require("material").setup({
+local opts = {
 	contrast = contrast,
 
 	italics = {
@@ -63,6 +64,7 @@ require("material").setup({
 		"aerial",
 		"vim-plug",
 		"Trouble",
+		"neotest-summary",
 	},
 
 	high_visibility = {
@@ -77,10 +79,18 @@ require("material").setup({
 	lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
 
 	custom_highlights = custom_highlights,
-})
+}
 
+-- if vim.g.envie_ui then
+-- 	opts.high_visibility.darker = true
+-- end
+
+require("material").setup(opts)
+
+vim.g.material_style = "deep ocean"
+
+-- set cursorline
+-- let g:material_style = 'deep ocean'
 vim.cmd([[
-  set cursorline
-  let g:material_style = 'deep ocean'
   colorscheme material
 ]])

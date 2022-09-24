@@ -36,7 +36,7 @@ opt.shortmess:append({ c = true }) -- don't give |ins-completion-menu| messages
 -- 12 Selecting text
 -- requires tmux 3.2+, also only want to set when using tmux
 local tmux_version = vim.split(vim.env.TMUX_VERSION or "", ".", { plain = true })
-if #tmux_version >= 2 and tonumber(tmux_version[1]) >= 3 and tonumber(tmux_version[2]) >= 2 then
+if g.clipboard == nil and #tmux_version >= 2 and tonumber(tmux_version[1]) >= 3 and tonumber(tmux_version[2]) >= 2 then
 	opt.clipboard = "unnamedplus"
 	g.clipboard = {
 		name = "tmux-osc52",

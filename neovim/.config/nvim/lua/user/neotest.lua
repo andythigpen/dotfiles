@@ -20,6 +20,10 @@ neotest.setup({
 		require("neotest-vim-test")({
 			ignore_file_types = { "python", "vim", "lua" },
 		}),
+		require("neotest-jest")({
+			jestCommand = "npm test --",
+		}),
+		require("neotest-go"),
 	},
 	icons = {
 		running = "羽",
@@ -34,11 +38,11 @@ function M.test(cmd)
 	-- no current way to know when vim-test is done
 end
 
-local function test(cmd)
-	return function()
-		M.test(cmd)
-	end
-end
+-- local function test(cmd)
+-- 	return function()
+-- 		M.test(cmd)
+-- 	end
+-- end
 
 -- keymaps for navigating to failed tests
 keymap("n", "]t", function()
@@ -49,12 +53,12 @@ keymap("n", "[t", function()
 end)
 
 -- keymaps for running tests & displaying results
-keymap("n", "<space>tt", neotest.summary.toggle, { silent = true })
+-- keymap("n", "<space>tt", neotest.summary.toggle, { silent = true })
 keymap("n", "<space>tn", neotest.run.run, { silent = true })
 keymap("n", "<space>tf", function()
 	neotest.run.run(vim.fn.expand("%"))
 end, { silent = true })
-keymap("n", "<space>ts", test("TestSuite"), { silent = true })
+keymap("n", "<space>ts", neotest.summary.toggle, { silent = true })
 keymap("n", "<space>tl", neotest.run.run_last, { silent = true })
 -- keymap("n", "<space>tc", M.clear, { silent = true })
 

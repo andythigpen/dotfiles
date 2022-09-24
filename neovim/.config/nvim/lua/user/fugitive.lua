@@ -1,7 +1,7 @@
 local keymap = vim.keymap.set
 
 -- fixed git status height
-local git_status_height = 15
+local git_status_width = 67
 
 local get_buffer_list = function()
 	return vim.fn.filter(vim.fn.range(1, vim.fn.bufnr("$")), "buflisted(v:val)")
@@ -29,16 +29,18 @@ vim.api.nvim_create_user_command("Gdiffoff", function()
 end, {})
 
 local toggle_git_status = function()
-	if vim.fn.buflisted(vim.fn.bufname(".git/index")) == 1 then
-		vim.cmd("bd .git/index")
+	local gitdir = vim.fn.FugitiveGitDir()
+	local bufname = vim.fn.bufname("fugitive://" .. gitdir .. "//")
+	if vim.fn.buflisted(bufname) == 1 then
 		wipe_matching_buffers("fugitive://")
 	else
 		vim.cmd(string.format(
 			[[
                 Git
-                %swincmd_
+                wincmd L
+                %swincmd |
             ]],
-			git_status_height
+			git_status_width
 		))
 	end
 end
@@ -52,17 +54,7 @@ local augroup_id = vim.api.nvim_create_augroup("FugitiveWinSize", {})
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup_id,
 	pattern = "fugitive",
-	callback = function(au)
-		-- opening neotree from the git buffer results in weird window resizing, so just disable it for now
-		vim.api.nvim_buf_set_keymap(au.buf, "n", "<leader>f", "<NOP>", { silent = true })
-		vim.cmd("setlocal winfixheight")
-	end,
-})
-
-vim.api.nvim_create_autocmd("WinEnter", {
-	group = augroup_id,
-	pattern = "*.git/index",
 	callback = function()
-		vim.cmd(git_status_height .. "wincmd_")
+		vim.cmd("setlocal winfixwidth")
 	end,
 })

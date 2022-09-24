@@ -64,28 +64,28 @@ cmp.setup({
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
--- local opts = {
--- 	mapping = cmp.mapping.preset.cmdline(),
--- 	sources = {
--- 		{ name = "buffer" },
--- 	},
--- }
--- if not vim.g.envie_ui then
--- 	-- opts.view = { entries = { name = "wildmenu", separator = " " } }
--- 	cmp.setup.cmdline("/", opts)
--- end
+local opts = {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
+}
+if not vim.g.envie_ui then
+	-- opts.view = { entries = { name = "wildmenu", separator = " " } }
+	cmp.setup.cmdline("/", opts)
+end
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- opts = {
--- 	keyword_length = 3,
--- 	mapping = cmp.mapping.preset.cmdline(),
--- 	sources = cmp.config.sources({
--- 		{ name = "path" },
--- 	}, {
--- 		{ name = "cmdline", keyword_length = 3 },
--- 	}),
--- }
--- if not vim.g.envie_ui then
--- 	-- opts.view = { entries = { name = "wildmenu", separator = " " } }
--- 	cmp.setup.cmdline(":", opts)
--- end
+opts = {
+	keyword_length = 3,
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline", keyword_length = 3 },
+	}),
+}
+if not vim.g.envie_ui then
+	-- opts.view = { entries = { name = "wildmenu", separator = " " } }
+	cmp.setup.cmdline(":", opts)
+end

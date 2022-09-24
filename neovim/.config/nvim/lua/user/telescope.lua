@@ -62,7 +62,7 @@ end
 
 if vim.g.envie_ui then
 	defaults.border = false
-	defaults.winblend = 15
+	defaults.winblend = 25
 end
 
 -- Global remapping

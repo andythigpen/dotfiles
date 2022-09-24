@@ -40,7 +40,12 @@ vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnost
 
 -- LSP settings (for overriding per client)
 local handlers = {
-	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = require("user.borders") }),
+	["textDocument/hover"] = vim.lsp.with(function(err, result, ctx, config)
+		local _, winnr = vim.lsp.handlers.hover(err, result, ctx, config)
+		if vim.g.envie_ui then
+			vim.api.nvim_win_set_option(winnr, "winblend", 20)
+		end
+	end, { border = require("user.borders") }),
 	-- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}),
 }
 

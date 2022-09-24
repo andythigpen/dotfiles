@@ -95,6 +95,14 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("notify").setup({
+				minimum_width = 20,
+			})
+		end,
+	})
 
 	-- text editing plugins
 	use({

@@ -3,6 +3,14 @@ local keymap = vim.keymap.set
 local coverage = require("coverage")
 
 coverage.setup({
+	auto_reload = true,
+	load_coverage_cb = function(ftype)
+		require("notify")(
+			"Loaded " .. ftype .. " coverage",
+			vim.log.levels.INFO,
+			{ render = "minimal", timeout = 1000, hide_from_history = true }
+		)
+	end,
 	highlights = {
 		summary_normal = { link = "Normal" },
 		summary_cursor_line = { link = "NormalFloat" },

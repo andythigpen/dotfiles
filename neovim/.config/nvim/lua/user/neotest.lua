@@ -16,6 +16,7 @@ neotest.setup({
 	adapters = {
 		require("neotest-python")({
 			dap = { justMyCode = false },
+			args = { "--cov" },
 		}),
 		require("neotest-vim-test")({
 			ignore_file_types = { "python", "vim", "lua" },
@@ -23,7 +24,9 @@ neotest.setup({
 		require("neotest-jest")({
 			jestCommand = "npm test --",
 		}),
-		require("neotest-go"),
+		require("neotest-go")({
+			args = { "-race", "-covermode=atomic", "-coverprofile=coverage.out" },
+		}),
 	},
 	icons = {
 		running = "羽",

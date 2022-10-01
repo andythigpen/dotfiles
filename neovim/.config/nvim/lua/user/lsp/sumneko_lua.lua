@@ -5,8 +5,8 @@ table.insert(runtime_path, "lua/?/init.lua")
 return {
 	on_attach = function(client)
 		-- disable document formatting in favor of using null-ls & stylua
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
+		client.server_capabilities.document_formatting = false
+		client.server_capabilities.document_range_formatting = false
 	end,
 	settings = {
 		Lua = {

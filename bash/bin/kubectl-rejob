@@ -1,0 +1,22 @@
+#!/bin/bash
+
+usage() {
+    echo "$0 rejob [name] <options>"
+    exit 1
+}
+
+if [ "$1" = "-h" -o "$1" = "--help" ]; then
+    usage
+fi
+
+JOB_NAME=$1
+if [ -z "$JOB_NAME" ] || [[ "$JOB_NAME" =~ ^-.* ]]; then
+    JOB_NAME=$(kubectl get job.batch "$@" -o name | fzf --height=10% --header="Select a job:")
+    JOB_NAME=${JOB_NAME#job.batch/}
+    [ -z "$JOB_NAME" ] && exit
+else
+    shift
+fi
+
+DATE=$(date +%s)
+kubectl get job.batch $JOB_NAME "$@" -o json | jq -r "del(.metadata.annotations,.metadata.creationTimestamp,.metadata.resourceVersion,.metadata.uid,.spec.selector,.spec.template.labels,.spec.template.metadata.labels,.status) | .metadata.labels.app = .metadata.labels.app[0:-11] + \"-$DATE\" | .spec.template.metadata.labels.app = .metadata.labels.app | .metadata.name = .metadata.name[0:-11] + \"-$DATE\"" | kubectl apply "$@" -f -

@@ -219,7 +219,14 @@ return require("packer").startup(function(use)
     use({
         "j-hui/fidget.nvim",
         config = function()
-            require("fidget").setup({})
+            require("fidget").setup({
+                text = {
+                    spinner = "dots_pulse",
+                },
+                window = {
+                    relative = "editor",
+                },
+            })
         end,
     })
     use({

@@ -3,7 +3,18 @@
 local contrast = {
     sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
     floating_windows = true, -- Enable contrast for floating windows
-    popup_menu = true, -- Enable lighter background for the popup menu
+    filetypes = { -- Specify which filetypes get the contrasted (darker) background
+        "terminal",
+        "floaterm",
+        "qf", -- quickfix
+        "fugitive",
+        "tagbar",
+        "nerdtree",
+        "aerial",
+        "vim-plug",
+        "Trouble",
+        "neotest-summary",
+    },
 }
 
 local custom_highlights = {
@@ -52,21 +63,16 @@ end
 local opts = {
     contrast = contrast,
 
-    italics = {
-        comments = true, -- Enable italic comments
+    styles = {
+        comments = { italic = true },
     },
 
-    contrast_filetypes = { -- Specify which filetypes get the contrasted (darker) background
-        "terminal",
-        "floaterm",
-        "qf", -- quickfix
-        "fugitive",
-        "tagbar",
-        "nerdtree",
-        "aerial",
-        "vim-plug",
-        "Trouble",
-        "neotest-summary",
+    plugins = { -- Uncomment the plugins that you use to highlight them
+        "dap",
+        "nvim-cmp",
+        "nvim-web-devicons",
+        "telescope",
+        "trouble",
     },
 
     high_visibility = {

@@ -105,9 +105,6 @@ local on_attach = function(client, bufnr)
 command! -buffer -nargs=0 Format :lua vim.lsp.buf.format({ timeout_ms = 3000 })
 autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 3000 })
   ]] )
-
-    -- setup aerial plugin for right-hand outline view
-    require("aerial").on_attach(client, bufnr)
 end
 
 -- LSP installer configuration

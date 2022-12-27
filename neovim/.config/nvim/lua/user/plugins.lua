@@ -85,7 +85,9 @@ return require("packer").startup(function(use)
             require("dressing").setup({
                 input = {
                     border = require("user.borders"),
-                    winblend = 0,
+                    win_options = {
+                        winblend = 0,
+                    },
                 },
                 select = {
                     builtin = {
@@ -150,9 +152,7 @@ return require("packer").startup(function(use)
         "hrsh7th/cmp-nvim-lsp",
         after = { "nvim-cmp", "nvim-lspconfig" },
         config = function()
-            local capabilities = require("cmp_nvim_lsp").update_capabilities(
-                vim.lsp.protocol.make_client_capabilities()
-            )
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
             lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
                 capabilities = capabilities,

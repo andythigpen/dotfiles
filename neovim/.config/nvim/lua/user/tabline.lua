@@ -19,7 +19,6 @@ local function render(f)
             f.add(info.modified and "[+]" or "[-]")
         end
 
-        P({ selection = colors.editor.selection, contrast = colors.editor.contrast })
         f.add({
             " ",
             bg = info.current and colors.editor.selection or colors.editor.contrast,

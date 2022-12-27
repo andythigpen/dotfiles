@@ -31,6 +31,7 @@ local custom_highlights = {
     Cursor = { bg = "NONE" },
     WinBarNormal = { fg = "#60667d", italic = true },
     FloatTitle = { link = "Normal" },
+    TSNote = { fg = "#89ddff" },
     EnvieModeN = { fg = "#0F111A", bg = "#84FFFF" },
     EnvieModeV = { fg = "#0F111A", bg = "#C792EA" },
     EnvieModeI = { fg = "#0F111A", bg = "#C3E88D" },

@@ -1,57 +1,58 @@
 -- treesitter configuration
 require("nvim-treesitter.configs").setup({
-	highlight = {
-		enable = true,
-		disable = {},
-	},
-	indent = {
-		enable = true,
-		disable = { "ruby", "go", "python", "yaml" },
-	},
-	endwise = {
-		enable = true,
-	},
-	ensure_installed = {
-		"tsx",
-		"toml",
-		"json",
-		"yaml",
-		"html",
-		"ruby",
-		"python",
-		"dockerfile",
-		"css",
-		"go",
-		"gomod",
-		"lua",
-		"typescript",
-		"rust",
-		"cpp",
-		"c",
-		"bash",
-		"vue",
-	},
-	playground = {
-		enable = true,
-		disable = {},
-		updatetime = 25,
-		persist_queries = false, -- Whether the query persists across vim sessions
-		keybindings = {
-			toggle_query_editor = "o",
-			toggle_hl_groups = "i",
-			toggle_injected_languages = "t",
-			toggle_anonymous_nodes = "a",
-			toggle_language_display = "I",
-			focus_language = "f",
-			unfocus_language = "F",
-			update = "R",
-			goto_node = "<cr>",
-			show_help = "?",
-		},
-	},
-	context_commentstring = { -- nvim-ts-context-commentstring
-		enable = true,
-	},
+    highlight = {
+        enable = true,
+        disable = {},
+    },
+    indent = {
+        enable = true,
+        disable = { "ruby", "go", "python", "yaml" },
+    },
+    endwise = {
+        enable = true,
+    },
+    ensure_installed = {
+        "tsx",
+        "toml",
+        "json",
+        "yaml",
+        "html",
+        "ruby",
+        "python",
+        "dockerfile",
+        "css",
+        "go",
+        "gomod",
+        "lua",
+        "typescript",
+        "rust",
+        "cpp",
+        "c",
+        "bash",
+        "vue",
+        "comment",
+    },
+    playground = {
+        enable = true,
+        disable = {},
+        updatetime = 25,
+        persist_queries = false, -- Whether the query persists across vim sessions
+        keybindings = {
+            toggle_query_editor = "o",
+            toggle_hl_groups = "i",
+            toggle_injected_languages = "t",
+            toggle_anonymous_nodes = "a",
+            toggle_language_display = "I",
+            focus_language = "f",
+            unfocus_language = "F",
+            update = "R",
+            goto_node = "<cr>",
+            show_help = "?",
+        },
+    },
+    context_commentstring = { -- nvim-ts-context-commentstring
+        enable = true,
+    },
 })
 
 local file_types = require("nvim-treesitter.parsers").filetype_to_parsername

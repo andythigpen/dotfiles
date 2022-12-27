@@ -69,12 +69,13 @@ return require("packer").startup(function(use)
         config = function()
             local colors = require("material.colors")
             require("window-picker").setup({
-                other_win_hl_color = colors.darkblue,
+                other_win_hl_color = colors.main.darkblue,
             })
         end,
     })
     use({
         "rafcamlet/tabline-framework.nvim",
+        after = "material.nvim", -- so the colors are set correctly to the theme
         config = function()
             require("user.tabline")
         end,

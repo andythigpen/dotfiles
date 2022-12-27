@@ -14,6 +14,7 @@ local contrast = {
         "vim-plug",
         "Trouble",
         "neotest-summary",
+        "neo-tree-popup",
     },
 }
 
@@ -38,6 +39,8 @@ local custom_highlights = {
     NeoTreeNormal = { link = "NormalContrast" },
     NeoTreeSignColumn = { bg = "NONE" },
     NeoTreeNormalNC = { link = "NeoTreeNormal" },
+    NeoTreeFloatNormal = { link = "NeoTreeNormal" },
+    NeoTreeFloatBorder = { fg = "#444444", bg = "#090B10" },
     DiffviewNormal = { link = "NormalContrast" },
     Cursor = { bg = "NONE" },
     WinBarNormal = { fg = "#60667d", italic = true },

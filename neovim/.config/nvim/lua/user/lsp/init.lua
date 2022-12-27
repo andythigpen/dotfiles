@@ -149,7 +149,8 @@ local lsp_servers = {
     "solargraph",
     "ansiblels",
     "tsserver",
-    "volar", -- vue
+    -- "volar", -- vue
+    "svelte",
 }
 
 for _, lsp in pairs(lsp_servers) do

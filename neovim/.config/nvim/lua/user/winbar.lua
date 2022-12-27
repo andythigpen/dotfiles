@@ -13,6 +13,7 @@ local excluded_filetypes = {
     "fugitive",
     "gitcommit",
     "neo-tree",
+    "neo-tree-popup",
     "aerial",
     "Trouble",
     "neotest-summary",

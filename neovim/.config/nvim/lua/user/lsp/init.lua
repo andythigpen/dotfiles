@@ -42,9 +42,9 @@ vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnost
 local handlers = {
     ["textDocument/hover"] = vim.lsp.with(function(err, result, ctx, config)
         local _, winnr = vim.lsp.handlers.hover(err, result, ctx, config)
-        if vim.g.envie_ui then
-            vim.api.nvim_win_set_option(winnr, "winblend", 20)
-        end
+        -- if vim.g.envie_ui then
+        --     vim.api.nvim_win_set_option(winnr, "winblend", 20)
+        -- end
     end, { border = require("user.borders") }),
     -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}),
 }
@@ -108,7 +108,7 @@ autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 3000 })
 end
 
 -- LSP installer configuration
-local lsp_installer = require("nvim-lsp-installer")
+local lsp_installer = require("mason-lspconfig")
 lsp_installer.setup()
 
 -- LSP configuration

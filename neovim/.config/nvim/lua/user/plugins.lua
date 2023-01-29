@@ -209,8 +209,11 @@ return require("packer").startup(function(use)
             require("lsp_signature").setup(lsp_signature_opts)
         end,
     })
+    use({"williamboman/mason.nvim", config = function()
+        require("mason").setup()
+    end})
     use({
-        "williamboman/nvim-lsp-installer",
+        "williamboman/mason-lspconfig.nvim",
         after = { "lsp_signature.nvim", "cmp-nvim-lsp", "null-ls.nvim" },
         requires = "neovim/nvim-lspconfig",
         config = function()

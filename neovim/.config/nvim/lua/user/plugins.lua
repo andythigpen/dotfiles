@@ -46,7 +46,7 @@ return require("packer").startup(function(use)
             require("virt-column").setup()
         end,
     })
-    use("ryanoasis/vim-devicons")
+    -- use("ryanoasis/vim-devicons")
     use("kyazdani42/nvim-web-devicons")
     use({
         "nvim-lualine/lualine.nvim",
@@ -209,9 +209,12 @@ return require("packer").startup(function(use)
             require("lsp_signature").setup(lsp_signature_opts)
         end,
     })
-    use({"williamboman/mason.nvim", config = function()
-        require("mason").setup()
-    end})
+    use({
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup()
+        end
+    })
     use({
         "williamboman/mason-lspconfig.nvim",
         after = { "lsp_signature.nvim", "cmp-nvim-lsp", "null-ls.nvim" },
@@ -249,22 +252,25 @@ return require("packer").startup(function(use)
         end,
     })
     use("jose-elias-alvarez/null-ls.nvim")
-    use({"lvimuser/lsp-inlayhints.nvim", config = function()
-        require("lsp-inlayhints").setup()
-        vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-        vim.api.nvim_create_autocmd("LspAttach", {
-            group = "LspAttach_inlayhints",
-            callback = function(args)
-                if not (args.data and args.data.client_id) then
-                    return
-                end
+    use({
+        "lvimuser/lsp-inlayhints.nvim",
+        config = function()
+            require("lsp-inlayhints").setup()
+            vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = "LspAttach_inlayhints",
+                callback = function(args)
+                    if not (args.data and args.data.client_id) then
+                        return
+                    end
 
-                local bufnr = args.buf
-                local client = vim.lsp.get_client_by_id(args.data.client_id)
-                require("lsp-inlayhints").on_attach(client, bufnr)
-            end,
-        })
-    end})
+                    local bufnr = args.buf
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    require("lsp-inlayhints").on_attach(client, bufnr)
+                end,
+            })
+        end
+    })
 
     -- debugging related plugins
     use("mfussenegger/nvim-dap")
@@ -340,7 +346,7 @@ return require("packer").startup(function(use)
         let g:dispatch_handlers = [ 'tmux' ]
         let g:dispatch_compilers = {
             \ 'pipenv run': ''}
-      ]]     )
+      ]])
             vim.keymap.set("n", "<leader>d", ":Dispatch!<CR>", { silent = true })
             vim.keymap.set("n", "<leader>D", ":Dispatch<CR>", { silent = true })
             vim.keymap.set("n", "<leader>m", ":Make!<CR>", { silent = true })
@@ -358,7 +364,7 @@ return require("packer").startup(function(use)
          function! g:projectionist_transformations.escapespace(input, o) abort
              return substitute(a:input, ' ', '\\\\ ', 'g')
          endfunction
-       ]]    )
+       ]])
             vim.keymap.set("n", "<space>r", ":lua require('user.terminal').run()<CR>", { silent = true })
         end,
     })
@@ -403,6 +409,11 @@ return require("packer").startup(function(use)
     use({ "nvim-treesitter/playground", after = "nvim-treesitter" })
     use({ "RRethy/nvim-treesitter-endwise", after = "nvim-treesitter", ft = { "ruby", "lua", "vimscript", "bash" } })
     use("JoosepAlviste/nvim-ts-context-commentstring")
+    use({
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        requires = "nvim-treesitter/nvim-treesitter",
+    })
 
     -- terminal plugins
     use("voldikss/vim-floaterm")
@@ -436,6 +447,7 @@ return require("packer").startup(function(use)
         "andythigpen/nvim-coverage",
         after = "material.nvim", -- highlights are cleared unless this is after material.nvim
         requires = "nvim-lua/plenary.nvim",
+        rocks = { 'lua-xmlreader' },
         config = function()
             require("user.coverage")
         end,

@@ -104,7 +104,7 @@ local on_attach = function(client, bufnr)
     vim.cmd([[
 command! -buffer -nargs=0 Format :lua vim.lsp.buf.format({ timeout_ms = 3000 })
 autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 3000 })
-  ]] )
+  ]])
 end
 
 -- LSP installer configuration
@@ -144,13 +144,15 @@ end
 local lsp_servers = {
     "gopls",
     "pyright",
-    "sumneko_lua",
+    "lua_ls",
     "rust_analyzer",
     "solargraph",
     "ansiblels",
     "tsserver",
     -- "volar", -- vue
     "svelte",
+    "html",
+    "emmet_ls",
 }
 
 for _, lsp in pairs(lsp_servers) do

@@ -16,6 +16,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- old vim plugin settings
+vim.g.BufKillCreateMappings = 0
+-- end old vim plugin settings
+
 require("lazy").setup({
     --#region colorscheme & UI plugins
     {
@@ -65,6 +69,10 @@ require("lazy").setup({
         opts = {},
     },
     {
+        "stevearc/dressing.nvim",
+        opts = {},
+    },
+    {
         'akinsho/toggleterm.nvim',
         keys = {
             {
@@ -100,6 +108,16 @@ require("lazy").setup({
     {
         "folke/noice.nvim",
         event = "VeryLazy",
+        keys = {
+            {
+                "<S-Enter>",
+                function()
+                    require('noice').redirect(vim.fn.getcmdline())
+                end,
+                mode = "c",
+                desc = "redirect cmdline",
+            },
+        },
         opts = {
             cmdline = {
                 format = {
@@ -126,6 +144,16 @@ require("lazy").setup({
                 long_message_to_split = true, -- long messages will be sent to a split
                 inc_rename = false,           -- enables an input dialog for inc-rename.nvim
                 lsp_doc_border = true,        -- add a border to hover docs and signature help
+            },
+            routes = {
+                {
+                    filter = {
+                        event = "msg_show",
+                        kind = "",
+                        find = "written",
+                    },
+                    opts = { skip = true },
+                },
             },
         },
         dependencies = {
@@ -208,6 +236,7 @@ require("lazy").setup({
         opts = {
             options = {
                 mode = "tabs",
+                always_show_bufferline = false,
             },
         },
     },
@@ -220,7 +249,7 @@ require("lazy").setup({
                 segments = {
                     { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
                     {
-                        sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+                        sign = { name = { "Diagnostic" }, colwidth = 1, maxwidth = 1, auto = true },
                         click = "v:lua.ScSa"
                     },
                     { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
@@ -232,6 +261,18 @@ require("lazy").setup({
                 }
             })
         end,
+    },
+    {
+        "utilyre/barbecue.nvim",
+        name = "barbecue",
+        version = "*",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        opts = {
+            -- configurations go here
+        },
     },
     --#endregion
 
@@ -310,6 +351,7 @@ require("lazy").setup({
     --#region file & source navigation
     {
         "stevearc/aerial.nvim",
+        lazy = false,
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
@@ -325,6 +367,10 @@ require("lazy").setup({
                 default_direction = "right",
             },
         },
+        config = function(_, opts)
+            require('aerial').setup(opts)
+            -- require('user.winbar')
+        end
     },
     {
         "nvim-neo-tree/neo-tree.nvim",
@@ -390,6 +436,20 @@ require("lazy").setup({
     },
     {
         "s1n7ax/nvim-window-picker",
+        opts = {},
+    },
+    --#endregion
+
+    --#region text editing
+    {
+        "qpkorr/vim-bufkill",
+    },
+    {
+        "numToStr/Comment.nvim",
+        opts = {},
+    },
+    {
+        "windwp/nvim-autopairs",
         opts = {},
     },
     --#endregion

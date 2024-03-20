@@ -1,0 +1,56 @@
+snippet imp
+	import ${0:module}
+snippet from
+	from ${1:package} import ${2:module}
+snippet if
+	if ${1:condition}:
+		${0:${VISUAL}}
+snippet el
+	else:
+		${0:${VISUAL}}
+snippet ei
+	elif ${1:condition}:
+		${0:${VISUAL}}
+snippet for
+	for ${1:item} in ${2:items}:
+		${0}
+snippet def
+	def ${1:fname}(${2}):
+		"""${3:docstring}"""
+		${0}
+snippet deff
+	def ${1:fname}(${2}):
+		${0}
+snippet adef
+	async def ${1:fname}(${2}):
+		"""${3:docstring}"""
+		${0}
+snippet adeff
+	async def ${1:fname}(${2}):
+		${0}
+snippet try Try/Except
+	try:
+		${1:${VISUAL}}
+	except ${2:Exception} as ${3:e}:
+		${0:raise}
+snippet trye Try/Except/Else
+	try:
+		${1:${VISUAL}}
+	except ${2:Exception} as ${3:e}:
+		${4:raise}
+	else:
+		${0}
+snippet tryf Try/Except/Finally
+	try:
+		${1:${VISUAL}}
+	except ${2:Exception} as ${3:e}:
+		${4:raise}
+	finally:
+		${0}
+# python debugger (pdb)
+snippet pdb
+	__import__('pdb').set_trace()
+# test function/method
+snippet test
+	def test_${1:description}(${2}):
+		${0}

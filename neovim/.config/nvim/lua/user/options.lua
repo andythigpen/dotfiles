@@ -11,17 +11,17 @@ opt.pastetoggle = "<leader>p"
 
 -- 2 Moving around, searching and patterns
 opt.ignorecase = true -- ignore case when using a search pattern
-opt.smartcase = true -- override 'ignorecase' when pattern has upper case characters
+opt.smartcase = true  -- override 'ignorecase' when pattern has upper case characters
 
 -- 4 Displaying text
-opt.scrolloff = 3 -- number of screen lines to show around the cursor
-opt.linebreak = true -- wrap long lines at a character in 'breakat'
-opt.lazyredraw = true -- don't redraw while executing macros
-opt.number = true -- print the line number for each line
-opt.relativenumber = true -- show line numbers
-opt.numberwidth = 5 -- line number gutter width
-opt.cmdheight = 0 -- height of the bottom cmd bar in lines
-opt.fillchars = "fold:─,diff:╱" -- characters to use for statusline, folds, filler lines
+opt.scrolloff = 3                     -- number of screen lines to show around the cursor
+opt.linebreak = true                  -- wrap long lines at a character in 'breakat'
+opt.lazyredraw = false                -- disabled for noice.nvim
+opt.number = true                     -- print the line number for each line
+opt.relativenumber = true             -- show line numbers
+opt.numberwidth = 5                   -- line number gutter width
+opt.cmdheight = 0                     -- height of the bottom cmd bar in lines
+opt.fillchars = "fold:─,diff:╱,eob: " -- characters to use for statusline, folds, filler lines
 
 -- 5 Syntax, highlighting, and spelling
 opt.colorcolumn = "101" -- highlight the 101 column boundary
@@ -37,35 +37,38 @@ opt.shortmess:append({ c = true }) -- don't give |ins-completion-menu| messages
 -- requires tmux 3.2+, also only want to set when using tmux
 local tmux_version = vim.split(vim.env.TMUX_VERSION or "", ".", { plain = true })
 if g.clipboard == nil and #tmux_version >= 2 and tonumber(tmux_version[1]) >= 3 and tonumber(tmux_version[2]) >= 2 then
-	opt.clipboard = "unnamedplus"
-	g.clipboard = {
-		name = "tmux-osc52",
-		copy = {
-			["+"] = { "tmux", "load-buffer", "-w", "-" },
-			["*"] = { "tmux", "load-buffer", "-w", "-" },
-		},
-		paste = {
-			["+"] = { "tmux", "save-buffer", "-" },
-			["*"] = { "tmux", "save-buffer", "-" },
-		},
-		["cache-enabled"] = 1,
-	}
+    opt.clipboard = "unnamedplus"
+    g.clipboard = {
+        name = "tmux-osc52",
+        copy = {
+            ["+"] = { "tmux", "load-buffer", "-w", "-" },
+            ["*"] = { "tmux", "load-buffer", "-w", "-" },
+        },
+        paste = {
+            ["+"] = { "tmux", "save-buffer", "-" },
+            ["*"] = { "tmux", "save-buffer", "-" },
+        },
+        ["cache-enabled"] = 1,
+    }
 end
 
 -- 13 Editing text
-opt.undofile = true -- save undo history to a file
-opt.completeopt:remove({ "preview" }) -- do not display a preview window on autocomplete
+opt.undofile = true                               -- save undo history to a file
+opt.completeopt:remove({ "preview" })             -- do not display a preview window on autocomplete
 opt.completeopt:append({ "noselect", "menuone" }) -- do not select the first item (noselect), display the menu even if only one match (menuone)
 
 -- 14 Tabs and indenting
-opt.tabstop = 4 -- number of spaces a <Tab> in the text stands for
-opt.shiftwidth = 4 -- number of spaces used for each step of (auto)indent
-opt.softtabstop = 4 -- if non-zero, number of spaces to insert for a <Tab>
+opt.tabstop = 4       -- number of spaces a <Tab> in the text stands for
+opt.shiftwidth = 4    -- number of spaces used for each step of (auto)indent
+opt.softtabstop = 4   -- if non-zero, number of spaces to insert for a <Tab>
 opt.shiftround = true -- round to 'shiftwidth' for "<<" and ">>"
-opt.expandtab = true -- expand <Tab> to spaces in Insert mode
+opt.expandtab = true  -- expand <Tab> to spaces in Insert mode
 
 -- 15 folding
-opt.foldenable = false -- do not display all folds open
+opt.foldenable = true -- do not display all folds open
+opt.foldcolumn = '1'
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 
 -- 20 Command line editing
 opt.wildignore:append({ "*.pyc", "*.o", "*.obj", "*.swp" })
@@ -76,9 +79,9 @@ opt.signcolumn = "yes"
 -- open all folds by default
 local augroup_id = vim.api.nvim_create_augroup("OpenFolds", { clear = false })
 vim.api.nvim_create_autocmd("Syntax", {
-	group = augroup_id,
-	pattern = "*",
-	callback = function()
-		vim.cmd("normal! zR")
-	end,
+    group = augroup_id,
+    pattern = "*",
+    callback = function()
+        vim.cmd("normal! zR")
+    end,
 })

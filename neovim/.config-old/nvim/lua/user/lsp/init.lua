@@ -38,6 +38,17 @@ end
 vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnostic()]])
 -- end diagnostic configuration
 
+-- LSP settings (for overriding per client)
+local handlers = {
+    ["textDocument/hover"] = vim.lsp.with(function(err, result, ctx, config)
+        local _, winnr = vim.lsp.handlers.hover(err, result, ctx, config)
+        -- if vim.g.envie_ui then
+        --     vim.api.nvim_win_set_option(winnr, "winblend", 20)
+        -- end
+    end, { border = require("user.borders") }),
+    -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}),
+}
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local mapping_opts = { noremap = true, silent = true }
@@ -96,12 +107,17 @@ autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 3000 })
   ]])
 end
 
+-- LSP installer configuration
+local lsp_installer = require("mason-lspconfig")
+lsp_installer.setup()
+
 -- LSP configuration
 local lspconfig = require("lspconfig")
 
-M.configure_lsp = function(server)
+local configure_lsp = function(server)
     local opts = {
         on_attach = on_attach,
+        handlers = handlers,
     }
 
     -- load LSP server-specific settings from separate modules
@@ -125,24 +141,31 @@ M.configure_lsp = function(server)
 end
 
 -- setup LSP configurations
--- local lsp_servers = {
---     "gopls",
---     "pyright",
---     "lua_ls",
---     "rust_analyzer",
---     "solargraph",
---     "ansiblels",
---     "tsserver",
---     -- "volar", -- vue
---     "svelte",
---     "html",
---     "emmet_ls",
---     "tailwindcss",
---     "yamlls",
--- }
---
--- for _, lsp in pairs(lsp_servers) do
---     configure_lsp(lsp)
--- end
+local lsp_servers = {
+    "gopls",
+    "pyright",
+    "lua_ls",
+    "rust_analyzer",
+    "solargraph",
+    "ansiblels",
+    "tsserver",
+    -- "volar", -- vue
+    "svelte",
+    "html",
+    "emmet_ls",
+}
+
+for _, lsp in pairs(lsp_servers) do
+    configure_lsp(lsp)
+end
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.isort.with({ extra_args = { "--profile", "black" } }),
+        null_ls.builtins.formatting.prettier,
+    },
+})
 
 return M

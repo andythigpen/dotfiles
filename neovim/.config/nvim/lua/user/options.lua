@@ -14,13 +14,13 @@ opt.ignorecase = true -- ignore case when using a search pattern
 opt.smartcase = true  -- override 'ignorecase' when pattern has upper case characters
 
 -- 4 Displaying text
-opt.scrolloff = 3                     -- number of screen lines to show around the cursor
-opt.linebreak = true                  -- wrap long lines at a character in 'breakat'
-opt.lazyredraw = false                -- disabled for noice.nvim
-opt.number = true                     -- print the line number for each line
-opt.relativenumber = true             -- show line numbers
-opt.numberwidth = 5                   -- line number gutter width
-opt.cmdheight = 0                     -- height of the bottom cmd bar in lines
+opt.scrolloff = 3 -- number of screen lines to show around the cursor
+opt.linebreak = true -- wrap long lines at a character in 'breakat'
+opt.lazyredraw = false -- disabled for noice.nvim
+opt.number = true -- print the line number for each line
+opt.relativenumber = true -- show line numbers
+opt.numberwidth = 5 -- line number gutter width
+opt.cmdheight = 0 -- height of the bottom cmd bar in lines
 opt.fillchars = "fold:─,diff:╱,eob: " -- characters to use for statusline, folds, filler lines
 
 -- 5 Syntax, highlighting, and spelling
@@ -31,7 +31,16 @@ opt.termguicolors = true
 opt.laststatus = 3 -- enable global statusline
 
 -- 11 Messages and info
-opt.shortmess:append({ c = true }) -- don't give |ins-completion-menu| messages
+opt.showmode = false
+-- see :h shortmess
+opt.shortmess:append({
+    c = true, -- don't give |ins-completion-menu| messages
+    W = true, -- don't give "written" or "[w]" when writing a file
+    I = true, -- don't give the intro message when starting Vim
+    C = true, -- don't give messages while scanning for ins-completion
+    F = true, -- don't give the file info when editing a file
+    S = true, -- don't show search count message when searching
+})
 
 -- 12 Selecting text
 -- requires tmux 3.2+, also only want to set when using tmux

@@ -1,2 +1,2 @@
 .*.swp
-post-install.sh
+pre-install.sh

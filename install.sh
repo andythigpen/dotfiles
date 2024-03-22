@@ -34,11 +34,15 @@ for pkg in $PKGS; do
         continue
     fi
     info "Installing $pkg"
-    stow --ignore=post-install.sh -v $pkg
+    if [ -f "$pkg/pre-install.sh" ]; then
+        info "Running pre install for $pkg"
+        bash "$pkg/pre-install.sh" || fail "Pre-install failed for $pkg"
+    fi
+    stow --ignore=pre-install.sh --ignore=post-install.sh -v $pkg
     if [ $? -eq 0 ]; then
         if [ -f "$pkg/post-install.sh" ]; then
             info "Running post install for $pkg"
-            bash "$pkg/post-install.sh"
+            bash "$pkg/post-install.sh" || fail "Post-install failed for $pkg"
         fi
         success "Installed $pkg"
     else

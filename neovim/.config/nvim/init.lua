@@ -32,16 +32,10 @@ require("lazy").setup({
             vim.cmd([[colorscheme catppuccin-mocha]])
         end,
         opts = {
-            color_overrides = {
-                mocha = {
-                    base = "#0f111a",
-                    crust = "#232637",
-                    surface0 = "#232637",
-                },
-            },
             custom_highlights = function(colors)
                 return {
                     VirtColumn = { fg = colors.surface0 },
+                    AerialNormal = { bg = colors.mantle },
                 }
             end,
             integrations = {
@@ -292,6 +286,7 @@ require("lazy").setup({
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-u>", true, true, true), "n", true)
             end
             opts.defaults = {
+                sorting_strategy = 'ascending',
                 layout_config = {
                     horizontal = {
                         prompt_position = 'top',
@@ -450,6 +445,12 @@ require("lazy").setup({
     },
     {
         "windwp/nvim-autopairs",
+        opts = {},
+    },
+    {
+        "kylechui/nvim-surround",
+        version = "*",
+        event = "VeryLazy",
         opts = {},
     },
     --#endregion
@@ -625,10 +626,16 @@ require("lazy").setup({
 
     --#region git
     {
-        "tpope/vim-fugitive",
-        config = function()
-            require("user.fugitive")
-        end,
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "sindrets/diffview.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+        config = true,
+        keys = {
+            { "<leader>g", function() require("neogit").open() end },
+        },
     },
     --#endregion
 

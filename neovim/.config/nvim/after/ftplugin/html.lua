@@ -1,3 +1,3 @@
-vim.wo.tabstop = 2
-vim.wo.shiftwidth = 2
-vim.wo.softtabstop = 2
+vim.bo.tabstop = 2
+vim.bo.shiftwidth = 2
+vim.bo.softtabstop = 2

@@ -33,6 +33,8 @@ opt.fillchars = {
 -- 5 Syntax, highlighting, and spelling
 opt.colorcolumn = "101" -- highlight the 101 column boundary
 opt.termguicolors = true
+opt.cursorline = true
+opt.cursorlineopt = "number"
 
 -- 6 Multiple windows
 opt.laststatus = 3 -- enable global statusline

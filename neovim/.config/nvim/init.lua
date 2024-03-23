@@ -122,6 +122,10 @@ require("lazy").setup({
                 },
             },
             lsp = {
+                hover = {
+                    enabled = true,
+                    silent = true,
+                },
                 progress = {
                     enabled = true,
                 },

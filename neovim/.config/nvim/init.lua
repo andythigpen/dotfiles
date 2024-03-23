@@ -678,9 +678,10 @@ require("lazy").setup({
     {
         "nvim-neotest/neotest",
         dependencies = {
+            "nvim-neotest/nvim-nio",
             "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim",
+            "nvim-treesitter/nvim-treesitter",
         },
         config = function()
             require("neotest").setup({
@@ -689,9 +690,6 @@ require("lazy").setup({
                         dap = { justMyCode = false },
                         args = { "--cov" },
                     }),
-                    -- require("neotest-vim-test")({
-                    --     ignore_file_types = { "python", "vim", "lua" },
-                    -- }),
                     require("neotest-jest")({
                         jestCommand = "npm test --",
                     }),
@@ -703,24 +701,14 @@ require("lazy").setup({
             })
         end,
         keys = {
-            { "]t", function()
-                require("neotest").jump.next({ status = "failed" })
-            end },
-            { "[t", function()
-                require("neotest").jump.prev({ status = "failed" })
-            end },
-            { "<space>tn", function()
-                require("neotest").run.run()
-            end },
-            { "<space>tf", function()
-                require("neotest").run.run(vim.fn.expand("%"))
-            end },
-            { "<space>ts", function()
-                require("neotest").summary.toggle()
-            end },
-            { "<space>tl", function()
-                require("neotest").run.run_last()
-            end },
+            { "]t",        function() require("neotest").jump.next({ status = "failed" }) end },
+            { "[t",        function() require("neotest").jump.prev({ status = "failed" }) end },
+            { "<space>tn", function() require("neotest").run.run() end },
+            { "<space>tf", function() require("neotest").run.run(vim.fn.expand("%")) end },
+            { "<space>tc", function() require("neotest").output_panel.clear() end },
+            { "<space>tt", function() require("neotest").output_panel.toggle() end },
+            { "<space>ts", function() require("neotest").summary.toggle() end },
+            { "<space>tl", function() require("neotest").run.run_last() end },
         },
     },
 

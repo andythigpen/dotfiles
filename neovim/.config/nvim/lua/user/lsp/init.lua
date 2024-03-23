@@ -100,8 +100,14 @@ end
 local lspconfig = require("lspconfig")
 
 M.configure_lsp = function(server)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+    }
     local opts = {
         on_attach = on_attach,
+        capabilities = capabilities,
     }
 
     -- load LSP server-specific settings from separate modules
@@ -123,26 +129,5 @@ M.configure_lsp = function(server)
 
     lspconfig[server].setup(opts)
 end
-
--- setup LSP configurations
--- local lsp_servers = {
---     "gopls",
---     "pyright",
---     "lua_ls",
---     "rust_analyzer",
---     "solargraph",
---     "ansiblels",
---     "tsserver",
---     -- "volar", -- vue
---     "svelte",
---     "html",
---     "emmet_ls",
---     "tailwindcss",
---     "yamlls",
--- }
---
--- for _, lsp in pairs(lsp_servers) do
---     configure_lsp(lsp)
--- end
 
 return M

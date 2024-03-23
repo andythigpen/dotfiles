@@ -42,6 +42,7 @@ require("lazy").setup({
                 aerial = true,
                 cmp = true,
                 mason = true,
+                neogit = true,
                 neotest = true,
                 neotree = true,
                 notify = true,
@@ -49,6 +50,8 @@ require("lazy").setup({
                     enabled = true,
                 },
                 treesitter = true,
+                ufo = true,
+                window_picker = true,
             },
         },
     },
@@ -155,16 +158,20 @@ require("lazy").setup({
             "rcarriga/nvim-notify",
         }
     },
-
-    -- {
-    --     "kevinhwang91/nvim-ufo",
-    --     dependencies = { "kevinhwang91/promise-async" },
-    --     keys = {
-    --         { "zR", function() require('ufo').openAllFolds() end,  desc = "open all folds" },
-    --         { "zM", function() require('ufo').closeAllFolds() end, desc = "close all folds" },
-    --     },
-    -- },
-
+    {
+        "kevinhwang91/nvim-ufo",
+        dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" },
+        event = "BufReadPost",
+        keys = {
+            { "zR", function() require('ufo').openAllFolds() end,  desc = "open all folds" },
+            { "zM", function() require('ufo').closeAllFolds() end, desc = "close all folds" },
+        },
+        opts = {
+            close_fold_kinds_for_ft = {
+                default = {},
+            },
+        },
+    },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -265,7 +272,7 @@ require("lazy").setup({
             "nvim-tree/nvim-web-devicons", -- optional dependency
         },
         opts = {
-            -- configurations go here
+            theme = 'catppuccin-mocha',
         },
     },
     --#endregion
@@ -364,7 +371,6 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require('aerial').setup(opts)
-            -- require('user.winbar')
         end
     },
     {
@@ -637,6 +643,22 @@ require("lazy").setup({
             { "<leader>g", function() require("neogit").open() end },
         },
     },
+    {
+        "sindrets/diffview.nvim",
+        opts = {
+            enhanced_diff_hl = true,
+            hooks = {
+                diff_buf_read = function()
+                    vim.opt_local.foldlevel = 99
+                    vim.opt_local.foldenable = false
+                end,
+                diff_buf_win_enter = function()
+                    vim.opt_local.foldlevel = 99
+                    vim.opt_local.foldenable = false
+                end,
+            },
+        }
+    },
     --#endregion
 
     --#region unit testing
@@ -709,5 +731,3 @@ require("lazy").setup({
         },
     },
 })
-
--- require("user.lsp")

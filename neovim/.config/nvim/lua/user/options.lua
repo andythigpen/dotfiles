@@ -14,14 +14,21 @@ opt.ignorecase = true -- ignore case when using a search pattern
 opt.smartcase = true  -- override 'ignorecase' when pattern has upper case characters
 
 -- 4 Displaying text
-opt.scrolloff = 3 -- number of screen lines to show around the cursor
-opt.linebreak = true -- wrap long lines at a character in 'breakat'
-opt.lazyredraw = false -- disabled for noice.nvim
-opt.number = true -- print the line number for each line
+opt.scrolloff = 3         -- number of screen lines to show around the cursor
+opt.linebreak = true      -- wrap long lines at a character in 'breakat'
+opt.lazyredraw = false    -- disabled for noice.nvim
+opt.number = true         -- print the line number for each line
 opt.relativenumber = true -- show line numbers
-opt.numberwidth = 5 -- line number gutter width
-opt.cmdheight = 0 -- height of the bottom cmd bar in lines
-opt.fillchars = "fold:─,diff:╱,eob: " -- characters to use for statusline, folds, filler lines
+opt.numberwidth = 5       -- line number gutter width
+opt.cmdheight = 0         -- height of the bottom cmd bar in lines
+opt.fillchars = {
+    fold = '─',
+    foldopen = '',
+    foldsep = ' ',
+    foldclose = '',
+    diff = '╱',
+    eob = ' ',
+}
 
 -- 5 Syntax, highlighting, and spelling
 opt.colorcolumn = "101" -- highlight the 101 column boundary
@@ -35,11 +42,10 @@ opt.showmode = false
 -- see :h shortmess
 opt.shortmess:append({
     c = true, -- don't give |ins-completion-menu| messages
-    W = true, -- don't give "written" or "[w]" when writing a file
     I = true, -- don't give the intro message when starting Vim
     C = true, -- don't give messages while scanning for ins-completion
     F = true, -- don't give the file info when editing a file
-    S = true, -- don't show search count message when searching
+    s = true, -- don't give "search hit BOTTOM, continuing at TOP" or "search hit TOP, continuing at BOTTOM" messages
 })
 
 -- 12 Selecting text
@@ -84,13 +90,3 @@ opt.wildignore:append({ "*.pyc", "*.o", "*.obj", "*.swp" })
 
 -- 25 Various
 opt.signcolumn = "yes"
-
--- open all folds by default
-local augroup_id = vim.api.nvim_create_augroup("OpenFolds", { clear = false })
-vim.api.nvim_create_autocmd("Syntax", {
-    group = augroup_id,
-    pattern = "*",
-    callback = function()
-        vim.cmd("normal! zR")
-    end,
-})

@@ -296,9 +296,10 @@ require("lazy").setup({
         lazy = false,
         dependencies = { "nvim-lua/plenary.nvim" },
         keys = {
-            { "<leader>b", "<cmd>Telescope buffers<cr>",    desc = "Telescope buffers" },
-            { "<C-p>",     "<cmd>Telescope find_files<cr>", desc = "Telescope files" },
-            { "<C-g>",     "<cmd>Telescope live_grep<cr>",  desc = "Telescope grep" },
+            { "<leader>b", "<cmd>Telescope buffers<cr>",                desc = "Telescope buffers" },
+            { "<leader>r", "<cmd>Telescope oldfiles only_cwd=true<cr>", desc = "Telescope recent files" },
+            { "<C-p>",     "<cmd>Telescope find_files<cr>",             desc = "Telescope files" },
+            { "<C-g>",     "<cmd>Telescope live_grep<cr>",              desc = "Telescope grep" },
         },
         opts = function(_, opts)
             local actions = require("telescope.actions")

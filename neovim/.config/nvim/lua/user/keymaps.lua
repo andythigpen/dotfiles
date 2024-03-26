@@ -69,18 +69,16 @@ keymap("n", "[q", navigate_quickfix("previous"), { silent = true })
 keymap("n", "]q", navigate_quickfix("next"), { silent = true })
 
 -- toggle line numbers
-local display_columns = true
 local function toggle_columns()
-    if display_columns then
-        vim.opt.signcolumn = "no"
-        vim.opt.number = false
-        vim.opt.relativenumber = false
-        display_columns = false
+    ---@diagnostic disable-next-line: undefined-field
+    if vim.opt_local.number:get() then
+        vim.opt_local.signcolumn = "no"
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
     else
-        vim.opt.signcolumn = "yes"
-        vim.opt.number = true
-        vim.opt.relativenumber = true
-        display_columns = true
+        vim.opt_local.signcolumn = "yes"
+        vim.opt_local.number = true
+        vim.opt_local.relativenumber = true
     end
 end
 keymap("n", "<leader>n", toggle_columns, { silent = true })

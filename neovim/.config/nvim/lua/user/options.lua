@@ -28,6 +28,12 @@ opt.fillchars = {
     foldclose = '',
     diff = '╱',
     eob = ' ',
+    vert = '▕',
+    vertleft = '▕',
+    vertright = '▕',
+    verthoriz = '▕',
+    horizup = '─',
+    horizdown = '─',
 }
 
 -- 5 Syntax, highlighting, and spelling

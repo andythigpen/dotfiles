@@ -687,6 +687,10 @@ require("lazy").setup({
             },
         }
     },
+    {
+        "FabijanZulj/blame.nvim",
+        config = true,
+    },
     --#endregion
 
     --#region unit testing

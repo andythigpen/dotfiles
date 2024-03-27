@@ -102,11 +102,4 @@ return {
         config = true,
     },
     --#endregion
-
-    --#region unit testing
-    { "nvim-neotest/neotest-python" },
-    { "haydenmeade/neotest-jest" },
-    { "nvim-neotest/neotest-go" },
-    { "rouge8/neotest-rust" },
-    --#endregion
 }

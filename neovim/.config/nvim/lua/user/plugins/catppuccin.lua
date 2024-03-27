@@ -13,6 +13,7 @@ return {
                 CursorLineNr = { fg = colors.subtext0 },
                 VirtColumn = { fg = colors.surface0 },
                 AerialNormal = { bg = colors.mantle },
+                PanelNormal = { bg = colors.mantle },
             }
         end,
         integrations = {

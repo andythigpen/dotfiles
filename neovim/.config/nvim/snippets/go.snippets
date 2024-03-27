@@ -1,7 +1,7 @@
 snippet if "if condition"
-	if ${1:/* condition */} {
-		${2:${VISUAL}}
-	}
+	if ${1:err != nil} {
+		${2:return err}
+	}${0}
 snippet ife "if error condition"
 	if err := ${1:/* condition */}; err != nil {
 		${2:return err}
@@ -42,7 +42,9 @@ snippet test "test function"
 	func Test${1:name}(t *testing.T) {
 		${0:${VISUAL}}
 	}
-snippet ga "goroutine anonymous function"
+snippet go "goroutine anonymous function"
 	go func(${1} ${2:type}) {
 		${3:/* code */}
 	}(${0})
+snippet app "append"
+	${1} = append(${1}, ${0:${VISUAL}})

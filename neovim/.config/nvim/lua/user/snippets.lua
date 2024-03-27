@@ -1,9 +1,9 @@
 local keymap = vim.keymap.set
 
 require("luasnip.config").setup({
-	history = true,
-	updateevents = "TextChanged,TextChangedI",
-	delete_check_events = "TextChanged",
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
+    delete_check_events = "TextChanged",
 })
 
 -- keymappings
@@ -20,21 +20,21 @@ require("luasnip.loaders.from_snipmate").load()
 require("luasnip.loaders.from_lua").load()
 
 function _G.edit_ft()
-	-- returns table like {"lua", "all"}
-	local fts = require("luasnip.util.util").get_snippet_filetypes()
-	vim.ui.select(fts, {
-		prompt = "Select which filetype to edit:",
-	}, function(item, idx)
-		-- selection aborted -> idx == nil
-		if idx then
-			vim.cmd("edit ~/.config/nvim/snippets/" .. item .. ".snippets")
-		end
-	end)
+    -- returns table like {"lua", "all"}
+    local fts = require("luasnip.util.util").get_snippet_filetypes()
+    vim.ui.select(fts, {
+        prompt = "Select which filetype to edit:",
+    }, function(item, idx)
+        -- selection aborted -> idx == nil
+        if idx then
+            vim.cmd("edit ~/.config/nvim/snippets/" .. item .. ".snippets")
+        end
+    end)
 end
 
 vim.cmd([[
 command! LuaSnipEdit :lua _G.edit_ft('snippets')
-command! LuaSnipEditLua :lua require("luasnip.loaders.from_lua").edit_snippet_files()
+command! LuaSnipEditLua :lua require("luasnip.loaders").edit_snippet_files()
 ]])
 
 -- add custom local snippets below here

@@ -48,7 +48,7 @@ vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<C
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -106,7 +106,7 @@ M.configure_lsp = function(server)
         lineFoldingOnly = true,
     }
     local opts = {
-        on_attach = on_attach,
+        on_attach = M.on_attach,
         capabilities = capabilities,
     }
 
@@ -118,7 +118,7 @@ M.configure_lsp = function(server)
             if k == "on_attach" then
                 -- make sure the default on_attach is not overridden
                 opts.on_attach = function(...)
-                    on_attach(...)
+                    M.on_attach(...)
                     server_opts.on_attach(...)
                 end
             else

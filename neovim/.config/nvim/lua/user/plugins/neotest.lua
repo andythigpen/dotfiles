@@ -17,9 +17,7 @@ return {
                     dap = { justMyCode = false },
                     args = { "--cov" },
                 }),
-                require("neotest-jest")({
-                    jestCommand = "npm test --",
-                }),
+                require("neotest-jest")({}),
                 require("neotest-go")({
                     args = { "-race", "-covermode=atomic", "-coverprofile=coverage.out" },
                 }),

@@ -48,3 +48,11 @@ snippet go "goroutine anonymous function"
 	}(${0})
 snippet app "append"
 	${1} = append(${1}, ${0:${VISUAL}})
+snippet st "struct"
+	type ${1:Struct} struct {
+		${0:${VISUAL}}
+	}
+snippet int "interface"
+	type ${1:Interface} interface {
+		${0:${VISUAL}}
+	}

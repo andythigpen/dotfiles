@@ -19,6 +19,7 @@ return {
         },
     },
     opts = {
+        auto_scroll = false,
         size = 15,
         winbar = {
             enabled = true,

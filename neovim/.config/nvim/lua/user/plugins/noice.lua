@@ -11,7 +11,7 @@ return {
             desc = "redirect cmdline",
         },
         {
-            "<leader>m",
+            "<leader>mm",
             function()
                 require("noice").cmd("dismiss")
             end,

@@ -12,6 +12,7 @@ return {
             return {
                 CursorLineNr = { fg = colors.subtext0 },
                 VirtColumn = { fg = colors.surface0 },
+                WinSeparator = { fg = colors.surface0 },
                 AerialNormal = { bg = colors.mantle },
                 PanelNormal = { bg = colors.mantle },
             }

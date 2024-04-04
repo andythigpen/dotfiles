@@ -21,10 +21,18 @@ return {
         {
             "<leader>ml",
             function()
+                require("noice").cmd("telescope")
+            end,
+            mode = "n",
+            desc = "searchable message log",
+        },
+        {
+            "<leader>mh",
+            function()
                 require("noice").cmd("history")
             end,
             mode = "n",
-            desc = "message log",
+            desc = "searchable message log",
         },
     },
     opts = {

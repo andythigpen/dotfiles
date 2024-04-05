@@ -21,7 +21,24 @@ return {
             },
             lualine_c = {
                 {
-                    'filename', path = 1,
+                    'filename',
+                    path = 1,
+                    fmt = function(filename)
+                        if string.sub(filename, 1, string.len('term://')) == 'term://' then
+                            local termname = 'terminal'
+                            local prefix = '#toggleterm#'
+                            local start = string.find(filename, prefix, 1, true)
+                            if start ~= nil then
+                                termname = termname .. ' ' .. string.sub(filename, start + string.len(prefix))
+                            end
+                            return termname
+                        end
+                        return filename
+                    end,
+                    symbols = {
+                        modified = ' ',
+                        readonly = ' ',
+                    },
                 },
                 '%=', --[[ add center components here in place of this comment ]]
             },

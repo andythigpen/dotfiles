@@ -19,7 +19,6 @@ local config = require("user.alternate.config")
 ---@field description string
 ---@field exists boolean
 
-
 ---@param filename string
 ---@return boolean
 local function file_exists(filename)
@@ -212,6 +211,7 @@ local function alternate(on_submit)
     end
 end
 
+---@param config_patterns { [string]: Alternate[]|string }
 M.add_patterns = function(config_patterns)
     local p = build_patterns(config_patterns)
     for _, pattern in ipairs(p) do

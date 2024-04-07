@@ -5,5 +5,6 @@ vim.api.nvim_create_autocmd('User', {
             return
         end
         require('user.alternate').setup()
+        require('user.projects').setup()
     end,
 })

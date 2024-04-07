@@ -66,5 +66,60 @@ return {
                 description = 'source',
             },
         },
+
+        -- ruby
+        ['(.*)%.rb$'] = {
+            {
+                alternate = '[1].rb',
+                description = 'spec',
+                condition = function(m)
+                    return string.find(m, '_spec%.rb$') == nil
+                end,
+                transform = function(m)
+                    local spec_dir = require('user.alternate.transformers').find_upward_dir('spec', m)
+                    local filename = vim.fn.fnamemodify(m, ":t")
+                    return spec_dir .. '/' .. filename .. '_spec'
+                end
+            },
+        },
+        ['(.*)_spec%.rb$'] = {
+            {
+                alternate = '[1].rb',
+                description = 'source',
+                transform = function(m)
+                    local lib_dir = require('user.alternate.transformers').find_upward_dir('lib', m)
+                    local filename = vim.fn.fnamemodify(m, ":t")
+                    return lib_dir .. '/' .. filename
+                end,
+            },
+        },
+
+        -- python
+        ['(.*)%.py$'] = {
+            {
+                alternate = '[1].py',
+                description = 'test',
+                condition = function(m)
+                    return string.find(vim.fn.fnamemodify(m, ':t'), '^test_') == nil
+                end,
+                transform = function(m)
+                    local dir = vim.fn.fnamemodify(m, ":h")
+                    local filename = vim.fn.fnamemodify(m, ":t")
+                    return dir .. '/test_' .. filename
+                end,
+            },
+            {
+                alternate = '[1].py',
+                description = 'source',
+                condition = function(m)
+                    return string.find(vim.fn.fnamemodify(m, ':t'), '^test_') ~= nil
+                end,
+                transform = function(m)
+                    local dir = vim.fn.fnamemodify(m, ":h")
+                    local filename = vim.fn.fnamemodify(m, ":t"):gsub('^test_', '')
+                    return dir .. '/' .. filename
+                end,
+            },
+        },
     },
 }

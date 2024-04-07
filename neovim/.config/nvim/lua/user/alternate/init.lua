@@ -1,3 +1,4 @@
+-- inspired by https://github.com/otavioschwanck/telescope-alternate.nvim
 local Menu = require("nui.menu")
 
 local M = {}
@@ -9,6 +10,7 @@ local config = require("user.alternate.config")
 ---@field description string
 ---@field condition fun(filename: string) | nil
 ---@field excludes string|nil the first alternate that matches will exclude any others from being matched with the same value
+---@field transform fun(m: string, index?: integer): string
 
 ---@class Pattern
 ---@field pattern string
@@ -149,7 +151,12 @@ local function find_alternates(pattern, current_file, matches)
         if alternate.condition == nil or alternate.condition(current_file) then
             local m = alternate.alternate
             for i = 1, #captures do
-                m = m:gsub("(%[" .. i .. "])", captures[i])
+                m = m:gsub("(%[" .. i .. "])", function()
+                    if alternate.transform ~= nil then
+                        return alternate.transform(captures[i], i)
+                    end
+                    return captures[i]
+                end)
             end
             if not vim.tbl_contains(excludes, alternate.excludes) then
                 ---@type Match
@@ -205,7 +212,7 @@ local function alternate(on_submit)
         return
     end
     if #matches == 1 and file_exists(matches[1].filename) then
-        select_file(matches[1])
+        on_submit(matches[1])
     else
         show_popup(matches, on_submit)
     end

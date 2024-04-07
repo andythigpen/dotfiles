@@ -48,7 +48,8 @@ vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<C
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-M.on_attach = function(client, bufnr)
+---@diagnostic disable-next-line: unused-local
+M.on_attach = function(_client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -56,8 +57,16 @@ M.on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", mapping_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gvD", "<cmd>rightbelow vsplit +lua\\ vim.lsp.buf.declaration()<CR>",
+        mapping_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gvd", "<cmd>rightbelow vsplit +lua\\ vim.lsp.buf.definition()<CR>",
+        mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", mapping_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gvy", "<cmd>rightbelow vsplit +lua\\ vim.lsp.buf.type_definition()<CR>",
+        mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", mapping_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "gvi", "<cmd>rightbelow vsplit +lua\\ vim.lsp.buf.implementation()<CR>",
+        mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>", mapping_opts)

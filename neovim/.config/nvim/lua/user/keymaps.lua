@@ -22,8 +22,6 @@ keymap("n", "/", "/\\v")
 
 -- switch between last opened buffer
 keymap("n", "<leader><BS>", "<C-^>", { silent = true })
--- toggle alternate file (ex. switches from .h to .c/cpp/etc)
-keymap("n", "<leader>a", ":A<CR>", { silent = true })
 
 -- quickfix mappings
 

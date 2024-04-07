@@ -1,6 +1,4 @@
-require("user.global")
-require("user.options")
-require("user.keymaps")
+require('user')
 
 -- Install package manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'

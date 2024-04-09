@@ -60,8 +60,12 @@ return {
                 {
                     -- LSP client status
                     function()
+                        local buf = vim.api.nvim_get_current_buf()
                         local clients = vim.tbl_values(vim.lsp.get_active_clients({ buffer = 0 }))
-                        local total = vim.tbl_count(vim.lsp.buf_get_clients(0))
+                        local attached = vim.tbl_filter(function(v)
+                            return v.attached_buffers[buf]
+                        end, clients)
+                        local total = vim.tbl_count(attached)
                         if total > 1 then
                             return total .. ' LSP'
                         elseif total == 1 then

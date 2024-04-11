@@ -61,7 +61,7 @@ return {
                     -- LSP client status
                     function()
                         local buf = vim.api.nvim_get_current_buf()
-                        local clients = vim.tbl_values(vim.lsp.get_active_clients({ buffer = 0 }))
+                        local clients = vim.tbl_values(vim.lsp.get_active_clients({ buffer = buf }))
                         local attached = vim.tbl_filter(function(v)
                             return v.attached_buffers[buf]
                         end, clients)
@@ -70,7 +70,7 @@ return {
                             return total .. ' LSP'
                         elseif total == 1 then
                             ---@diagnostic disable-next-line: undefined-field
-                            return clients[1].name
+                            return attached[1].name
                         end
                         return ''
                     end,

@@ -30,14 +30,12 @@ snippet forr "for range loop"
 	}
 snippet fun "function"
 	func ${1:funcName}(${2}) ${3:error} {
-		${4}
+		${0}
 	}
-	${0}
 snippet fum "method"
 	func (${1:receiver} ${2:type}) ${3:funcName}(${4}) ${5:error} {
-		${6}
+		${0}
 	}
-	${0}
 snippet test "test function"
 	func Test${1:name}(t *testing.T) {
 		${0:${VISUAL}}

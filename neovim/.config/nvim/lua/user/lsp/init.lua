@@ -93,16 +93,8 @@ M.on_attach = function(_client, bufnr)
     )
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", mapping_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", mapping_opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>a", "<cmd>Telescope diagnostics<CR>", mapping_opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>s", "<cmd>Telescope lsp_workspace_symbols<CR>", mapping_opts)
-
-    -- Add Format command, automatically format on save
-    vim.cmd([[
-command! -buffer -nargs=0 Format :lua vim.lsp.buf.format({ timeout_ms = 3000 })
-autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 3000 })
-  ]])
 end
 
 -- LSP configuration

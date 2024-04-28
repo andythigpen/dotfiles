@@ -1,11 +1,18 @@
 return {
     "folke/noice.nvim",
+    dependencies = {
+        "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify",
+    },
     event = "VeryLazy",
     keys = {
         {
-            "<S-Enter>",
+            "<S-CR>",
             function()
-                require('noice').redirect(vim.fn.getcmdline())
+                local cmd = vim.fn.getcmdline()
+                require('noice').redirect(cmd)
+                local key = vim.api.nvim_replace_termcodes("<C-c>", true, false, true)
+                vim.api.nvim_feedkeys(key, 'n', false)
             end,
             mode = "c",
             desc = "redirect cmdline",
@@ -106,8 +113,4 @@ return {
             },
         },
     },
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-        "rcarriga/nvim-notify",
-    }
 }

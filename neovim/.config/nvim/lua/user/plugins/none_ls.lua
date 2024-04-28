@@ -1,5 +1,6 @@
 return {
     "nvimtools/none-ls.nvim",
+    cond = false,
     config = function()
         local null_ls = require("null-ls")
         local user_lsp = require("user.lsp")

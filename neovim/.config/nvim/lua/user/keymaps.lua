@@ -39,10 +39,11 @@ end
 -- returns a function intended to be used in a mapping
 local function navigate_quickfix(direction)
     return function()
-        if not is_quickfix_open() then
-            return
+        if direction == "next" then
+            pcall(function() vim.cmd.cnext() end)
+        else
+            pcall(function() vim.cmd.cprevious() end)
         end
-        vim.cmd('silent! execute "normal! :c' .. direction .. '\\<CR>"')
     end
 end
 

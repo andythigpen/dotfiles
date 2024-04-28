@@ -23,12 +23,21 @@ return {
                 }),
                 require("neotest-rust"),
             },
+            icons = {
+                unknown = '',
+            },
             summary = {
+                follow = false,
+                expand_errors = false,
                 mappings = {
                     output = "K",
                     next_failed = "<C-J>",
                     prev_failed = "<C-K>",
                     watch = "W",
+                    mark = "m",
+                    clear_marked = "<C-m>",
+                    expand = { "<LeftMouse>", "	" },
+                    jumpto = "<CR>",
                 },
             },
         })

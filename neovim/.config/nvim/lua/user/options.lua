@@ -7,8 +7,6 @@
 local opt = vim.opt
 local g = vim.g
 
-opt.pastetoggle = "<leader>p"
-
 -- 2 Moving around, searching and patterns
 opt.ignorecase = true -- ignore case when using a search pattern
 opt.smartcase = true  -- override 'ignorecase' when pattern has upper case characters

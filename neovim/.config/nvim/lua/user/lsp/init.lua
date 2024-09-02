@@ -101,6 +101,10 @@ end
 local lspconfig = require("lspconfig")
 
 M.configure_lsp = function(server)
+    if server == "tsserver" or server == "vtsls" then
+        return
+    end
+
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.foldingRange = {
         dynamicRegistration = false,

@@ -1,4 +1,5 @@
 require('user.global')
 require('user.options')
 require('user.keymaps')
+require('user.filetypes')
 require('user.local_plugins')

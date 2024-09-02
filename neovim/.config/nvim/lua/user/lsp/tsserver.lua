@@ -8,6 +8,7 @@ local fallback_root_files = {
 }
 
 return {
+    autostart = false,
     root_dir = function(fname)
         local primary = util.root_pattern(unpack(root_files))(fname)
         local fallback = util.root_pattern(unpack(fallback_root_files))(fname)

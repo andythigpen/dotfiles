@@ -5,8 +5,13 @@ return {
         "sindrets/diffview.nvim",
         "nvim-telescope/telescope.nvim",
     },
-    config = true,
+    -- config = true,
     keys = {
         { "<leader>g", function() require("neogit").open() end },
+    },
+    opts = {
+        commit_editor = {
+            kind = "vsplit",
+        },
     },
 }

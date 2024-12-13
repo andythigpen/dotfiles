@@ -34,6 +34,10 @@ return {
                 ["on"] = "none",
                 ["os"] = "none",
                 ["ot"] = "none",
+                ["<c-f>"] = "none",
+                ["<c-b>"] = "none",
+                ["<PageUp>"] = { "scroll_preview", config = { direction = 10 } },
+                ["<PageDown>"] = { "scroll_preview", config = { direction = -10 } },
             },
         },
         event_handlers = {

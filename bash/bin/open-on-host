@@ -15,4 +15,4 @@ HOST=${HOST:-$(echo $SSH_CLIENT | awk '{print $1}')}
 [ -z "$HOST_SSH_USER" ] && die "HOST_SSH_USER not set"
 [ -z "$1" ] && die "usage: $0 <url>"
 
-ssh ${HOST_SSH_USER}@${HOST} "open $1"
+ssh ${HOST_SSH_USER}@${HOST} "open '$1'"

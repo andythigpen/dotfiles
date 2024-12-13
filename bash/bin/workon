@@ -124,7 +124,7 @@ def get_attached_session() -> Optional[libtmux.Session]:
     server = libtmux.Server()
     try:
         session = server.attached_sessions
-        if session is None:
+        if not session:
             return None
         return session[0]
     except libtmux.exc.LibTmuxException:
@@ -140,8 +140,8 @@ def print_env(cfg: ConfigParser) -> None:
     session = get_attached_session()
     if session is None:
         return
-    window = session.attached_window
-    window_name = window.get("window_name")
+    window = session.active_window
+    window_name = window.window_name
     if not window_name:
         return
     for name, value in get_env_pairs(cfg, window_name):
@@ -200,21 +200,25 @@ def workon(cfg: ConfigParser, project: str, start_dir: str) -> None:
     if session is None:
         print("Attached session not found")
         return
-    window = session.find_where({"window_name": project})
-    if window is not None:
-        window.select_window()
-        return
+    try:
+        window = session.windows.get(lambda w: w.window_name == project)
+        if window is not None:
+            window.select()
+            return
+    except Exception:
+        pass
 
     window = session.new_window(
         window_name=project,
         start_directory=start_dir,
     )
+    window.select()
 
     if not cfg.getboolean(project, "launch_editor", fallback=True):
         return
 
     editor = cfg.get(WORKON_SETTINGS_SECTION, "editor", fallback="nvim")
-    pane1 = window.attached_pane
+    pane1 = window.active_pane
     if pane1 is not None:
         pane1.send_keys(editor, enter=True)
     window.select_layout("main-vertical")
@@ -225,21 +229,25 @@ def workstop(project):
     if session is None:
         print("Attached session not found")
         return
+    window = None
     if project:
-        window = session.find_where({"window_name": project})
+        try:
+            window = session.windows.get(lambda w: w.window_name == project)
+        except Exception:
+            pass
     else:
-        window = session.attached_window
+        window = session.active_window
     if window is None:
         print(f"Window '{project}' not found")
         return
     print("Exiting...")
     # save any work before exiting just in case
     for pane in window.panes:
-        if pane.get("pane_current_command") in ("vim", "nvim", "vi"):
+        if pane.pane_current_command in ("vim", "nvim", "vi"):
             pane.send_keys("", enter=False, suppress_history=False)
             pane.send_keys(":wqa!")
             pane.send_keys("C-d", enter=False, suppress_history=False)
-    window.kill_window()
+    window.kill()
 
 
 def parse_configuration():

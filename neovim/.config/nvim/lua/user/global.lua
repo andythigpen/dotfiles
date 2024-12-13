@@ -13,6 +13,15 @@ R = function(name)
     return require(name)
 end
 
+local ui_open = vim.ui.open
+vim.ui.open = function(v)
+    -- open URLs on host machine when ssh'd into another machine
+    if vim.env.SSH_CLIENT ~= nil and string.match(v, '[a-z]*://[^ >,;]*') then
+        return vim.system({ 'open-on-host', v }, { timeout = 10000 })
+    end
+    return ui_open(v)
+end
+
 -- highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking text',

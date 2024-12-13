@@ -1,9 +1,9 @@
 # git PS1
-if [[ $(type -t __git_ps1) == "function" ]]; then
-    export PS1='\u:\W\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '
-else
-    export PS1="[\u@\h \W]\\$ "
-fi
+# if [[ $(type -t __git_ps1) == "function" ]]; then
+#     export PS1='\u:\W\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '
+# else
+#     export PS1="[\u@\h \W]\\$ "
+# fi
 
 # aliases
 alias vi='vim'

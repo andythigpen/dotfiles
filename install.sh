@@ -27,6 +27,8 @@ else
     SHOULD_CONFIRM=0
 fi
 
+git submodule update --init
+
 pushd $DIR &>/dev/null
 for pkg in $PKGS; do
     pkg=${pkg%%/}

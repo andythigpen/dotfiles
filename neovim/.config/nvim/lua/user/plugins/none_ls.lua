@@ -13,7 +13,7 @@ return {
                 -- null_ls.builtins.formatting.black,
                 -- null_ls.builtins.formatting.isort.with({ extra_args = { "--profile", "black" } }),
                 -- null_ls.builtins.formatting.prettier,
-                require("none-ls.diagnostics.eslint"),
+                -- require("none-ls.diagnostics.eslint"),
             },
         })
     end,

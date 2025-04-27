@@ -121,5 +121,17 @@ return {
                 end,
             },
         },
+
+        -- rego
+        ['(.*)%.rego'] = {
+            {
+                alternate = '[1]_test.rego',
+                description = 'test',
+                condition = function(m)
+                    return string.find(m, '_test%.rego$') == nil
+                end,
+            },
+        },
+        ['(.*)_test%.rego$'] = '[1].rego',
     },
 }

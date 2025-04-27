@@ -20,8 +20,10 @@ return {
             python = { "isort", "black" },
             javascript = { "prettier" },
             typescript = { "prettier" },
-            yaml = { "prettier" },
+            rego = { "opa_fmt" },
+            -- yaml = { "prettier" },
             json = { "prettier" },
+            sql = { "sqlfmt" },
         },
         format_on_save = function(bufnr)
             if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

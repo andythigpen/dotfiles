@@ -5,12 +5,17 @@ local M = {}
 
 local config = require("user.alternate.config")
 
+local default_priority = 10
+
+---@alias TransformFn fun(m: string, index?: integer): string
+
 ---@class Alternate
 ---@field alternate string
 ---@field description string
 ---@field condition fun(filename: string) | nil
----@field excludes string|nil the first alternate that matches will exclude any others from being matched with the same value
----@field transform fun(m: string, index?: integer): string
+---@field excludes string | nil the first alternate that matches will exclude any others from being matched with the same value
+---@field transform TransformFn | nil
+---@field priority integer | nil
 
 ---@class Pattern
 ---@field pattern string
@@ -20,6 +25,7 @@ local config = require("user.alternate.config")
 ---@field filename string
 ---@field description string
 ---@field exists boolean
+---@field priority integer
 
 ---@param filename string
 ---@return boolean
@@ -164,6 +170,7 @@ local function find_alternates(pattern, current_file, matches)
                     filename = m,
                     description = alternate.description,
                     exists = file_exists(m),
+                    priority = alternate.priority or default_priority,
                 }
                 if alternate.excludes ~= nil then
                     if excludes[alternate.excludes] == nil then
@@ -190,6 +197,10 @@ local function find_alternates(pattern, current_file, matches)
             end
         end
     end
+
+    table.sort(matches, function(a, b)
+        return a.priority < b.priority
+    end)
 end
 
 local patterns = build_patterns(config.patterns)
@@ -218,7 +229,7 @@ local function alternate(on_submit)
     end
 end
 
----@param config_patterns { [string]: Alternate[]|string }
+---@param config_patterns { [string]: Alternate | Alternate[] | string }
 M.add_patterns = function(config_patterns)
     local p = build_patterns(config_patterns)
     for _, pattern in ipairs(p) do

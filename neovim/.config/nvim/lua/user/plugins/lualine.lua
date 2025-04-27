@@ -61,7 +61,7 @@ return {
                     -- LSP client status
                     function()
                         local buf = vim.api.nvim_get_current_buf()
-                        local clients = vim.tbl_values(vim.lsp.get_active_clients({ buffer = buf }))
+                        local clients = vim.tbl_values(vim.lsp.get_clients({ buffer = buf }))
                         local attached = vim.tbl_filter(function(v)
                             return v.attached_buffers[buf]
                         end, clients)

@@ -15,31 +15,44 @@ return {
             endwise = {
                 enable = true,
             },
+            modules = {},
+            auto_install = false,
+            sync_install = false,
+            ignore_install = {},
             ensure_installed = {
-                "tsx",
-                "toml",
-                "json",
-                "yaml",
-                "html",
-                "ruby",
-                "python",
-                "dockerfile",
+                "bash",
+                "c",
+                "comment",
+                "cpp",
                 "css",
+                "dockerfile",
+                "git_config",
+                "git_rebase",
+                "gitattributes",
+                "gitcommit",
+                "gitignore",
                 "go",
                 "gomod",
+                "html",
+                "json",
                 "lua",
-                "typescript",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "regex",
+                "ruby",
                 "rust",
-                "cpp",
-                "c",
-                "bash",
-                "comment",
+                "sql",
+                "toml",
+                "tsx",
+                "typescript",
+                "yaml",
             },
             playground = {
                 enable = true,
                 disable = {},
                 updatetime = 25,
-                persist_queries = false,     -- Whether the query persists across vim sessions
+                persist_queries = false, -- Whether the query persists across vim sessions
                 keybindings = {
                     toggle_query_editor = "o",
                     toggle_hl_groups = "i",
@@ -88,8 +101,8 @@ return {
                     -- mapping query_strings to modes.
                     selection_modes = {
                         -- ['@parameter.outer'] = 'v', -- charwise
-                        ['@function.outer'] = 'V',      -- linewise
-                        ['@class.outer'] = '<c-v>',     -- blockwise
+                        ['@function.outer'] = 'V',  -- linewise
+                        ['@class.outer'] = '<c-v>', -- blockwise
                     },
                     -- If you set this to `true` (default is `false`) then any textobject is
                     -- extended to include preceding or succeeding whitespace. Succeeding

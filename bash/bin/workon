@@ -1,313 +1,63 @@
-#!/usr/bin/env python3
+#!/bin/bash
 
-import argparse
-import glob
-import os
-import sys
-from pathlib import Path
-from typing import List, Optional, Tuple
+PROJECT_DIR=${PROJECT_DIR:-$HOME/Projects}
+WORKON_STATE="$HOME/.local/state/workon"
+MRU_CHOICES="$WORKON_STATE/mru"
+WORKON_LAYOUT=${WORKON_LAYOUT:-default}
 
-import libtmux
-import libtmux.exc
-from configparser import ConfigParser
+mkdir -p "$WORKON_STATE"
+touch "$MRU_CHOICES"
 
-WORKON_SETTINGS_SECTION = "workon settings"
-BASH_COMPLETION_SCRIPT = """#!/usr/bin/env bash
+files=$(find "$PROJECT_DIR" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort)
+if [ -n "$WORKON_PREFIX" ]; then
+    matches=$(echo "$files" | grep "^${WORKON_PREFIX}" | sed "s/${WORKON_PREFIX}//")
+    if [ -n "$matches" ]; then
+        files=$(echo -e "$files\n$matches" | sort)
+    fi
+fi
 
-_workon_completions()
-{
-  local cur
-  COMPREPLY=()   # Array variable storing the possible completions.
-  cur=${COMP_WORDS[COMP_CWORD]}
+# remove any choices that no longer exist in list of files
+comm -23 <(sort "$MRU_CHOICES") <(echo "$files") | xargs -I{} sed -i '/^{}$/d' "$MRU_CHOICES"
 
-  case "$cur" in
-    -*)
-    COMPREPLY=( $( compgen -W '-c -p -w -s -h' -- $cur ) );;
-    *)
-    COMPREPLY=( $( ${COMP_WORDS[@]} -c ) )
-    ;;
-  esac
+mru=$(cat "$MRU_CHOICES")
+mru_sorted=$(sort "$MRU_CHOICES")
+remaining=$(comm -23 <(echo "$files") <(echo "$mru_sorted"))
+choices="$remaining"
+if [ -n "$mru" ]; then
+    choices="$mru\n$choices"
+fi
+if ! choice=$(echo -e "$choices" | fzf --info=hidden \
+    --layout="$WORKON_LAYOUT" \
+    --prompt=' ' \
+    --pointer='' \
+    --color="gutter:-1,pointer:blue" \
+    --history="$WORKON_STATE/history"); then
+    exit
+fi
 
-  return 0
-}
+mru_exists=$(comm -12 <(echo "$choice") <(echo "$mru_sorted"))
+if [ -n "$mru_exists" ]; then
+    sed -i "/^${choice}$/d" "$MRU_CHOICES"
+fi
 
-complete -F _workon_completions workon
-"""
+# add to MRU at the top
+echo "$choice" | cat - "$MRU_CHOICES" >"${MRU_CHOICES}.tmp" && mv "${MRU_CHOICES}.tmp" "$MRU_CHOICES"
 
+window_id=$(tmux list-windows -f "#{==:#{window_name},${choice}}" -F '#{window_id}')
+if [ -n "$window_id" ]; then
+    tmux select-window -t "$window_id"
+    exit
+fi
 
-def get_path_completion(working_dir: str, project: str, prefix: str) -> List[str]:
-    """Returns a list of path strings for the given working directory, project, and prefix.
+selected_dir="${PROJECT_DIR}/${choice}"
+if [ ! -d "$selected_dir" ]; then
+    selected_dir="${PROJECT_DIR}/${WORKON_PREFIX}${choice}"
+fi
+if [ ! -d "$selected_dir" ]; then
+    echo "project directory not found for $choice"
+    exit 1
+fi
 
-    Args:
-        working_dir (str): working directory
-        project (str): project
-        prefix (str): prefix
-
-    Returns:
-        List[str]:
-    """
-    results = get_matching_dirs(working_dir, prefix, project)
-    path = os.path.expanduser(f"{working_dir}/{prefix}{project}")
-    ret = []
-    for result in results:
-        result = result.replace(path, "", 1)
-        # output = f"{prefix}{project}{result}"
-        output = f"{project}{result}"
-        ret.append(output)
-    return ret
-
-
-def print_bash_completion(
-    cfg: ConfigParser, working_dir: str, project: str, prefix: str
-) -> None:
-    """Prints bash completion results or script.
-
-    When called with project="bashscript" the bash completion helper is output
-    to stdout.
-
-    Args:
-        cfg (ConfigParser): config object
-        working_dir (str): working directory path
-        project (str): input string
-        prefix (str): provided prefix
-    """
-    if project == "bashscript":
-        print(BASH_COMPLETION_SCRIPT)
-        return
-
-    # completion for projects with a prefix
-    results = get_path_completion(working_dir, project, prefix)
-    # completion for projects with just the path and no prefix
-    results.extend(get_path_completion(working_dir, project, ""))
-    # completion for configured projects in the config file
-    results.extend(
-        [
-            s
-            for s in cfg.sections()
-            if s.startswith(project) and s != WORKON_SETTINGS_SECTION
-        ]
-    )
-    results = sorted(set(results))
-    if len(results) == 1 and results[0] == project:
-        return
-    for result in results:
-        print(result)
-
-
-def get_env_pairs(cfg: ConfigParser, project: str) -> List[Tuple[str, str]]:
-    """Returns configured environment key, value pairs for the given project.
-
-    Args:
-        cfg (ConfigParser): config object
-        project (str): project
-
-    Returns:
-        List[Tuple[str, str]]: pairs of key, values
-    """
-    if project not in cfg:
-        return []
-    pairs = []
-    for line in cfg[project].get("env", fallback="").splitlines():
-        if not line:
-            continue
-        k, v = line.split("=")
-        pairs.append((k, v))
-    return pairs
-
-
-def get_attached_session() -> Optional[libtmux.Session]:
-    """Returns the first available attached session or None.
-
-    Returns:
-        Optional[libtmux.Session]: attached session
-    """
-    server = libtmux.Server()
-    try:
-        session = server.attached_sessions
-        if not session:
-            return None
-        return session[0]
-    except libtmux.exc.LibTmuxException:
-        return None
-
-
-def print_env(cfg: ConfigParser) -> None:
-    """Prints environment variables to stdout so that they can be sourced by bash.
-
-    Args:
-        cfg (ConfigParser): config object
-    """
-    session = get_attached_session()
-    if session is None:
-        return
-    window = session.active_window
-    window_name = window.window_name
-    if not window_name:
-        return
-    for name, value in get_env_pairs(cfg, window_name):
-        print(f"export {name}={value}")
-
-
-def get_matching_dirs(working_dir, prefix, project) -> List[str]:
-    """Returns a list of paths in the working directory with the given prefix and project input.
-
-    Args:
-        working_dir (str): working directory
-        prefix (str): prefix
-        project (str): project
-
-    Returns:
-        List[str]: list of matching paths
-    """
-    path = os.path.expanduser(f"{working_dir}/{prefix}{project}*")
-    return [p for p in glob.glob(path) if Path(p).is_dir()]
-
-
-def find_start_dir(
-    cfg: ConfigParser, working_dir: str, project: str, prefix: str = ""
-) -> Optional[str]:
-    """Returns the first matching path or None.
-
-    Args:
-        cfg (ConfigParser): config object
-        working_dir (str): working directory
-        project (str): project
-        prefix (str): prefix
-
-    Returns:
-        Optional[str]: path or None
-    """
-    if project in cfg:
-        start_dir = cfg[project].get("start_dir")
-        if start_dir is not None:
-            return os.path.expanduser(start_dir)
-
-    exact = os.path.expanduser(f"{working_dir}/{project}")
-    if os.path.exists(exact):
-        return exact
-    exact = os.path.expanduser(f"{working_dir}/{prefix}{project}")
-    if os.path.exists(exact):
-        return exact
-    results = get_matching_dirs(working_dir, prefix, project)
-    if results:
-        print("Found matches: %s" % " ".join(results))
-        return results[0]
-    return None
-
-
-def workon(cfg: ConfigParser, project: str, start_dir: str) -> None:
-    session = get_attached_session()
-    if session is None:
-        print("Attached session not found")
-        return
-    try:
-        window = session.windows.get(lambda w: w.window_name == project)
-        if window is not None:
-            window.select()
-            return
-    except Exception:
-        pass
-
-    window = session.new_window(
-        window_name=project,
-        start_directory=start_dir,
-    )
-    window.select()
-
-    if not cfg.getboolean(project, "launch_editor", fallback=True):
-        return
-
-    editor = cfg.get(WORKON_SETTINGS_SECTION, "editor", fallback="nvim")
-    pane1 = window.active_pane
-    if pane1 is not None:
-        pane1.send_keys(editor, enter=True)
-    window.select_layout("main-vertical")
-
-
-def workstop(project):
-    session = get_attached_session()
-    if session is None:
-        print("Attached session not found")
-        return
-    window = None
-    if project:
-        try:
-            window = session.windows.get(lambda w: w.window_name == project)
-        except Exception:
-            pass
-    else:
-        window = session.active_window
-    if window is None:
-        print(f"Window '{project}' not found")
-        return
-    print("Exiting...")
-    # save any work before exiting just in case
-    for pane in window.panes:
-        if pane.pane_current_command in ("vim", "nvim", "vi"):
-            pane.send_keys("", enter=False, suppress_history=False)
-            pane.send_keys(":wqa!")
-            pane.send_keys("C-d", enter=False, suppress_history=False)
-    window.kill()
-
-
-def parse_configuration():
-    cfg = ConfigParser()
-    cfg.read(
-        [
-            os.path.expanduser("~/.config/workon.cfg"),
-            os.path.expanduser("~/.workon"),
-        ]
-    )
-    return cfg
-
-
-if __name__ == "__main__":
-    cfg = parse_configuration()
-    default_prefix = cfg.get(WORKON_SETTINGS_SECTION, "prefix", fallback="")
-    default_workdir = cfg.get(
-        WORKON_SETTINGS_SECTION, "workdir", fallback="~/working-copy"
-    )
-
-    parser = argparse.ArgumentParser(description="work on")
-    parser.add_argument(
-        "-c", "--completion", action="store_true", help="bash completion script"
-    )
-    parser.add_argument("-p", "--prefix", default=default_prefix, help="project prefix")
-    parser.add_argument(
-        "-w", "--workdir", default=default_workdir, help="working directory"
-    )
-    parser.add_argument(
-        "-s", "--stop", action="store_true", help="stop working on project"
-    )
-    parser.add_argument(
-        "-e",
-        "--env",
-        action="store_true",
-        help="set bash env variables for the current window",
-    )
-    parser.add_argument("name", default="", nargs="?", help="service name")
-    args = parser.parse_args()
-
-    if args.completion:
-        project = args.name
-        print_bash_completion(cfg, args.workdir, project, args.prefix)
-        sys.exit(0)
-
-    if args.env:
-        print_env(cfg)
-        sys.exit(0)
-
-    project = args.name
-    if args.stop:
-        workstop(project)
-        sys.exit(0)
-
-    if not project:
-        print("Must specify a project name")
-        sys.exit(1)
-
-    start_dir = find_start_dir(cfg, args.workdir, project, args.prefix)
-    if start_dir is None:
-        print("Unable to find a matching project")
-        sys.exit(1)
-    workon(cfg, project, start_dir)
+window_id=$(tmux new-window -c "$selected_dir" -F "#{window_id}" -n "$choice")
+tmux send-keys -t "$window_id" 'nvim' 'Enter'
+tmux select-layout -t "$window_id" 'main-vertical'

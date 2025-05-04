@@ -4,11 +4,13 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
-        completions = { lsp = { enabled = true } },
         file_types = { 'markdown', 'gitcommit' },
         heading = {
-            left_pad = 1,
             position = 'inline',
+        },
+        anti_conceal = { enabled = false },
+        win_options = {
+            concealcursor = { rendered = 'nc' },
         },
     },
 }

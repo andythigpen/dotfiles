@@ -6,5 +6,6 @@ vim.api.nvim_create_autocmd('User', {
         end
         require('user.alternate').setup()
         require('user.projects').setup()
+        require('user.toggle').setup()
     end,
 })

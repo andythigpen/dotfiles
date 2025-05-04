@@ -22,15 +22,5 @@ if which ag &>/dev/null; then
     export FZF_DEFAULT_COMMAND='ag -l -g ""'
 fi
 
-# patch kitty box drawing font with rounded filled box corners
-# if [ -z "$NVIM_FILLED_BOXES" -a ! -z "$KITTY_PID" ]; then
-#     if [ -e "$HOME/.config/kitty/boxes.py" ]; then
-#         # Run a remote control command telling the current instance of kitty to
-#         # load the boxes kitten, which inserts the box drawing characters.
-#         kitty @ kitten boxes.py
-#         export NVIM_FILLED_BOXES=1
-#     fi
-# fi
-
 # add machine local settings here
 [ -f ~/.bashrc_local ] && source ~/.bashrc_local

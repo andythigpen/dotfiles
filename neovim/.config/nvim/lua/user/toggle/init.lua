@@ -76,6 +76,7 @@ M.setup = function()
         toggles[value] = key
     end
 
+    vim.api.nvim_create_user_command("InverseToggle", M.toggle, { desc = "Toggles the inverse text under the cursor" })
     vim.keymap.set("n", "<space>i", M.toggle, { desc = "Toggles the inverse text under the cursor" })
 end
 

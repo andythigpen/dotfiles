@@ -12,8 +12,8 @@ paths = ["daily/**"]
 filename = "{{format-date now}}"
 template = "daily.md"
 
-[group.ticket]
+[group.tickets]
 paths = ["tickets/**"]
-[group.ticket.note]
-filename = "{{extra.ticket_id}}"
+[group.tickets.note]
+filename = "{{title}}"
 template = "ticket.md"

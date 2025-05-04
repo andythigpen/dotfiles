@@ -1,4 +1,4 @@
-# {{extra.ticket_id}}
+# {{title}}
 
 ## Tasks
 

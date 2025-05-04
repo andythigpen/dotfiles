@@ -37,13 +37,15 @@ end
 
 -- if the quickfix window is open, navigate in the direction given (one of next or previous).
 -- returns a function intended to be used in a mapping
-local function navigate_quickfix(direction)
+local function navigate_list(type, direction)
+    if type ~= "c" and type ~= "l" then
+        error("expected one of c or l for type")
+    end
+    if direction ~= "next" and direction ~= "previous" then
+        error("expected one of next or previous for direction")
+    end
     return function()
-        if direction == "next" then
-            pcall(function() vim.cmd.cnext() end)
-        else
-            pcall(function() vim.cmd.cprevious() end)
-        end
+        pcall(function() vim.cmd({ cmd = type .. direction }) end)
     end
 end
 
@@ -64,8 +66,10 @@ local function toggle_quickfix()
 end
 
 keymap("n", "<leader>q", toggle_quickfix, { silent = true })
-keymap("n", "[q", navigate_quickfix("previous"), { silent = true })
-keymap("n", "]q", navigate_quickfix("next"), { silent = true })
+keymap("n", "[q", navigate_list("c", "previous"), { silent = true })
+keymap("n", "]q", navigate_list("c", "next"), { silent = true })
+keymap("n", "[w", navigate_list("l", "previous"), { silent = true })
+keymap("n", "]w", navigate_list("l", "next"), { silent = true })
 
 -- toggle line numbers
 local function toggle_columns()

@@ -1,0 +1,19 @@
+[notebook]
+dir = "~/Notes"
+
+[note]
+language = "en"
+filename = "{{format-date now 'timestamp'}}-{{slug title}}"
+extension = "md"
+
+[group.daily]
+paths = ["daily/**"]
+[group.daily.note]
+filename = "{{format-date now}}"
+template = "daily.md"
+
+[group.ticket]
+paths = ["tickets/**"]
+[group.ticket.note]
+filename = "{{extra.ticket_id}}"
+template = "ticket.md"

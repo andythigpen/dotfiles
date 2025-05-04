@@ -27,6 +27,7 @@ if [ -n "$mru" ]; then
     choices="$mru\n$choices"
 fi
 if ! choice=$(echo -e "$choices" | fzf --info=hidden \
+    --bind="ctrl-f:page-down,ctrl-b:page-up" \
     --layout="$WORKON_LAYOUT" \
     --prompt=' ' \
     --pointer='' \

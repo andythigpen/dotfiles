@@ -79,9 +79,6 @@ vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "WarningMs
 vim.fn.sign_define("DapLogPoint", { text = "◆", texthl = "SpellRare", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "▶", texthl = "MatchParen", linehl = "CursorLine", numhl = "" })
 
--- load configurations from launch.json
-require("dap.ext.vscode").load_launchjs()
-
 -- keymappings
 keymap("n", "<F2>", terminate, { silent = true })
 keymap("n", "<F3>", terminate, { silent = true })

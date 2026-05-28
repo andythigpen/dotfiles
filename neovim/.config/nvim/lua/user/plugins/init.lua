@@ -65,10 +65,8 @@ return {
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-            require("mason-lspconfig").setup()
-            local user_lsp = require("user.lsp")
-            require("mason-lspconfig").setup_handlers({
-                user_lsp.configure_lsp,
+            require("mason-lspconfig").setup({
+                automatic_enable = true,
             })
         end
     },

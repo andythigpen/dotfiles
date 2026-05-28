@@ -42,8 +42,8 @@ vim.cmd([[autocmd CursorHold,CursorHoldI * lua require('user.lsp').open_diagnost
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local mapping_opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", mapping_opts)
-vim.api.nvim_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", mapping_opts)
-vim.api.nvim_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", mapping_opts)
+vim.api.nvim_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.jump({count=-1})<CR>", mapping_opts)
+vim.api.nvim_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.jump({count=1})<CR>", mapping_opts)
 vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", mapping_opts)
 
 -- Use an on_attach function to only map the following keys
@@ -97,42 +97,19 @@ M.on_attach = function(_client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>s", "<cmd>Telescope lsp_workspace_symbols<CR>", mapping_opts)
 end
 
--- LSP configuration
-local lspconfig = require("lspconfig")
+vim.lsp.config('*', {
+    on_attach = M.on_attach,
+    capabilities = {
+        textDocument = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+        },
+    },
+})
 
-M.configure_lsp = function(server)
-    if server == "tsserver" or server == "vtsls" then
-        return
-    end
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-    }
-    local opts = {
-        on_attach = M.on_attach,
-        capabilities = capabilities,
-    }
-
-    -- load LSP server-specific settings from separate modules
-    local ok, server_opts = pcall(require, "user.lsp." .. server)
-    if ok then
-        -- merge the local options into the defaults
-        for k, v in pairs(server_opts) do
-            if k == "on_attach" then
-                -- make sure the default on_attach is not overridden
-                opts.on_attach = function(...)
-                    M.on_attach(...)
-                    server_opts.on_attach(...)
-                end
-            else
-                opts[k] = v
-            end
-        end
-    end
-
-    lspconfig[server].setup(opts)
-end
+require('user.lsp.lua_ls')
+require('user.lsp.pyright')
+require('user.lsp.rust_analyzer')
+require('user.lsp.tailwindcss')
 
 return M

@@ -10,7 +10,7 @@ return {
             },
             indent = {
                 enable = true,
-                disable = { "ruby", "go", "python", "yaml" },
+                disable = { "ruby", "go", "yaml" },
             },
             endwise = {
                 enable = true,

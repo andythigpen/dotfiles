@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if ! $(which entr &>/dev/null); then
+if ! which entr &>/dev/null; then
     echo "Missing entr executable"
     exit 1
 fi
 
-if ! $(which ag &>/dev/null); then
+if ! which ag &>/dev/null; then
     echo "Missing ag executable"
     exit 1
 fi
@@ -34,4 +34,5 @@ fi
 
 while true; do
     ag -l $AG_ARGS | entr -r -d $@
+    sleep 1
 done
